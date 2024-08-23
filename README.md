@@ -3,8 +3,8 @@ This project aims to recreate the Unix `wc` utility for Windows as part of the [
 
 ## Key Objectives
 * Achieve support for the following commands: `-c`, `-l`, `-w`, `-m`.
-* Develop a robust and efficient wc implementation.
-* Ensure that the application is modular and flexible to accomodate future enhancements.
+* Develop a robust and efficient `wc` implementation.
+* Ensure the application is modular and flexible to accomodate future enhancements.
 * Adhere to best practices and coding standards.
 
 ## Technical Stack

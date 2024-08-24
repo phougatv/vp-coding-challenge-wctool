@@ -21,10 +21,23 @@ public class Program
 			return;
 		}
 
+		var fileInfo = new FileInfo(filepath);
 		if (command == "-c")
 		{
-			var fileInfo = new FileInfo(filepath);
 			Console.WriteLine($"{fileInfo.Length} {filename}");
+			return;
+		}
+
+		if (command == "-l")
+		{
+			var lineCount = 0UL;
+			using var streamReader = new StreamReader(fileInfo.FullName);
+			while (streamReader.ReadLine() != null)
+			{
+				lineCount++;
+			}
+
+			Console.WriteLine($"{lineCount} {filename}");
 		}
 	}
 }

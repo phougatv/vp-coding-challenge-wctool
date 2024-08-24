@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "VP.CodingChallenge.WCTool": {
+      "commandName": "Project",
+      "commandLineArgs": "-c test.txt"
+    }
+  }
+}

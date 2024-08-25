@@ -6,7 +6,7 @@ using VP.CodingChallenge.WCNet.CommandResolvers;
 using VP.CodingChallenge.WCNet.Commands;
 using VP.CodingChallenge.WCNet.Commands.Concrete;
 
-internal static class ServiceCollectionExtension
+internal static class WcNetServiceExtension
 {
 	internal static IServiceProvider BuildWcNetServiceProvider(this IServiceCollection services)
 		=> services.AddWcNet().BuildServiceProvider();

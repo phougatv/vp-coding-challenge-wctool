@@ -1,43 +1,45 @@
 ﻿namespace VP.CodingChallenge.WCNet;
 
+using Microsoft.Extensions.DependencyInjection;
+using VP.CodingChallenge.WCNet.CommandHandlers;
+using VP.CodingChallenge.WCNet.CommandResolvers;
+using VP.CodingChallenge.WCNet.Commands;
+using VP.CodingChallenge.WCNet.Commands.Concrete;
+
 public class Program
 {
-	private const String Directory = @".\Files";
+	//private const String Directory = @".\Files";
 
 	static void Main(String[] args)
 	{
-		if (args.Length != 2)
-		{
-			Console.WriteLine("Incorrect command format, -<command> <filename.extension>");
-			return;
-		}
+		var services = new ServiceCollection();
 
-		var command = args[0];
-		var filename = args[1];
-		var filepath = Path.Combine(Directory, filename);
-		if (!Path.Exists(filepath))
-		{
-			Console.WriteLine($"File: {filename}, not found");
-			return;
-		}
+		//Add commands
+		services
+			.AddKeyedScoped<ICommand, ByteCountCommand>("-c")
+			.AddKeyedScoped<ICommand, LineCountCommand>("-l");
 
-		var fileInfo = new FileInfo(filepath);
-		if (command == "-c")
-		{
-			Console.WriteLine($"{fileInfo.Length} {filename}");
-			return;
-		}
-
-		if (command == "-l")
-		{
-			var lineCount = 0UL;
-			using var streamReader = new StreamReader(fileInfo.FullName);
-			while (streamReader.ReadLine() != null)
+		//Add Resolver
+		services
+			.AddScoped<ICommandResolver, DefaultCommandResolver>(provider =>
 			{
-				lineCount++;
-			}
+				var keys = new[] { "-c", "-l" }; // Extend this as needed or use reflection to automate
+				var commandMap = keys
+				.ToDictionary(
+					key => key,
+					key => provider.GetRequiredKeyedService<ICommand>(key));
 
-			Console.WriteLine($"{lineCount} {filename}");
-		}
+				return new DefaultCommandResolver(commandMap);
+			});
+
+		//Add Handler
+		services.AddScoped<DefaultCommandHandler>();
+
+		//Build ServiceProvider
+		var serviceProvider = services.BuildServiceProvider();
+
+		//Execute DefaultCommandHandler.Handle
+		var commandHandler = serviceProvider.GetRequiredService<DefaultCommandHandler>();
+		commandHandler.Handle(args);
 	}
 }

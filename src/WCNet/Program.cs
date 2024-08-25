@@ -1,4 +1,4 @@
-﻿namespace VP.CodingChallenge.WCTool;
+﻿namespace VP.CodingChallenge.WCNet;
 
 public class Program
 {

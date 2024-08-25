@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "VP.CodingChallenge.WCTool": {
+    "VP.CodingChallenge.WCNet": {
       "commandName": "Project",
       "commandLineArgs": "-l test.txt"
     }

@@ -4,5 +4,5 @@
 
 /.git
 /.vs
-/src/WCTool/bin
-/src/WCTool/obj
+/src/WCNet/bin
+/src/WCNet/obj

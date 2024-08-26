@@ -1,5 +1,8 @@
 ﻿namespace VP.CodingChallenge.WCNet.Commands.Concrete;
 
+using VP.CodingChallenge.WCNet.Attributes;
+
+[CommandKey("-c")]
 internal class ByteCountCommand : ICommand
 {
 	public String Execute(String filepath)

@@ -6,3 +6,5 @@
 /.vs
 /src/WCNet/bin
 /src/WCNet/obj
+/test/WCNet/Tests/bin
+/test/WCNet/Tests/obj

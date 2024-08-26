@@ -1,10 +1,11 @@
 ﻿namespace VP.CodingChallenge.WCNet.Startup;
 
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
+using VP.CodingChallenge.WCNet.Attributes;
 using VP.CodingChallenge.WCNet.CommandHandlers;
 using VP.CodingChallenge.WCNet.CommandResolvers;
 using VP.CodingChallenge.WCNet.Commands;
-using VP.CodingChallenge.WCNet.Commands.Concrete;
 
 internal static class WcNetServiceExtension
 {
@@ -23,9 +24,19 @@ internal static class WcNetServiceExtension
 
 	private static IServiceCollection AddWcNetCommands(this IServiceCollection services)
 	{
-		services
-			.AddKeyedScoped<ICommand, ByteCountCommand>("-c")
-			.AddKeyedScoped<ICommand, LineCountCommand>("-l");
+		var commandInterfaceType = typeof(ICommand);
+		var concreteCommandTypes = Assembly
+			.GetExecutingAssembly()
+			.GetTypes()
+			.Where(type => commandInterfaceType.IsAssignableFrom(type) && type.IsClass && !type.IsAbstract)
+			.ToList();
+		foreach (var commandType in concreteCommandTypes)
+		{
+			var keyAttribute = commandType.GetCustomAttribute<CommandKeyAttribute>();
+			if (keyAttribute is null) continue;
+
+			services.AddKeyedScoped(commandInterfaceType, keyAttribute.Key, commandType);
+		}
 
 		return services;
 	}
@@ -35,11 +46,21 @@ internal static class WcNetServiceExtension
 		services
 			.AddScoped<ICommandResolver, DefaultCommandResolver>(provider =>
 			{
-				var keys = new[] { "-c", "-l" }; // Extend this as needed or use reflection to automate
-				var commandMap = keys
-				.ToDictionary(
-					key => key,
-					key => provider.GetRequiredKeyedService<ICommand>(key));
+				var commandInterfaceType = typeof(ICommand);
+				var concreteCommandTypes = Assembly
+					.GetExecutingAssembly()
+					.GetTypes()
+					.Where(type => commandInterfaceType.IsAssignableFrom(type) && type.IsClass && !type.IsAbstract)
+					.ToList();					
+				var commandMap = new Dictionary<String, ICommand>(concreteCommandTypes.Count);
+				foreach (var commandType in concreteCommandTypes)
+				{
+					var attribute = commandType.GetCustomAttribute<CommandKeyAttribute>();
+					if (attribute is null) continue;
+
+					var commandInstance = provider.GetRequiredKeyedService<ICommand>(attribute.Key);
+					commandMap[attribute.Key] = commandInstance;
+				}
 
 				return new DefaultCommandResolver(commandMap);
 			});
@@ -53,4 +74,5 @@ internal static class WcNetServiceExtension
 
 		return services;
 	}
+
 }

@@ -11,6 +11,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WCNet", "WCNet", "{A941F701
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VP.CodingChallenge.WCNet", "src\WCNet\VP.CodingChallenge.WCNet.csproj", "{45D68EF0-5EF3-4D38-967A-F3ABCF6775F4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WCNet", "WCNet", "{10AFBDF7-E4FC-4279-A190-F0F286CC9264}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VP.CodingChallenge.WCNet.Test", "test\WCNet\VP.CodingChallenge.WCNet.Test.csproj", "{C827F1D3-884C-4432-A554-962AA6085C38}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,10 @@ Global
 		{45D68EF0-5EF3-4D38-967A-F3ABCF6775F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45D68EF0-5EF3-4D38-967A-F3ABCF6775F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45D68EF0-5EF3-4D38-967A-F3ABCF6775F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C827F1D3-884C-4432-A554-962AA6085C38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C827F1D3-884C-4432-A554-962AA6085C38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C827F1D3-884C-4432-A554-962AA6085C38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C827F1D3-884C-4432-A554-962AA6085C38}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -28,6 +36,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{A941F701-D0D3-4886-801B-87F97E650BE8} = {8F526A11-6F55-4859-8F25-08217E047BE7}
 		{45D68EF0-5EF3-4D38-967A-F3ABCF6775F4} = {A941F701-D0D3-4886-801B-87F97E650BE8}
+		{10AFBDF7-E4FC-4279-A190-F0F286CC9264} = {BB16D67F-6729-4621-944F-6099E0ED5236}
+		{C827F1D3-884C-4432-A554-962AA6085C38} = {10AFBDF7-E4FC-4279-A190-F0F286CC9264}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8A790F20-4B3F-4800-87B9-DD76861525EE}

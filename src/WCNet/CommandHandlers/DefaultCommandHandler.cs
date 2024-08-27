@@ -1,7 +1,5 @@
 ﻿namespace VP.CodingChallenge.WCNet.CommandHandlers;
 
-using VP.CodingChallenge.WCNet.CommandResolvers;
-
 internal class DefaultCommandHandler
 {
 	private const String Directory = @".\Files";
@@ -20,7 +18,7 @@ internal class DefaultCommandHandler
 			return;
 		}
 
-		var commandKey = args[0];
+		Command commandKey = args[0];
 		var filename = args[1];
 		var filepath = Path.Combine(Directory, filename);
 		if (!File.Exists(filepath))

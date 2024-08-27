@@ -1,7 +1,5 @@
 ﻿namespace VP.CodingChallenge.WCNet.Commands.Concrete;
 
-using VP.CodingChallenge.WCNet.Attributes;
-
 [CommandKey("-l")]
 internal class LineCountCommand : ICommand
 {

@@ -10,7 +10,7 @@ public class Resolve
 		{
 			{ "-c", new ByteCountCommand() }
 		};
-		var key = "-w";
+		var key = new Command("-w");
 		var defaultResolver = new DefaultCommandResolver(commandMap);
 
 		//Act
@@ -28,7 +28,7 @@ public class Resolve
 		{
 			{ "-c", new ByteCountCommand() }
 		};
-		var key = "-c";
+		var key = new Command("-c");
 		var defaultResolver = new DefaultCommandResolver(commandMap);
 
 		//Act

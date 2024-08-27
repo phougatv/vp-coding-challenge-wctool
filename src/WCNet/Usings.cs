@@ -1,0 +1,10 @@
+﻿global using Microsoft.Extensions.DependencyInjection;
+global using System.Reflection;
+global using System.Runtime.CompilerServices;
+global using VP.CodingChallenge.WCNet.Attributes;
+global using VP.CodingChallenge.WCNet.CommandHandlers;
+global using VP.CodingChallenge.WCNet.CommandModels;
+global using VP.CodingChallenge.WCNet.CommandResolvers;
+global using VP.CodingChallenge.WCNet.Commands;
+global using VP.CodingChallenge.WCNet.Commands.Concrete;
+global using VP.CodingChallenge.WCNet.Startup;

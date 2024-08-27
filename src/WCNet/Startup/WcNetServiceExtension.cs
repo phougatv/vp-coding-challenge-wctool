@@ -1,12 +1,5 @@
 ﻿namespace VP.CodingChallenge.WCNet.Startup;
 
-using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
-using VP.CodingChallenge.WCNet.Attributes;
-using VP.CodingChallenge.WCNet.CommandHandlers;
-using VP.CodingChallenge.WCNet.CommandResolvers;
-using VP.CodingChallenge.WCNet.Commands;
-
 internal static class WcNetServiceExtension
 {
 	internal static IServiceProvider BuildWcNetServiceProvider(this IServiceCollection services)

@@ -26,4 +26,12 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EditorConfigFiles Remove="C:\source\vp-coding-challenge-wcnet\test\WCNet\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="C:\source\vp-coding-challenge-wcnet\test\WCNet\.editorconfig" />
+  </ItemGroup>
+
 </Project>

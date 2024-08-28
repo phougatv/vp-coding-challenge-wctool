@@ -2,24 +2,24 @@
 
 internal class CommandArgument : IEquatable<CommandArgument>
 {
-	internal Command Command { get; }
-	internal String Filename { get; } = String.Empty;
+	internal CommandKey CommandKey { get; }
+	internal String Filepath { get; } = String.Empty;
 
-	private CommandArgument(Command command, String filename)
+	private CommandArgument(CommandKey commandKey, String filepath)
 	{
-		Command = command;
-		Filename = filename;
+		CommandKey = commandKey;
+		Filepath = filepath;
 	}
 
-	public static CommandArgument Create(Command command, String filename) => new CommandArgument(command, filename);
+	public static CommandArgument Create(CommandKey commandKey, String filename) => new CommandArgument(commandKey, filename);
 
 	public Boolean Equals(CommandArgument? other) => this == other;
 
 	public override Boolean Equals(Object? obj) => obj is not null && obj is CommandArgument other && Equals(other);
 
-	public override Int32 GetHashCode() => HashCode.Combine(Command, Filename);
+	public override Int32 GetHashCode() => HashCode.Combine(CommandKey, Filepath);
 
-	public override String ToString() => $"Command: {Command}, Filename: \"{Filename}\"";
+	public override String ToString() => $"Command: {CommandKey}, Filename: \"{Path.GetFileName(Filepath)}\"";
 
 	public static Boolean operator ==(CommandArgument? left, CommandArgument? right)
 	{
@@ -33,7 +33,7 @@ internal class CommandArgument : IEquatable<CommandArgument>
 			return false;
 		}
 
-		return left.Command.Equals(right.Command) && String.Equals(left.Filename, right.Filename);
+		return left.CommandKey.Equals(right.CommandKey) && String.Equals(left.Filepath, right.Filepath);
 	}
 
 	public static Boolean operator !=(CommandArgument? left, CommandArgument? right) => !(left == right);

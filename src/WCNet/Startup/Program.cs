@@ -13,8 +13,8 @@ public class Program
 		var serviceProvider = ServiceCollection.BuildWcNetServiceProvider(configuration);
 
 		//Execute DefaultCommandHandler.Handle
-		var commandHandler = serviceProvider.GetRequiredService<DefaultCommandHandler>();
-		commandHandler.Handle(args);
+		var commandHandler = serviceProvider.GetRequiredService<CommandHandlerBase>();
+		commandHandler.Main(args);
 	}
 
 	internal static IConfigurationBuilder GetWcConfigurationBuilder()

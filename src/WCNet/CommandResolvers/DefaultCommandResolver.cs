@@ -9,7 +9,7 @@ internal class DefaultCommandResolver : ICommandResolver
 		_commandMap = commandMap;
 	}
 
-	public ICommand Resolve(Command commandKey)
+	public ICommand Resolve(CommandKey commandKey)
 	{
 		if (_commandMap.TryGetValue(commandKey, out var command))
 		{

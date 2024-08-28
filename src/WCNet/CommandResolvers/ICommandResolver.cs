@@ -2,5 +2,5 @@
 
 internal interface ICommandResolver
 {
-	ICommand Resolve(Command commandKey);
+	ICommand Resolve(CommandKey commandKey);
 }

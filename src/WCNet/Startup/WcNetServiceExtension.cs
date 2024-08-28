@@ -70,7 +70,7 @@ internal static class WcNetServiceExtension
 	}
 
 	private static IServiceCollection AddWcNetCommandHandler(this IServiceCollection services)
-		=> services.AddScoped<DefaultCommandHandler>();
+		=> services.AddScoped<CommandHandlerBase, DefaultCommandHandler>();
 
 	private static void InitializeConcreteCommandTypes()
 	{

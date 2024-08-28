@@ -15,6 +15,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WCNet", "WCNet", "{10AFBDF7
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VP.CodingChallenge.WCNet.Test", "test\WCNet\VP.CodingChallenge.WCNet.Test.csproj", "{C827F1D3-884C-4432-A554-962AA6085C38}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A2AFEF2E-D5B7-48A0-A7FC-EA13204E05A7}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

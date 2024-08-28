@@ -8,6 +8,6 @@ internal class CommandNotFoundError : Error
 
 	}
 
-	internal static CommandNotFoundError Create(Command command)
+	internal static CommandNotFoundError Create(CommandKey command)
 		=> new CommandNotFoundError($"Command: {command} not found.");
 }

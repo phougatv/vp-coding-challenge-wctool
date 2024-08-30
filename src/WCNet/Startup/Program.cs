@@ -8,10 +8,10 @@ public class Program
 	static void Main(String[] args)
 	{
 		//Build WcNet configuration
-		var configuration = ConfigurationBuilder.BuildWcNetConfiguration();
+		var configuration = ConfigurationBuilder.BuildWCNetConfiguration();
 
 		//Build WcNet service provider
-		var serviceProvider = ServiceCollection.BuildWcNetServiceProvider(configuration);
+		var serviceProvider = ServiceCollection.BuildWCNetServiceProvider(configuration);
 
 		//Execute CommandHandlerBase.Main
 		var commandHandler = serviceProvider.GetRequiredService<CommandHandlerBase>();

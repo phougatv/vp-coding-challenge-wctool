@@ -1,8 +1,8 @@
 ﻿namespace VP.CodingChallenge.WCNet.Startup;
 
-internal static class WcNetConfigurationExtension
+internal static class WCNetConfigurationExtension
 {
-    internal static IConfiguration BuildWcNetConfiguration(this IConfigurationBuilder builder)
+    internal static IConfiguration BuildWCNetConfiguration(this IConfigurationBuilder builder)
         => builder
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)

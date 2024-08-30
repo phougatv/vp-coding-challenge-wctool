@@ -21,15 +21,15 @@ The key objectives of this project are (for more details visit [here](https://co
   - [ ] **Word count (`-w`)**: Counts the number of words in a file.
   - [ ] **Character count (`-m`)**: Counts the number of characters in a file. If the current locale does not support multibyte characters this will match the `-c` option.
   - [ ] **No command/Default option**: It is an equivalent to `-c`, `-l`, and `-w` options.
-  - [ ] **.editorconfig**: Enforces consistent coding styles and formatting across the project, ensuring adherence to best practices and reducing code review overhead.
-  - [ ] **Flexible dependency injection**: Utilizes .NET 8 Dependency Injection with Keyed Services for scalable and maintainable command resolution.
+  - [x] **.editorconfig**: Enforces consistent coding styles and formatting across the project, ensuring adherence to best practices and reducing code review overhead.
+  - [x] **Flexible dependency injection**: Utilizes .NET 8 Dependency Injection with Keyed Services for scalable and maintainable command resolution.
   - [x] **Command pattern**: Implements the Command Pattern for handling different command-line arguments, ensuring flexibility and adherence to SOLID principles.
-  - [ ] **Command-line arguments parser**: Includes a built-in parser for handling command-line inputs.
-  - [ ] **Template method pattern**: Incorporates the Template Method Pattern to share common execution logic across commands.
+  - [x] **Command-line arguments parser**: Includes a built-in parser for handling command-line inputs.
+  - [x] **Template method pattern**: Incorporates the Template Method Pattern to share common execution logic across commands.
 ### Tests
   - [ ] **End-to-End tests**: Test the application as a whole, ensuring that it behaves as expected in real-world scenarios.
-  - [ ] **Integration tests**: Test how different parts of the application work together.
-  - [ ] **Unit tests**: Comprehensive unit tests for each component, ensuring code reliability.
+  - [x] **Integration tests**: Test how different parts of the application work together.
+  - [x] **Unit tests**: Comprehensive unit tests for each component, ensuring code reliability.
   - [ ] **Benchmarks**: Performance testing to ensure the tool operates efficiently even with large files.
 
 ## Build the solution

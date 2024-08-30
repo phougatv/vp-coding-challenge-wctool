@@ -1,27 +1,27 @@
 ﻿namespace VP.CodingChallenge.WCNet.Startup;
 
-internal static class WcNetServiceExtension
+internal static class WCNetServiceExtension
 {
 	private readonly static Type _iCommandType = typeof(ICommand);
 	private static List<Type> _concreteCommandTypes = [];
 	private static List<String> _allowedCommands = [];
 
-	internal static IServiceProvider BuildWcNetServiceProvider(this IServiceCollection services, IConfiguration configuration)
+	internal static IServiceProvider BuildWCNetServiceProvider(this IServiceCollection services, IConfiguration configuration)
 	{
 		InitializeConcreteCommandTypes();
 		InitializeAllowedCommands();
 
-		return services.AddWcNet(configuration).BuildServiceProvider();
+		return services.AddWCNet(configuration).BuildServiceProvider();
 	}
 
-	private static IServiceCollection AddWcNet(this IServiceCollection services, IConfiguration configuration)
+	private static IServiceCollection AddWCNet(this IServiceCollection services, IConfiguration configuration)
 		=> services
-			.AddWcNetCommands()
-			.AddWcNetCommandResolver()
-			.AddWcNetCommandParser(configuration)
-			.AddWcNetCommandHandler();
+			.AddWCNetCommands()
+			.AddWCNetCommandResolver()
+			.AddWCNetCommandParser(configuration)
+			.AddWCNetCommandHandler();
 
-	private static IServiceCollection AddWcNetCommands(this IServiceCollection services)
+	private static IServiceCollection AddWCNetCommands(this IServiceCollection services)
 	{
 		if (_concreteCommandTypes.Count == 0)
 		{
@@ -40,7 +40,7 @@ internal static class WcNetServiceExtension
 		return services;
 	}
 
-	private static IServiceCollection AddWcNetCommandResolver(this IServiceCollection services)
+	private static IServiceCollection AddWCNetCommandResolver(this IServiceCollection services)
 		=> services.AddScoped<ICommandResolver, DefaultCommandResolver>(provider =>
 			{
 				var commandMap = new Dictionary<String, ICommand>(_concreteCommandTypes.Count);
@@ -56,7 +56,7 @@ internal static class WcNetServiceExtension
 				return new DefaultCommandResolver(commandMap);
 			});
 
-	private static IServiceCollection AddWcNetCommandParser(this IServiceCollection services, IConfiguration configuration)
+	private static IServiceCollection AddWCNetCommandParser(this IServiceCollection services, IConfiguration configuration)
 	{
 		services.AddScoped<ICommandParser, DefaultCommandParser>();
 
@@ -69,7 +69,7 @@ internal static class WcNetServiceExtension
 		return services.Configure<ParserOptions>(section);
 	}
 
-	private static IServiceCollection AddWcNetCommandHandler(this IServiceCollection services)
+	private static IServiceCollection AddWCNetCommandHandler(this IServiceCollection services)
 		=> services.AddScoped<CommandHandlerBase, DefaultCommandHandler>();
 
 	private static void InitializeConcreteCommandTypes()

@@ -2,12 +2,16 @@
 
 internal class FileExtensionNotAllowedError : Error
 {
-	private FileExtensionNotAllowedError(String message)
+    private readonly String _message;
+
+    private FileExtensionNotAllowedError(String message)
 		: base(message)
 	{
-
+        _message = message;
 	}
 
 	internal static FileExtensionNotAllowedError Create(String fileExtension)
-		=> new FileExtensionNotAllowedError($"File extension: .{fileExtension}, is not allowed.");
+		=> new FileExtensionNotAllowedError($"File extension: \".{fileExtension}\", is not allowed.");
+
+    public override String ToString() => _message;
 }

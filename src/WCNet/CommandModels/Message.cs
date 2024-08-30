@@ -1,14 +1,14 @@
 ﻿namespace VP.CodingChallenge.WCNet.CommandModels;
 
-internal readonly struct Message : IEquatable<Message>
+public readonly struct Message : IEquatable<Message>
 {
-    internal String Text { get; }
+    public String Text { get; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Message"/> struct.
     /// </summary>
     /// <param name="text">The text</param>
-    internal Message(String text)
+    public Message(String text)
     {
         Text = text;
     }

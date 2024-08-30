@@ -3,26 +3,18 @@
 public class Program
 {
 	private static readonly IServiceCollection ServiceCollection = new ServiceCollection();
+    private static readonly IConfigurationBuilder ConfigurationBuilder = new ConfigurationBuilder();
 
 	static void Main(String[] args)
 	{
-		//WC configuration provider
-		var configuration = GetWcConfigurationBuilder().Build();
+		//Build WcNet configuration
+		var configuration = ConfigurationBuilder.BuildWcNetConfiguration();
 
-		//WC service provider
+		//Build WcNet service provider
 		var serviceProvider = ServiceCollection.BuildWcNetServiceProvider(configuration);
 
-		//Execute DefaultCommandHandler.Handle
+		//Execute CommandHandlerBase.Main
 		var commandHandler = serviceProvider.GetRequiredService<CommandHandlerBase>();
 		commandHandler.Main(args);
-	}
-
-	internal static IConfigurationBuilder GetWcConfigurationBuilder()
-	{
-		var builder = new ConfigurationBuilder()
-			.SetBasePath(Directory.GetCurrentDirectory())
-			.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-
-		return builder;
 	}
 }

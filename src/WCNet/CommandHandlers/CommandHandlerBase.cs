@@ -2,24 +2,36 @@
 
 public abstract class CommandHandlerBase
 {
-    internal abstract Result<CommandArgument> PreHandle(String[] args);
-    internal abstract Result<Message> Handle(CommandArgument commandArgument);
-    internal abstract Result PostHandle(Message message);
+    protected abstract Result<CommandArgument> PreHandle(String[] args);
+    protected abstract Result<Message> Handle(CommandArgument commandArgument);
+    protected abstract Result PostHandle(Message message);
 
     public void Main(String[] args)
     {
-        var argumentResult = PreHandle(args);
-        if (argumentResult.IsFailed)
-        {
-            //Write to console why it failed
-        }
+        var commandKey = new CommandKey();
 
-        var messageResult = Handle(argumentResult.Value);
-        if (messageResult.IsFailed)
+        try
         {
-            //Write to console why it failed
-        }
+            var argumentResult = PreHandle(args);
+            if (argumentResult.IsFailed)
+            {
+                Console.WriteLine(argumentResult.Error);
+                return;
+            }
 
-        PostHandle(messageResult.Value);
+            commandKey = argumentResult.Value.CommandKey;
+            var messageResult = Handle(argumentResult.Value);
+            if (messageResult.IsFailed)
+            {
+                Console.WriteLine(messageResult.Error);
+                return;
+            }
+
+            PostHandle(messageResult.Value);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error executing command: {commandKey}: {ex.Message}");
+        }
     }
 }

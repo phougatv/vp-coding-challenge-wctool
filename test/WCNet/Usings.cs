@@ -1,8 +1,10 @@
 ﻿global using FluentAssertions;
 global using LightResults;
 global using Microsoft.Extensions.Options;
+global using Microsoft.VisualStudio.TestPlatform.Utilities;
 global using NSubstitute;
 global using VP.CodingChallenge.WCNet.CommandErrors;
+global using VP.CodingChallenge.WCNet.CommandHandlers;
 global using VP.CodingChallenge.WCNet.CommandModels;
 global using VP.CodingChallenge.WCNet.CommandParsers;
 global using VP.CodingChallenge.WCNet.CommandResolvers;

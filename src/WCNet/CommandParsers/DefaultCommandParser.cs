@@ -13,7 +13,7 @@ internal class DefaultCommandParser : ICommandParser
 	{
 		if (args.Length != 2)
 		{
-			return Result<CommandArgument>.Fail(CommandFormatError.Create());
+            return Result<CommandArgument>.Fail(CommandFormatError.Create());
 		}
 
 		var commandRegex = new Regex(_options.CommandExpression);

@@ -1,6 +1,6 @@
 ﻿namespace VP.CodingChallenge.WCNet.CommandModels;
 
-internal readonly struct CommandKey : IEquatable<CommandKey>
+public readonly struct CommandKey : IEquatable<CommandKey>
 {
 	public String Value { get; }
 

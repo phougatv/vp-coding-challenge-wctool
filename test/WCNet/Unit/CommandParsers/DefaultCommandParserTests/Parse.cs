@@ -55,7 +55,7 @@ public class Parse
 		actualResult.Should().NotBeNull().And.BeOfType<Result<CommandArgument>>();
 		actualResult.IsFailed.Should().BeTrue();
 		actualResult.Error.Should().NotBeNull().And.BeOfType<CommandNotFoundError>();
-		actualResult.Error.Message.Should().NotBeNullOrEmpty().And.Be("Command: -w not found.");
+		actualResult.Error.Message.Should().NotBeNullOrEmpty().And.Be("Command: \"-w\" not found.");
 	}
 
 	[Fact]
@@ -80,7 +80,7 @@ public class Parse
 		actualResult.Should().NotBeNull().And.BeOfType<Result<CommandArgument>>();
 		actualResult.IsFailed.Should().BeTrue();
 		actualResult.Error.Should().NotBeNull().And.BeOfType<FileExtensionNotAllowedError>();
-		actualResult.Error.Message.Should().NotBeNullOrEmpty().And.Be($"File extension: .{fileExtension}, is not allowed.");
+		actualResult.Error.Message.Should().NotBeNullOrEmpty().And.Be($"File extension: \".{fileExtension}\", is not allowed.");
 	}
 
 	[Fact]

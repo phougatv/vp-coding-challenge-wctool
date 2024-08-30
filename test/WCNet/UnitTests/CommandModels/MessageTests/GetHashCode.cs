@@ -1,4 +1,4 @@
-﻿namespace VP.CodingChallenge.WCNet.Test.Unit.CommandModels.MessageTests;
+﻿namespace VP.CodingChallenge.WCNet.Test.UnitTests.CommandModels.MessageTests;
 
 public class GetHashCode
 {

@@ -1,4 +1,4 @@
-﻿namespace VP.CodingChallenge.WCNet.Test.Unit.CommandHandlers.CommandHandlerBaseTests;
+﻿namespace VP.CodingChallenge.WCNet.Test.UnitTests.CommandHandlers.CommandHandlerBaseTests;
 
 public class Main
 {

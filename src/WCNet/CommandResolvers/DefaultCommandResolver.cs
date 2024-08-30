@@ -2,9 +2,9 @@
 
 internal class DefaultCommandResolver : ICommandResolver
 {
-	private readonly IDictionary<String, ICommand> _commandMap;
+	private readonly IDictionary<CommandKey, ICommand> _commandMap;
 
-	public DefaultCommandResolver(IDictionary<String, ICommand> commandMap)
+	public DefaultCommandResolver(IDictionary<CommandKey, ICommand> commandMap)
 	{
 		_commandMap = commandMap;
 	}

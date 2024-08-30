@@ -1,4 +1,4 @@
-﻿namespace VP.CodingChallenge.WCNet.Test.Unit.CommandHandlers;
+﻿namespace VP.CodingChallenge.WCNet.Test.UnitTests.CommandHandlers;
 
 internal class TestCommandHandler : CommandHandlerBase
 {

@@ -43,7 +43,7 @@ internal static class WCNetServiceExtension
 	private static IServiceCollection AddWCNetCommandResolver(this IServiceCollection services)
 		=> services.AddScoped<ICommandResolver, DefaultCommandResolver>(provider =>
 			{
-				var commandMap = new Dictionary<String, ICommand>(_concreteCommandTypes.Count);
+				var commandMap = new Dictionary<CommandKey, ICommand>(_concreteCommandTypes.Count);
 				foreach (var commandType in _concreteCommandTypes)
 				{
 					var attribute = commandType.GetCustomAttribute<CommandKeyAttribute>();

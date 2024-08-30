@@ -1,4 +1,4 @@
-﻿namespace VP.CodingChallenge.WCNet.Test.Unit.CommandModels.CommandArgumentTests;
+﻿namespace VP.CodingChallenge.WCNet.Test.UnitTests.CommandModels.MessageTests;
 
 public class NotEquals
 {
@@ -6,8 +6,8 @@ public class NotEquals
     public void ReturnsFalse_WhenInstancesAreEqual()
     {
         //Arrange
-        var left = CommandArgument.Create("-c", "filepath");
-        var right = CommandArgument.Create("-c", "filepath");
+        var left = new Message("message");
+        var right = new Message("message");
 
         //Act
         var actual = left != right;
@@ -20,8 +20,8 @@ public class NotEquals
     public void ReturnsTrue_WhenInstancesAreNotEqual()
     {
         //Arrange
-        var left = CommandArgument.Create("-c", "filepath");
-        var right = CommandArgument.Create("-c", "fake-filepath");
+        var left = new Message("message");
+        var right = new Message("test message");
 
         //Act
         var actual = left != right;

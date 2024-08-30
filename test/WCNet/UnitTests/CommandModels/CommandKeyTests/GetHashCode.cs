@@ -1,4 +1,4 @@
-﻿namespace VP.CodingChallenge.WCNet.Test.Unit.CommandModels.CommandKeyTests;
+﻿namespace VP.CodingChallenge.WCNet.Test.UnitTests.CommandModels.CommandKeyTests;
 
 public class GetHashCode
 {

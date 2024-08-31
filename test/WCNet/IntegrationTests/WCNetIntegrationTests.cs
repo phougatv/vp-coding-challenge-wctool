@@ -19,8 +19,8 @@ public class WCNetIntegrationTests : IClassFixture<FilesDirectoryFixture>
 
         //add commands
         services
-            .AddKeyedScoped<ICommand, ByteCountCommand>("-c")
-            .AddKeyedScoped<ICommand, LineCountCommand>("-l");
+            .AddKeyedScoped<ICommand, ByteCountCommand>("c")
+            .AddKeyedScoped<ICommand, LineCountCommand>("l");
 
         //add command resolvers
         services
@@ -28,8 +28,8 @@ public class WCNetIntegrationTests : IClassFixture<FilesDirectoryFixture>
             {
                 var commandMap = new Dictionary<CommandKey, ICommand>
                 {
-                    { "-c", provider.GetRequiredKeyedService<ICommand>("-c") },
-                    { "-l", provider.GetRequiredKeyedService<ICommand>("-l" ) }
+                    { "c", provider.GetRequiredKeyedService<ICommand>("c") },
+                    { "l", provider.GetRequiredKeyedService<ICommand>("l" ) }
                 };
 
                 return new DefaultCommandResolver(commandMap);
@@ -56,8 +56,10 @@ public class WCNetIntegrationTests : IClassFixture<FilesDirectoryFixture>
     {
         //Arrange
         var commandHandler = _serviceProvider.GetRequiredService<CommandHandlerBase>();
-        var filepath = CreateTestFile("byte_count_testfile.txt", "Hello World!\r\nThis is byte count integration test.");
-        var args = new String[] { "-c", "byte_count_testfile.txt" };
+        var filename = "byte_count_testfile.txt";
+        var commandKey = (CommandKey)"c";
+        var filepath = CreateTestFile(filename, "Hello World!\r\nThis is byte count integration test.");
+        var args = new String[] { "-c", filename };
         var expected = "50 byte_count_testfile.txt";
 
         //Act
@@ -74,8 +76,10 @@ public class WCNetIntegrationTests : IClassFixture<FilesDirectoryFixture>
     {
         //Arrange
         var commandHandler = _serviceProvider.GetRequiredService<CommandHandlerBase>();
-        var filepath = CreateTestFile("line_count_testfile.txt", "Line1\r\nLine2\r\nLine3\r\nLine4.");
-        var args = new String[] { "-l", "line_count_testfile.txt" };
+        var filename = "line_count_testfile.txt";
+        var commandKey = (CommandKey)"l";
+        var filepath = CreateTestFile(filename, "Line1\r\nLine2\r\nLine3\r\nLine4.");
+        var args = new String[] { "-l", filename };
         var expected = "4 line_count_testfile.txt";
 
         //Act

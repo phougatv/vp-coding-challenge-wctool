@@ -1,6 +1,6 @@
 ﻿namespace VP.CodingChallenge.WCNet.Commands.Concrete;
 
-[CommandKey("-l")]
+[CommandKey("l")]
 internal class LineCountCommand : ICommand
 {
 	public String Execute(String filepath)

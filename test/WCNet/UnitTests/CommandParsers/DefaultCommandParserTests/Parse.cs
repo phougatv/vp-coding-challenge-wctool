@@ -113,19 +113,19 @@ public class Parse
     {
         //Arrange
         var tempPath = Path.GetTempPath();
-        var filePath = CreateTestFile("testfile.txt", "Line1\nLine2\nLine3");
-        var args = new String[] { "-c", "testfile.txt" };
-        var filename = args[1];
-        var mockedOptions = Substitute.For<IOptions<ParserOptions>>();
-        mockedOptions.Value.Returns(new ParserOptions
+        var command = "c";
+        var filename = "testfile.txt";
+        var args = new String[] { "-c", filename };
+        var stubOptions = Substitute.For<IOptions<ParserOptions>>();
+        stubOptions.Value.Returns(new ParserOptions
         {
             CommandExpression = "^(-[cl])",
             AllowedFileExtension = ".txt",
             Directory = tempPath
         });
 
-        var parser = new DefaultCommandParser(mockedOptions);
-        var expectedResult = CommandArgument.Create(args[0], Path.Combine(tempPath, args[1]));
+        var parser = new DefaultCommandParser(stubOptions);
+        var expectedResult = CommandArgument.Create(command, Path.Combine(tempPath, filename));
 
         //Act
         var actualResult = parser.Parse(args);
@@ -136,14 +136,4 @@ public class Parse
         actualResult.IsSuccess.Should().BeTrue();
         actualResult.Value.Should().Be(expectedResult);
     }
-
-    #region Private Methods
-    private String CreateTestFile(String filename, String content)
-    {
-        var filepath = Path.Combine(Path.GetTempPath(), filename);
-        File.WriteAllText(filepath, content);
-
-        return filepath;
-    }
-    #endregion Private Methods
 }

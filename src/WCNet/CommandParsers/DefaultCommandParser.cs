@@ -35,7 +35,9 @@ internal class DefaultCommandParser : ICommandParser
 			return Result<CommandArgument>.Fail(FileNotFoundError.Create(filename));
 		}
 
-		return Result<CommandArgument>.Ok(CommandArgument.Create(commandValue, filepath));
+        commandValue = commandValue.Replace("-", "");
+
+        return Result<CommandArgument>.Ok(CommandArgument.Create(commandValue, filepath));
 	}
 
 	#region Private Methods

@@ -2,9 +2,14 @@
 
 internal sealed class CommandKeyAttribute : Attribute
 {
-	public String Key { get; }
+	public CommandKey Key { get; }
 
-	public CommandKeyAttribute(String key)
+    public CommandKeyAttribute(String key)
+        : this((CommandKey)key)
+    {
+    }
+
+	public CommandKeyAttribute(CommandKey key)
 	{
 		Key = key;
 	}

@@ -15,7 +15,7 @@ The key objectives of this project are (for more details visit [here](https://co
 - [FluentAssertions](https://fluentassertions.com/)
 
 ## Features
-### Source
+### Source Code
   - [x] **Byte count (`-c`)**: Counts the number of bytes in a file.
   - [x] **Line count (`-l`)**: Counts the number of lines in a file.
   - [ ] **Word count (`-w`)**: Counts the number of words in a file.
@@ -60,4 +60,33 @@ vp-coding-challenge-wcnet/
 
 ## How to?
 ### Add a new command
-### Register a new command
+- Create a class in **Commands > Concrete** directory/folder, with prefix `Command` and add `CommandKeyAttribute` to it.
+  ```
+  [CommandKey("x")]
+  internal sealed class TestCommand : ICommand
+  {
+  	public String Execute (String filepath) => throw new NotImplementedException();
+  }
+  ```
+- Add the same command-key (`x` in this case) in `ParserOptions` of `appsettings.json` as follows:
+  ```
+  //before
+  {
+  	"ParserOptions": {
+    	"CommandExpression": "^(-[clwm])"
+  	}
+	}
+
+  //after
+  {
+  	"ParserOptions": {
+  		"CommandExpression": "^(-[clwmx])"
+  	}
+  }
+  ```
+### Run your newly added command
+- Modify `launchSettings.json` as follows:
+  ```
+  "commandLineArgs": "-<your_command-key> <filename>.txt"
+  ```
+- Build and run the application.

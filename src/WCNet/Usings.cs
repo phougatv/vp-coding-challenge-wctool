@@ -4,6 +4,7 @@ global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Options;
 global using System.Reflection;
 global using System.Runtime.CompilerServices;
+global using System.Text;
 global using System.Text.RegularExpressions;
 global using VP.CodingChallenge.WCNet.Attributes;
 global using VP.CodingChallenge.WCNet.CommandErrors;

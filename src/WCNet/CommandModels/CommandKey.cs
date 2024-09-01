@@ -66,4 +66,13 @@ public readonly struct CommandKey : IEquatable<CommandKey>
     /// <param name="right">The <see cref="CommandKey"/> instance on the right</param>
     /// <returns>True if the two specified <see cref="CommandKey"/> instances are not equal; otherwise, false.</returns>
     public static Boolean operator !=(CommandKey left, CommandKey right) => !left.Equals(right);
+
+    public Boolean IsByteCountKey() => IsOrdinalIgnoreCaseComparisonEqual("c");
+    public Boolean IsCharacterCountKey() => IsOrdinalIgnoreCaseComparisonEqual("m");
+    public Boolean IsLineCountKey() => IsOrdinalIgnoreCaseComparisonEqual("l");
+    public Boolean IsWordCountKey() => IsOrdinalIgnoreCaseComparisonEqual("w");
+
+    #region Private Methods
+    private Boolean IsOrdinalIgnoreCaseComparisonEqual(String key) => Value.Equals(key, StringComparison.OrdinalIgnoreCase);
+    #endregion Private Methods
 }

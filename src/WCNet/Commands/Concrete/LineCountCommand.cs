@@ -3,7 +3,7 @@
 [CommandKey("l")]
 internal class LineCountCommand : ICommand
 {
-	public String Execute(String filepath)
+	public Result<UInt64> Execute(String filepath)
 	{
 		var fileInfo = new FileInfo(filepath);
 		var lineCount = 0UL;
@@ -13,7 +13,6 @@ internal class LineCountCommand : ICommand
 			lineCount++;
 		}
 
-		var filename = Path.GetFileName(filepath);
-		return $"{lineCount} {filename}";
+		return Result<UInt64>.Ok(lineCount);
 	}
 }

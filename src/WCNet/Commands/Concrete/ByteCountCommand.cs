@@ -3,10 +3,9 @@
 [CommandKey("c")]
 internal class ByteCountCommand : ICommand
 {
-	public String Execute(String filepath)
-	{
-		var fileInfo = new FileInfo(filepath);
-		var filename = Path.GetFileName(filepath);
-		return $"{fileInfo.Length} {filename}";
-	}
+    public Result<UInt64> Execute(String filepath)
+    {
+        var fileInfo = new FileInfo(filepath);
+        return Result<UInt64>.Ok((UInt64)fileInfo.Length);
+    }
 }

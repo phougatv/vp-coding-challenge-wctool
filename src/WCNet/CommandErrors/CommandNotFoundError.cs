@@ -10,6 +10,9 @@ internal class CommandNotFoundError : Error
         _message = message;
 	}
 
+    internal static CommandNotFoundError Create()
+        => new CommandNotFoundError($"Command not found.");
+
 	internal static CommandNotFoundError Create(CommandKey command)
 		=> new CommandNotFoundError($"Command: \"{command}\" not found.");
 

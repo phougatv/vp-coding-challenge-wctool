@@ -18,8 +18,8 @@ The key objectives of this project are (for more details visit [here](https://co
 ### Source Code
   - [x] **Byte count (`-c`)**: Counts the number of bytes in a file.
   - [x] **Line count (`-l`)**: Counts the number of lines in a file.
-  - [ ] **Word count (`-w`)**: Counts the number of words in a file.
-  - [ ] **Character count (`-m`)**: Counts the number of characters in a file. If the current locale does not support multibyte characters this will match the `-c` option.
+  - [x] **Word count (`-w`)**: Counts the number of words in a file.
+  - [x] **Character count (`-m`)**: Counts the number of characters in a file. If the current locale does not support multibyte characters this will match the `-c` option.
   - [ ] **No command/Default option**: It is an equivalent to `-c`, `-l`, and `-w` options.
   - [x] **.editorconfig**: Enforces consistent coding styles and formatting across the project, ensuring adherence to best practices and reducing code review overhead.
   - [x] **Flexible dependency injection**: Utilizes .NET 8 Dependency Injection with Keyed Services for scalable and maintainable command resolution.

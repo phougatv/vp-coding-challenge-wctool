@@ -2,5 +2,6 @@
 
 internal class CommandNotFound : ICommand
 {
-	public String Execute(String filepath) => $"Command not found";
+	public Result<UInt64> Execute(String filepath)
+        => Result<UInt64>.Fail(CommandNotFoundError.Create());
 }

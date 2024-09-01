@@ -3,7 +3,7 @@
 [CommandKey("m")]
 internal class CharacterCountCommand : ICommand
 {
-    public String Execute(String filepath)
+    public Result<UInt64> Execute(String filepath)
     {
         var fileInfo = new FileInfo(filepath);
         var characterCount = 0UL;
@@ -15,6 +15,6 @@ internal class CharacterCountCommand : ICommand
             line = streamReader.ReadLine();
         }
 
-        return $"{characterCount} {Path.GetFileName(filepath)}";
+        return Result<UInt64>.Ok(characterCount);
     }
 }

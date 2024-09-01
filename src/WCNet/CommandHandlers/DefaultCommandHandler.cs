@@ -14,13 +14,10 @@ internal class DefaultCommandHandler : CommandHandlerBase
     protected override Result<Message> Handle(CommandArgument commandArgument)
 	{
         var command = _commandResolver.Resolve(commandArgument.CommandKey);
-        var text = command.Execute(commandArgument.Filepath);
-        if (String.IsNullOrEmpty(text))
-        {
-            return Result<Message>.Fail(CommandExecutionError.Create(commandArgument.CommandKey));
-        }
+        var filename = Path.GetFileName(commandArgument.Filepath);
+        var countResult = command.Execute(commandArgument.Filepath);
 
-        return Result<Message>.Ok(text);
+        return Result<Message>.Ok($"{countResult.Value} {filename}");
 	}
 
     protected override Result PostHandle(Message message)

@@ -6,11 +6,11 @@ public class ToString
     public void ReturnsStringContainingCommandKeyAndFilepath()
     {
         //Arrange
-        var commandKey = new CommandKey("-c");
+        var commandKeys = new CommandKey[] { "-c" };
         var filename = "filename.txt";
         var filepath = Path.Combine($".\\filepath\\{filename}");
-        var commandArgs = CommandArgument.Create(commandKey, filepath);
-        var expected = $"Command: {commandKey}, Filename: \"{filename}\"";
+        var commandArgs = CommandArgument.Create(commandKeys, filepath);
+        var expected = $"Command: {commandKeys}, Filename: \"{filename}\"";
 
         //Act
         var actual = commandArgs.ToString();

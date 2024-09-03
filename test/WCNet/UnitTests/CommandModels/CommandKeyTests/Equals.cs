@@ -7,8 +7,8 @@ public class Equals
     public void ReturnsFalse_WhenInstancesAreNotEqual()
     {
         //Arrange
-        var other = new CommandKey("-c");
-        var current = new CommandKey("-w");
+        var other = new CommandKey("c");
+        var current = new CommandKey("w");
 
         //Assert
         var actual = current.Equals(other);
@@ -21,8 +21,8 @@ public class Equals
     public void ReturnsTrue_WhenInstancesAreEqual()
     {
         //Arrange
-        var other = new CommandKey("-c");
-        var current = new CommandKey("-c");
+        var other = new CommandKey("c");
+        var current = new CommandKey("c");
 
         //Assert
         var actual = current.Equals(other);
@@ -38,7 +38,7 @@ public class Equals
     {
         //Arrange
         var obj = (Object?)null;
-        var current = new CommandKey("-c");
+        var current = new CommandKey("c");
 
         //Act
         var actual = current.Equals(obj);
@@ -51,8 +51,8 @@ public class Equals
     public void ReturnsFalse_WhenObjectIsNotNullButIsNotOfTypeCommandKey()
     {
         //Arrange
-        var obj = (Object?)CommandArgument.Create("-c", "fake-filepath");
-        var current = new CommandKey("-c");
+        var obj = (Object?)CommandArgument.Create(["c"], "fake-filepath");
+        var current = new CommandKey("c");
 
         //Act
         var actual = current.Equals(obj);
@@ -65,8 +65,8 @@ public class Equals
     public void ReturnsFalse_WhenObjectIsNotNullAndIsOfTypeCommandKeyButNotEqualToTheCurrentInstance()
     {
         //Arrange
-        var obj = (Object?)new CommandKey("-w");
-        var current = new CommandKey("-c");
+        var obj = (Object?)new CommandKey("w");
+        var current = new CommandKey("c");
 
         //Act
         var actual = current.Equals(obj);
@@ -79,8 +79,8 @@ public class Equals
     public void ReturnsTrue_WhenObjectIsNotNullAndIsOfTypeCommandKeyAndIsEqualToTheCurrentInstance()
     {
         //Arrange
-        var obj = (Object?)new CommandKey("-c");
-        var current = new CommandKey("-c");
+        var obj = (Object?)new CommandKey("c");
+        var current = new CommandKey("c");
 
         //Act
         var actual = current.Equals(obj);
@@ -97,7 +97,7 @@ public class Equals
     {
         //Arrange
         var left = (CommandKey)null!;
-        var right = new CommandKey("-c");
+        var right = new CommandKey("c");
 
         //Act
         var actual = left == right;
@@ -110,7 +110,7 @@ public class Equals
     public void ReturnsFalse_WhenOperandRightIsNull()
     {
         //Arrange
-        var left = new CommandKey("-c");
+        var left = new CommandKey("c");
         var right = (CommandKey)null!;
 
         //Act
@@ -124,8 +124,8 @@ public class Equals
     public void ReturnsFalse_WhenOperandsAreNotNullAndNotEqual()
     {
         //Arrange
-        var left = new CommandKey("-c");
-        var right = new CommandKey("-w");
+        var left = new CommandKey("c");
+        var right = new CommandKey("w");
 
         //Act
         var actual = left == right;
@@ -152,8 +152,8 @@ public class Equals
     public void ReturnsTrue_WhenOperandsAreNotNullAndEqual()
     {
         //Arrange
-        var left = new CommandKey("-c");
-        var right = new CommandKey("-c");
+        var left = new CommandKey("c");
+        var right = new CommandKey("c");
 
         //Act
         var actual = left == right;

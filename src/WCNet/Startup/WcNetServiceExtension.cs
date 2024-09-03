@@ -54,16 +54,27 @@ internal static class WCNetServiceExtension
             });
 
     private static IServiceCollection AddWCNetCommandParser(this IServiceCollection services, IConfiguration configuration)
-    {
-        services.AddScoped<ICommandParser, DefaultCommandParser>();
+        => services
+            .AddScoped<ICommandParser, DefaultCommandParser>()
+            .AddWcNetParserOptions (configuration);
 
+    private static IServiceCollection AddWcNetParserOptions(this IServiceCollection services, IConfiguration configuration)
+    {
         var section = configuration.GetSection(nameof(ParserOptions));
         if (section is null)
         {
             return services;
         }
 
-        return services.Configure<ParserOptions>(section);
+        return services
+            .Configure<ParserOptions>(section)
+            .PostConfigure<ParserOptions>(options =>
+            {
+                if (options.DefaultCommandsRaw is not null && options.DefaultCommandsRaw.Length > 0)
+                {
+                    options.DefaultCommands = options.DefaultCommandsRaw.Select(dc => new CommandKey(dc)).ToArray();
+                }
+            });
     }
 
     private static IServiceCollection AddWCNetCommandHandler(this IServiceCollection services)

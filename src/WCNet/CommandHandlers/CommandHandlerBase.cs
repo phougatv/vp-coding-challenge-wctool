@@ -8,7 +8,7 @@ public abstract class CommandHandlerBase
 
     public void Main(String[] args)
     {
-        var commandKey = new CommandKey();
+        CommandKey[] keys = [];
 
         try
         {
@@ -19,7 +19,7 @@ public abstract class CommandHandlerBase
                 return;
             }
 
-            commandKey = argumentResult.Value.CommandKey;
+            keys = argumentResult.Value.CommandKeys;
             var messageResult = Handle(argumentResult.Value);
             if (messageResult.IsFailed)
             {
@@ -31,7 +31,7 @@ public abstract class CommandHandlerBase
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error executing command: {commandKey}: {ex.Message}");
+            Console.WriteLine($"Error executing command: {String.Join(',', keys)}: {ex.Message}");
         }
     }
 }

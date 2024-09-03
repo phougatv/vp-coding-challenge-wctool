@@ -6,7 +6,7 @@ public class GetHashCode
     public void ReturnsSameValue_WhenSameObjectIsCalledMultipleTimes()
     {
         //Arrange
-        var commandArgs = CommandArgument.Create("-c", "filepath");
+        var commandArgs = CommandArgument.Create(["c"], "filepath");
         var hash_1 = commandArgs.GetHashCode();
         var hash_2 = commandArgs.GetHashCode();
 
@@ -21,8 +21,8 @@ public class GetHashCode
     public void ReturnsSameValue_ForEqualObjects()
     {
         //Arrange
-        var commandArgs_1 = CommandArgument.Create("-c", "filepath");
-        var commandArgs_2 = CommandArgument.Create("-c", "filepath");
+        var commandArgs_1 = CommandArgument.Create(["c"], "filepath");
+        var commandArgs_2 = CommandArgument.Create(["c"], "filepath");
 
         //Act
         var hash_1 = commandArgs_1.GetHashCode();
@@ -36,8 +36,8 @@ public class GetHashCode
     public void ReturnsDifferentValue_WhenCommandKeyMatchesButFilepathDoesNotMatch()
     {
         //Arrange
-        var commandArgs_1 = CommandArgument.Create("-c", "filepath");
-        var commandArgs_2 = CommandArgument.Create("-c", "fake-filepath");
+        var commandArgs_1 = CommandArgument.Create(["c"], "filepath");
+        var commandArgs_2 = CommandArgument.Create(["c"], "fake-filepath");
 
         //Act
         var hash_1 = commandArgs_1.GetHashCode();
@@ -51,8 +51,8 @@ public class GetHashCode
     public void ReturnsDifferentValue_WhenFilepathMatchesButCommandKeyDoesNotMatch()
     {
         //Arrange
-        var commandArgs_1 = CommandArgument.Create("-c", "filepath");
-        var commandArgs_2 = CommandArgument.Create("-l", "filepath");
+        var commandArgs_1 = CommandArgument.Create(["c"], "filepath");
+        var commandArgs_2 = CommandArgument.Create(["l"], "filepath");
 
         //Act
         var hash_1 = commandArgs_1.GetHashCode();

@@ -33,7 +33,7 @@ public class Main
         var commandKey = new CommandKey("-w");
         var args = new String[] { "-c", "filename.txt" };
         var preHandleResult = Result<CommandArgument>.Fail(CommandNotFoundError.Create(commandKey));
-        var commandArgs = CommandArgument.Create(commandKey, "filename.txt");
+        var commandArgs = CommandArgument.Create([commandKey], "filename.txt");
         var messageResult = Result<Message>.Ok(new Message("Success"));
         var message = messageResult.Value;
         var testHandler = new TestCommandHandler(
@@ -57,7 +57,7 @@ public class Main
         //Arrange
         var commandKey = new CommandKey("-c");
         var args = new String[] { "-c", "filename.txt" };
-        var commandArgs = CommandArgument.Create(commandKey, "filename.txt");
+        var commandArgs = CommandArgument.Create([commandKey], "filename.txt");
         var preHandleResult = Result<CommandArgument>.Ok(commandArgs);
         var message = new Message("Success");
         var messageResult = Result<Message>.Fail(CommandExecutionError.Create(commandKey));
@@ -82,7 +82,7 @@ public class Main
         //Arrange
         var commandKey = new CommandKey("-c");
         var args = new String[] { "-c", "filename.txt" };
-        var commandArgs = CommandArgument.Create(commandKey, "filename.txt");
+        var commandArgs = CommandArgument.Create([commandKey], "filename.txt");
         var preHandleResult = Result<CommandArgument>.Ok(commandArgs);
         var message = new Message("342190 filename.txt");
         var messageResult = Result<Message>.Ok(message);

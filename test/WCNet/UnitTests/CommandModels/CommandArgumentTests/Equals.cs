@@ -7,8 +7,8 @@ public class Equals
     public void ReturnsFalse_WhenInstancesAreNotEqual()
     {
         //Arrange
-        var other = CommandArgument.Create("-c", "filepath");
-        var current = CommandArgument.Create("-c", "fake-filepath");
+        var other = CommandArgument.Create(["c"], "filepath");
+        var current = CommandArgument.Create(["c"], "fake-filepath");
 
         //Assert
         var actual = current.Equals(other);
@@ -21,8 +21,8 @@ public class Equals
     public void ReturnsTrue_WhenInstancesAreEqual()
     {
         //Arrange
-        var other = CommandArgument.Create("-c", "filepath");
-        var current = CommandArgument.Create("-c", "filepath");
+        var other = CommandArgument.Create(["c"], "filepath");
+        var current = CommandArgument.Create(["c"], "filepath");
 
         //Assert
         var actual = current.Equals(other);
@@ -38,7 +38,7 @@ public class Equals
     {
         //Arrange
         var obj = (Object?)null;
-        var current = CommandArgument.Create("-c", "filepath");
+        var current = CommandArgument.Create(["c"], "filepath");
 
         //Act
         var actual = current.Equals(obj);
@@ -52,7 +52,7 @@ public class Equals
     {
         //Arrange
         var obj = (Object?)new CommandKey("-c");
-        var current = CommandArgument.Create("-c", "filepath");
+        var current = CommandArgument.Create(["c"], "filepath");
 
         //Act
         var actual = current.Equals(obj);
@@ -65,8 +65,8 @@ public class Equals
     public void ReturnsFalse_WhenObjectIsOfTypeCommandArgumentButOneOfThePropertiesDoesNotMatch()
     {
         //Arrange
-        var obj = (Object?)CommandArgument.Create("-c", "fake-filepath");
-        var current = CommandArgument.Create("-c", "filepath");
+        var obj = (Object?)CommandArgument.Create(["c"], "fake-filepath");
+        var current = CommandArgument.Create(["c"], "filepath");
 
         //Act
         var actual = current.Equals(obj);
@@ -79,8 +79,8 @@ public class Equals
     public void ReturnsTrue_WhenObjectIsOfTypeCommandArgumentAndAllThePropertiesMatch()
     {
         //Arrange
-        var obj = (Object?)CommandArgument.Create("-c", "filepath");
-        var current = CommandArgument.Create("-c", "filepath");
+        var obj = (Object?)CommandArgument.Create(["c"], "filepath");
+        var current = CommandArgument.Create(["c"], "filepath");
 
         //Act
         var actual = current.Equals(obj);
@@ -97,7 +97,7 @@ public class Equals
     {
         //Arrange
         var left = (CommandArgument)null!;
-        var right = CommandArgument.Create("-c", "filepath");
+        var right = CommandArgument.Create(["c"], "filepath");
 
         //Act
         var actual = left == right;
@@ -110,7 +110,7 @@ public class Equals
     public void ReturnsFalse_WhenOperandRightIsNull()
     {
         //Arrange
-        var left = CommandArgument.Create("-c", "filepath");
+        var left = CommandArgument.Create(["c"], "filepath");
         var right = (CommandArgument)null!;
 
         //Act
@@ -124,8 +124,8 @@ public class Equals
     public void ReturnsFalse_WhenCommandKeyMatchesButFilepathDoesNot()
     {
         //Arrange
-        var left = CommandArgument.Create("-c", "filepath");
-        var right = CommandArgument.Create("-c", "fake-filepath");
+        var left = CommandArgument.Create(["c"], "filepath");
+        var right = CommandArgument.Create(["c"], "fake-filepath");
 
         //Act
         var actual = left == right;
@@ -138,8 +138,8 @@ public class Equals
     public void ReturnsFalse_WhenFilepathMatchesButCommandKeyDoesNot()
     {
         //Arrange
-        var left = CommandArgument.Create("-c", "filepath");
-        var right = CommandArgument.Create("-w", "filepath");
+        var left = CommandArgument.Create(["c"], "filepath");
+        var right = CommandArgument.Create(["w"], "filepath");
 
         //Act
         var actual = left == right;
@@ -166,8 +166,8 @@ public class Equals
     public void ReturnsTrue_WhenOperandsBothCommandKeyAndFilepathAreEqual()
     {
         //Arrange
-        var left = CommandArgument.Create("-c", "filepath");
-        var right = CommandArgument.Create("-c", "filepath");
+        var left = CommandArgument.Create(["c"], "filepath");
+        var right = CommandArgument.Create(["c"], "filepath");
 
         //Act
         var actual = left == right;

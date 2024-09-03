@@ -13,11 +13,18 @@ internal class DefaultCommandHandler : CommandHandlerBase
 
     protected override Result<Message> Handle(CommandArgument commandArgument)
 	{
-        var command = _commandResolver.Resolve(commandArgument.CommandKey);
-        var filename = Path.GetFileName(commandArgument.Filepath);
-        var countResult = command.Execute(commandArgument.Filepath);
+        var countResults = new List<Result<UInt64>>(commandArgument.CommandKeys.Length);
+        foreach (var key in commandArgument.CommandKeys)
+        {
+            var command = _commandResolver.Resolve(key);
+            var result = command.Execute(commandArgument.Filepath);
+            countResults.Add(result);
+        }
 
-        return Result<Message>.Ok($"{countResult.Value} {filename}");
+        var filename = Path.GetFileName(commandArgument.Filepath);
+        var countText = String.Join(' ', countResults.Select(r => r.Value));
+
+        return Result<Message>.Ok($"{countText} {filename}");
 	}
 
     protected override Result PostHandle(Message message)
@@ -25,5 +32,6 @@ internal class DefaultCommandHandler : CommandHandlerBase
         Console.WriteLine(message);
         return Result.Ok();
     }
+
     protected override Result<CommandArgument> PreHandle(String[] args) => _commandParser.Parse(args);
 }

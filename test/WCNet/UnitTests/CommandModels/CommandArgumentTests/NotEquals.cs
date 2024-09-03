@@ -6,8 +6,8 @@ public class NotEquals
     public void ReturnsFalse_WhenInstancesAreEqual()
     {
         //Arrange
-        var left = CommandArgument.Create("-c", "filepath");
-        var right = CommandArgument.Create("-c", "filepath");
+        var left = CommandArgument.Create(["c"], "filepath");
+        var right = CommandArgument.Create(["c"], "filepath");
 
         //Act
         var actual = left != right;
@@ -20,8 +20,8 @@ public class NotEquals
     public void ReturnsTrue_WhenInstancesAreNotEqual()
     {
         //Arrange
-        var left = CommandArgument.Create("-c", "filepath");
-        var right = CommandArgument.Create("-c", "fake-filepath");
+        var left = CommandArgument.Create(["c"], "filepath");
+        var right = CommandArgument.Create(["c"], "fake-filepath");
 
         //Act
         var actual = left != right;

@@ -51,7 +51,7 @@ public class Equals
     public void ReturnsFalse_WhenObjectIsNotNullButIsNotOfTypeMessage()
     {
         //Arrange
-        var obj = (Object?)CommandArgument.Create("-c", "fake-filepath");
+        var obj = (Object?)CommandArgument.Create(["c"], "fake-filepath");
         var current = new Message("message");
 
         //Act

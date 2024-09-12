@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "VP.CodingChallenge.WCNet": {
+      "commandName": "Project",
+      "commandLineArgs": "test.txt"
+    }
+  }
+}

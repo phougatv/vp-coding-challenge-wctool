@@ -16,10 +16,10 @@ internal class DefaultCommandParser
             return Result<CommandArgument>.Fail("Missing configuration");
         }
 
-        if (HasSingleItem(args))
-        {
-            return ParseToDefaultCommands(args, options);
-        }
+        //if (HasSingleItem(args))
+        //{
+        //    return ParseToDefaultCommands(args, options);
+        //}
 
         return ParseToSpecifiedCommands(args, options);
     }
@@ -30,23 +30,23 @@ internal class DefaultCommandParser
         options.DefaultCommands.Length == 0 ||
         String.IsNullOrEmpty(options.CommandExpression) ||
         String.IsNullOrEmpty(options.AllowedFileExtension);
-    private static Result<CommandArgument> ParseToDefaultCommands(String[] args, ParserOptions options)
-    {
-        var filename = args[^1];
-        var fileExtension = Path.GetExtension(filename);
-        var filepath = Path.Combine(options.Directory, filename);
-        if (!IsFileExtensionAllowed(fileExtension, options.AllowedFileExtension))
-        {
-            return Result<CommandArgument>.Fail(FileExtensionNotAllowedError.Create(Path.GetExtension(filename)));
-        }
+    //private static Result<CommandArgument> ParseToDefaultCommands(String[] args, ParserOptions options)
+    //{
+    //    var filename = args[^1];
+    //    var fileExtension = Path.GetExtension(filename);
+    //    var filepath = Path.Combine(options.Directory, filename);
+    //    if (!IsFileExtensionAllowed(fileExtension, options.AllowedFileExtension))
+    //    {
+    //        return Result<CommandArgument>.Fail(FileExtensionNotAllowedError.Create(Path.GetExtension(filename)));
+    //    }
 
-        if (FileDoesNotExists(filepath))
-        {
-            return Result<CommandArgument>.Fail(FileNotFoundError.Create(filename));
-        }
+    //    if (FileDoesNotExists(filepath))
+    //    {
+    //        return Result<CommandArgument>.Fail(FileNotFoundError.Create(filename));
+    //    }
 
-        return Result<CommandArgument>.Ok(CommandArgument.Create(options.DefaultCommands, filepath));
-    }
+    //    return Result<CommandArgument>.Ok(CommandArgument.Create(options.DefaultCommands, filepath));
+    //}
 
     private static Result<CommandArgument> ParseToSpecifiedCommands(String[] args, ParserOptions options)
     {
@@ -70,7 +70,7 @@ internal class DefaultCommandParser
             return Result<CommandArgument>.Fail(FileNotFoundError.Create(filename));
         }
 
-        var keys = new CommandKey[] { commandValue.Replace("-", "") };
+        var keys = new CommandKey(commandValue.Replace("-", ""));
         return Result<CommandArgument>.Ok(CommandArgument.Create(keys, filepath));
     }
 

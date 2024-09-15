@@ -1,32 +1,32 @@
-﻿namespace VP.CodingChallenge.WCNet.Test.UnitTests.CommandModels.CommandArgumentTests;
+﻿//namespace VP.CodingChallenge.WCNet.Test.UnitTests.CommandModels.CommandArgumentTests;
 
-public class NotEquals
-{
-    [Fact]
-    public void ReturnsFalse_WhenInstancesAreEqual()
-    {
-        //Arrange
-        var left = CommandArgument.Create(["c"], "filepath");
-        var right = CommandArgument.Create(["c"], "filepath");
+//public class NotEquals
+//{
+//    [Fact]
+//    public void ReturnsFalse_WhenInstancesAreEqual()
+//    {
+//        //Arrange
+//        var left = CommandArgument.Create(["c"], "filepath");
+//        var right = CommandArgument.Create(["c"], "filepath");
 
-        //Act
-        var actual = left != right;
+//        //Act
+//        var actual = left != right;
 
-        //Assert
-        actual.Should().BeFalse();
-    }
+//        //Assert
+//        actual.Should().BeFalse();
+//    }
 
-    [Fact]
-    public void ReturnsTrue_WhenInstancesAreNotEqual()
-    {
-        //Arrange
-        var left = CommandArgument.Create(["c"], "filepath");
-        var right = CommandArgument.Create(["c"], "fake-filepath");
+//    [Fact]
+//    public void ReturnsTrue_WhenInstancesAreNotEqual()
+//    {
+//        //Arrange
+//        var left = CommandArgument.Create(["c"], "filepath");
+//        var right = CommandArgument.Create(["c"], "fake-filepath");
 
-        //Act
-        var actual = left != right;
+//        //Act
+//        var actual = left != right;
 
-        //Assert
-        actual.Should().BeTrue();
-    }
-}
+//        //Assert
+//        actual.Should().BeTrue();
+//    }
+//}

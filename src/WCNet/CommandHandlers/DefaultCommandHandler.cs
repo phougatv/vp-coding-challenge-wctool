@@ -3,12 +3,12 @@
 internal class DefaultCommandHandler : CommandHandlerBase
 {
     private readonly ICommandResolver _commandResolver;
-    private readonly ICommandParser _commandParser;
+    //private readonly ICommandParser _commandParser;
 
-    public DefaultCommandHandler(ICommandResolver commandResolver, ICommandParser commandParser)
+    public DefaultCommandHandler(ICommandResolver commandResolver/*, ICommandParser commandParser*/)
 	{
 		_commandResolver = commandResolver;
-        _commandParser = commandParser;
+        //_commandParser = commandParser;
 	}
 
     protected override Result<Message> Handle(CommandArgument commandArgument)
@@ -33,5 +33,5 @@ internal class DefaultCommandHandler : CommandHandlerBase
         return Result.Ok();
     }
 
-    protected override Result<CommandArgument> PreHandle(String[] args) => _commandParser.Parse(args);
+    //protected override Result<CommandArgument> PreHandle(String[] args) => _commandParser.Parse(args);
 }

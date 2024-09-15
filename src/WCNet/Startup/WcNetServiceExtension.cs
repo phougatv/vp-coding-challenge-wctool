@@ -6,19 +6,18 @@ internal static class WCNetServiceExtension
     private static List<Type> _concreteCommandTypes = [];
     private static List<String> _allowedCommands = [];
 
-    internal static IServiceProvider BuildWCNetServiceProvider(this IServiceCollection services, IConfiguration configuration)
+    internal static IServiceProvider BuildWCNetServiceProvider(this IServiceCollection services)
     {
         InitializeConcreteCommandTypes();
         InitializeAllowedCommands();
 
-        return services.AddWCNet(configuration).BuildServiceProvider();
+        return services.AddWCNet().BuildServiceProvider();
     }
 
-    private static IServiceCollection AddWCNet(this IServiceCollection services, IConfiguration configuration)
+    private static IServiceCollection AddWCNet(this IServiceCollection services)
         => services
             .AddWCNetCommands()
             .AddWCNetCommandResolver()
-            .AddWCNetCommandParser(configuration)
             .AddWCNetCommandHandler();
 
     private static IServiceCollection AddWCNetCommands(this IServiceCollection services)
@@ -53,10 +52,10 @@ internal static class WCNetServiceExtension
                 return new DefaultCommandResolver(commandMap);
             });
 
-    private static IServiceCollection AddWCNetCommandParser(this IServiceCollection services, IConfiguration configuration)
-        => services
-            .AddScoped<ICommandParser, DefaultCommandParser>()
-            .AddWcNetParserOptions (configuration);
+    //private static IServiceCollection AddWCNetCommandParser(this IServiceCollection services, IConfiguration configuration)
+    //    => services
+    //        .AddScoped<ICommandParser, DefaultCommandParser>()
+    //        .AddWcNetParserOptions (configuration);
 
     private static IServiceCollection AddWcNetParserOptions(this IServiceCollection services, IConfiguration configuration)
     {

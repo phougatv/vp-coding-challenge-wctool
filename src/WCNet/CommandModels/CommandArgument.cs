@@ -8,7 +8,7 @@ public class CommandArgument : IEquatable<CommandArgument>
     /// <summary>
     /// Gets the <see cref="CommandModels.CommandKey"/>
     /// </summary>
-	public CommandKey[] CommandKeys { get; }
+    public CommandKey CommandKey { get; }
 
     /// <summary>
     /// Gets the Filepath
@@ -18,21 +18,21 @@ public class CommandArgument : IEquatable<CommandArgument>
     /// <summary>
     /// Initializes a new instance of <see cref="CommandArgument"/>.
     /// </summary>
-    /// <param name="commandKeys">The <see cref="CommandKey"/></param>
+    /// <param name="commandKey">The <see cref="CommandModels.CommandKey"/></param>
     /// <param name="filepath">The filepath</param>
-	private CommandArgument(CommandKey[] commandKeys, String filepath)
-	{
-		CommandKeys = commandKeys;
-		Filepath = filepath;
-	}
+    private CommandArgument(CommandKey commandKey, String filepath)
+    {
+        CommandKey = commandKey;
+        Filepath = filepath;
+    }
 
     /// <summary>
     /// Creates a new instance of <see cref="CommandArgument"/>.
     /// </summary>
-    /// <param name="CommandKeys">The <see cref="CommandKey"/></param>
+    /// <param name="CommandKeys">The <see cref="CommandModels.CommandKey"/></param>
     /// <param name="filepath">The filepath</param>
     /// <returns>An instance of <see cref="CommandArgument"/>.</returns>
-	public static CommandArgument Create(CommandKey[] commandKeys, String filepath) => new CommandArgument(commandKeys, filepath);
+    public static CommandArgument Create(CommandKey commandKey, String filepath) => new CommandArgument(commandKey, filepath);
 
     /// <summary>
     /// Determines whether the <paramref name="other"/> (<see cref="CommandArgument"/>) is equal to the current <see cref="CommandArgument"/>.
@@ -53,15 +53,13 @@ public class CommandArgument : IEquatable<CommandArgument>
     /// </summary>
     /// <returns>A hash code for the current <see cref="CommandArgument"/>.</returns>
 	public override Int32 GetHashCode()
-        => HashCode.Combine(
-            CommandKeys.Aggregate(0, (hash, key) => hash ^ key.GetHashCode()),
-            Filepath.GetHashCode());
+        => HashCode.Combine(CommandKey, Filepath);
 
     /// <summary>
     /// Gets the string representation of <see cref="CommandArgument"/>.
     /// </summary>
     /// <returns>The string representation of <see cref="CommandArgument"/>.</returns>
-	public override String ToString() => $"Command: {CommandKeys}, Filename: \"{Path.GetFileName(Filepath)}\"";
+	public override String ToString() => $"Command: {CommandKey}, Filename: \"{Path.GetFileName(Filepath)}\"";
 
     /// <summary>
     /// Determines whether two specified <see cref="CommandArgument"/> instances are equal.
@@ -70,19 +68,19 @@ public class CommandArgument : IEquatable<CommandArgument>
     /// <param name="right">The <see cref="CommandArgument"/> instance on the right</param>
     /// <returns>True if the two specified <see cref="CommandArgument"/> instances are equal; otherwise, false.</returns>
 	public static Boolean operator ==(CommandArgument? left, CommandArgument? right)
-	{
-		if (ReferenceEquals(left, right))
-		{
-			return true;
-		}
+    {
+        if (ReferenceEquals(left, right))
+        {
+            return true;
+        }
 
-		if (left is null || right is null || !left.CommandKeys.SequenceEqual(right.CommandKeys))
-		{
-			return false;
-		}
+        if (left is null || right is null)
+        {
+            return false;
+        }
 
-		return String.Equals(left.Filepath, right.Filepath, StringComparison.Ordinal);
-	}
+        return left.CommandKey == right.CommandKey && String.Equals(left.Filepath, right.Filepath, StringComparison.Ordinal);
+    }
 
     /// <summary>
     /// Determines whether two specified <see cref="CommandArgument"/> instances are not equal.

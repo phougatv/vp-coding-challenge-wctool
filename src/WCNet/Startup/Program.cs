@@ -2,21 +2,16 @@
 
 public class Program
 {
-	private static readonly IServiceCollection ServiceCollection = new ServiceCollection();
+    private static readonly IServiceCollection ServiceCollection = new ServiceCollection();
     private static readonly IConfigurationBuilder ConfigurationBuilder = new ConfigurationBuilder();
 
-	static void Main(String[] args)
-	{
+    static void Main(String[] args)
+    {
         try
         {
             //Build WcNet configuration
             var configuration = ConfigurationBuilder.BuildWCNetConfiguration();
-            var options = configuration.GetSection(nameof(ParserOptions)).Get<ParserOptions>();
-            if (options is not null && options.DefaultCommandsRaw.Length > 0)
-            {
-                options.DefaultCommands = options.DefaultCommandsRaw.Select(dc => new CommandKey(dc)).ToArray();
-            }
-
+            var options = configuration.GetParserOptions();
             var commandRequestResult = DefaultCommandParser.Parse(args, options);
             if (commandRequestResult.IsFailed)
             {
@@ -34,5 +29,5 @@ public class Program
         {
             Console.WriteLine($"Application terminated. Error: {ex.Message}");
         }
-	}
+    }
 }

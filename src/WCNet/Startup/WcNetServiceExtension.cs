@@ -52,11 +52,6 @@ internal static class WCNetServiceExtension
                 return new DefaultCommandResolver(commandMap);
             });
 
-    //private static IServiceCollection AddWCNetCommandParser(this IServiceCollection services, IConfiguration configuration)
-    //    => services
-    //        .AddScoped<ICommandParser, DefaultCommandParser>()
-    //        .AddWcNetParserOptions (configuration);
-
     private static IServiceCollection AddWcNetParserOptions(this IServiceCollection services, IConfiguration configuration)
     {
         var section = configuration.GetSection(nameof(ParserOptions));

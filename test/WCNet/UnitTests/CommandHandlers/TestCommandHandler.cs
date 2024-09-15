@@ -18,5 +18,5 @@ internal class TestCommandHandler : CommandHandlerBase
 
     protected override Result<Message> Handle(CommandArgument commandArgument) => _handle(commandArgument);
     protected override Result PostHandle(Message message) => _postHandle(message);
-    protected override Result<CommandArgument> PreHandle(String[] args) => _preHandle(args);
+    //protected override Result<CommandArgument> PreHandle(String[] args) => _preHandle(args);
 }

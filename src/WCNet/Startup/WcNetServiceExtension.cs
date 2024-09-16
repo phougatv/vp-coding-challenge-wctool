@@ -9,6 +9,7 @@ internal static class WCNetServiceExtension
         => services
             .AddWCNetCommandFactories()
             .AddWCNetCommandResolver()
+            .AddWCNetCommandInvoker()
             .AddWCNetCommandHandler();
 
     private static IServiceCollection AddWCNetCommandFactories(this IServiceCollection services)
@@ -35,8 +36,11 @@ internal static class WCNetServiceExtension
     }
 
     private static IServiceCollection AddWCNetCommandResolver(this IServiceCollection services)
-        => services.AddScoped<ICommandResolver, DefaultCommandResolver>();
+        => services.AddSingleton<ICommandResolver, DefaultCommandResolver>();
+
+    private static IServiceCollection AddWCNetCommandInvoker(this IServiceCollection services)
+        => services.AddSingleton<ICommandInvoker, DefaultCommandInvoker>();
 
     private static IServiceCollection AddWCNetCommandHandler(this IServiceCollection services)
-        => services.AddScoped<CommandHandlerBase, DefaultCommandHandler>();
+        => services.AddSingleton<CommandHandlerBase, DefaultCommandHandler>();
 }

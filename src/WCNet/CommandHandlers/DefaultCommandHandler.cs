@@ -11,16 +11,8 @@ internal class DefaultCommandHandler : CommandHandlerBase
 
     protected override Result<Message> Handle(CommandArgument commandArgument)
 	{
-        //var countResults = new List<Result<UInt64>>(commandArgument.CommandKey.Length);
-        //foreach (var key in commandArgument.CommandKey)
-        //{
-        //    var command = _commandResolver.Resolve(key);
-        //    var result = command.Execute(commandArgument.Filepath);
-        //    countResults.Add(result);
-        //}
-
-        var command = _commandResolver.Resolve(commandArgument.CommandKey);
-        var countResult = command.Execute(commandArgument.Filepath);
+        var command = _commandResolver.ResolveCommand(commandArgument);
+        var countResult = command.Execute();
         var filename = Path.GetFileName(commandArgument.Filepath);
 
         return Result<Message>.Ok($"{countResult.Value} {filename}");
@@ -31,6 +23,4 @@ internal class DefaultCommandHandler : CommandHandlerBase
         Console.WriteLine(message);
         return Result.Ok();
     }
-
-    //protected override Result<CommandArgument> PreHandle(String[] args) => _commandParser.Parse(args);
 }

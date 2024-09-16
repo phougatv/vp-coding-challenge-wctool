@@ -3,9 +3,16 @@
 [CommandKey("l")]
 internal class LineCountCommand : ICommand
 {
-	public Result<UInt64> Execute(String filepath)
+    private readonly String _filepath;
+
+    public LineCountCommand(String filepath)
+    {
+        _filepath = filepath;
+    }
+
+    public Result<UInt64> Execute()
 	{
-		var fileInfo = new FileInfo(filepath);
+		var fileInfo = new FileInfo(_filepath);
 		var lineCount = 0UL;
 		using var streamReader = new StreamReader(fileInfo.FullName);
 		while (streamReader.ReadLine() != null)

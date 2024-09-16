@@ -4,18 +4,19 @@
 internal class WordCountCommand : ICommand
 {
     private readonly String _filepath;
+    private readonly IOutput _output;
 
-    public WordCountCommand(String filepath)
+    public WordCountCommand(String filepath, IOutput output)
     {
         _filepath = filepath;
+        _output = output;
     }
 
-    public Result<UInt64> Execute()
+    public void Execute()
     {
         var content = File.ReadAllText(_filepath);
         var pattern = @"\b\w+\b";
         var matchCollection = Regex.Matches(content, pattern);
-
-        return Result<UInt64>.Ok((UInt64)matchCollection.Count);
+        _output.Sink(matchCollection.Count, Path.GetFileName(_filepath));
     }
 }

@@ -2,6 +2,13 @@
 
 internal class CommandNotFound : ICommand
 {
-	public Result<UInt64> Execute()
-        => Result<UInt64>.Fail(CommandNotFoundError.Create());
+    private readonly IOutput _output;
+
+    public CommandNotFound(IOutput output)
+    {
+        _output = output;
+    }
+
+	public void Execute()
+        => _output.Sink(CommandNotFoundError.Create().ToString());
 }

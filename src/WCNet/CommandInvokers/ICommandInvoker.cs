@@ -3,5 +3,5 @@
 internal interface ICommandInvoker
 {
     void SetCommand(ICommand command);
-    Result<UInt64> InvokeCommand();
+    void InvokeCommand();
 }

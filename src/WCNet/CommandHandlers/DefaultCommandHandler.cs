@@ -15,11 +15,9 @@ internal class DefaultCommandHandler : CommandHandlerBase
 	{
         var command = _commandResolver.ResolveCommand(commandArgument);
         _invoker.SetCommand(command);
+        _invoker.InvokeCommand();
 
-        var countResult = _invoker.InvokeCommand();
-        var filename = Path.GetFileName(commandArgument.Filepath);
-
-        return Result<Message>.Ok($"{countResult.Value} {filename}");
+        return Result<Message>.Ok($"Command executed successfully.");
 	}
 
     protected override Result PostHandle(Message message)

@@ -4,24 +4,26 @@
 internal class CharacterCountCommand : ICommand
 {
     private readonly String _filepath;
+    private readonly IOutput _output;
 
-    public CharacterCountCommand(String filepath)
+    public CharacterCountCommand(String filepath, IOutput output)
     {
         _filepath = filepath;
+        _output = output;
     }
 
-    public Result<UInt64> Execute()
+    public void Execute()
     {
         var fileInfo = new FileInfo(_filepath);
-        var characterCount = 0UL;
+        var characterCount = 0L;
         using var streamReader = new StreamReader(fileInfo.FullName);
         var line = streamReader.ReadLine();
         while (line != null)
         {
-            characterCount += (UInt64)line.Length;
+            characterCount += line.Length;
             line = streamReader.ReadLine();
         }
 
-        return Result<UInt64>.Ok(characterCount);
+        _output.Sink(characterCount, fileInfo.Name);
     }
 }

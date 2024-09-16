@@ -7,6 +7,7 @@ internal static class WCNetServiceExtension
 
     private static IServiceCollection AddWCNet(this IServiceCollection services)
         => services
+            .AddWCNetOutput()
             .AddWCNetCommandFactories()
             .AddWCNetCommandResolver()
             .AddWCNetCommandInvoker()
@@ -29,11 +30,15 @@ internal static class WCNetServiceExtension
                 commandTypeMap.Add(commandKeyAttribute.Key, type);
             }
 
-            return new CountCommandFactory(commandTypeMap);
+            var output = provider.GetRequiredService<IOutput>();
+            return new CountCommandFactory(commandTypeMap, output);
         });
 
         return services;
     }
+
+    private static IServiceCollection AddWCNetOutput(this IServiceCollection services)
+        => services.AddSingleton<IOutput, ConsoleOutput>();
 
     private static IServiceCollection AddWCNetCommandResolver(this IServiceCollection services)
         => services.AddSingleton<ICommandResolver, DefaultCommandResolver>();

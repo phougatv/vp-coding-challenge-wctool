@@ -3,5 +3,5 @@ namespace VP.CodingChallenge.WCNet.Commands;
 
 internal interface ICommand
 {
-	Result<UInt64> Execute();
+	void Execute();
 }

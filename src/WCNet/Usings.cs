@@ -17,3 +17,4 @@ global using VP.CodingChallenge.WCNet.Commands;
 global using VP.CodingChallenge.WCNet.Commands.Concrete;
 global using VP.CodingChallenge.WCNet.Configurations;
 global using VP.CodingChallenge.WCNet.Startup;
+global using VP.CodingChallenge.WCNet.Sinks;

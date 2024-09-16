@@ -2,20 +2,15 @@
 
 internal class DefaultCommandResolver : ICommandResolver
 {
-	private readonly IDictionary<CommandKey, ICommand> _commandMap;
+	private readonly ICommandFactory _factory;
 
-	public DefaultCommandResolver(IDictionary<CommandKey, ICommand> commandMap)
+	public DefaultCommandResolver(ICommandFactory factory)
 	{
-		_commandMap = commandMap;
+		_factory = factory;
 	}
 
-	public ICommand Resolve(CommandKey commandKey)
-	{
-		if (_commandMap.TryGetValue(commandKey, out var command))
-		{
-			return command;
-		}
-
-		return new CommandNotFound();
-	}
+    public ICommand ResolveCommand(CommandArgument request)
+    {
+        return _factory.CreateCommand(request);
+    }
 }

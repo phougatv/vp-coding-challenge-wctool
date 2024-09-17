@@ -22,7 +22,7 @@ internal static class WCNetServiceExtension
             .GetTypes()
             .Where(type => typeof(ICommand).IsAssignableFrom(type) && !type.IsAbstract && type.IsClass)
             .ToList();
-            var commandTypeMap = new Dictionary<CommandKey, Type>(commandTypes.Count);
+            var commandTypeMap = new Dictionary<Command, Type>(commandTypes.Count);
             foreach (var type in commandTypes)
             {
                 var commandKeyAttribute = type.GetCustomAttribute<CommandKeyAttribute>();

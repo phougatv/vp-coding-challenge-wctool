@@ -3,17 +3,17 @@ using System.Diagnostics.CodeAnalysis;
 
 internal class DefaultCommandParser
 {
-    public static Result<CommandArgument> Parse(String[] args, ParserOptions? options)
+    public static Result<CommandRequest> Parse(String[] args, ParserOptions? options)
     {
         if (HasUnexpectedNumberOfItems(args))
         {
-            return Result<CommandArgument>.Fail(CommandFormatError.Create());
+            return Result<CommandRequest>.Fail(CommandFormatError.Create());
         }
 
         if (IsConfigurationMissing(options))
         {
             //TODO: add custom error along with the message
-            return Result<CommandArgument>.Fail("Missing configuration");
+            return Result<CommandRequest>.Fail("Missing configuration");
         }
 
         //if (HasSingleItem(args))
@@ -48,30 +48,30 @@ internal class DefaultCommandParser
     //    return Result<CommandArgument>.Ok(CommandArgument.Create(options.DefaultCommands, filepath));
     //}
 
-    private static Result<CommandArgument> ParseToSpecifiedCommands(String[] args, ParserOptions options)
+    private static Result<CommandRequest> ParseToSpecifiedCommands(String[] args, ParserOptions options)
     {
         var commandRegex = new Regex(options.CommandExpression);
         var commandValue = args[0];
         if (!commandRegex.IsMatch(commandValue))
         {
-            return Result<CommandArgument>.Fail(CommandNotFoundError.Create(commandValue));
+            return Result<CommandRequest>.Fail(CommandNotFoundError.Create(commandValue));
         }
 
         var filename = args[^1];
         var fileExtension = Path.GetExtension(filename);
         if (!IsFileExtensionAllowed(fileExtension, options.AllowedFileExtension))
         {
-            return Result<CommandArgument>.Fail(FileExtensionNotAllowedError.Create(Path.GetExtension(filename)));
+            return Result<CommandRequest>.Fail(FileExtensionNotAllowedError.Create(Path.GetExtension(filename)));
         }
 
         var filepath = Path.Combine(options.Directory, filename);
         if (FileDoesNotExists(filepath))
         {
-            return Result<CommandArgument>.Fail(FileNotFoundError.Create(filename));
+            return Result<CommandRequest>.Fail(FileNotFoundError.Create(filename));
         }
 
-        var keys = new CommandKey(commandValue.Replace("-", ""));
-        return Result<CommandArgument>.Ok(CommandArgument.Create(keys, filepath));
+        var keys = new Command(commandValue.Replace("-", ""));
+        return Result<CommandRequest>.Ok(CommandRequest.Create(keys, filepath));
     }
 
     private static Boolean HasUnexpectedNumberOfItems(String[] args)

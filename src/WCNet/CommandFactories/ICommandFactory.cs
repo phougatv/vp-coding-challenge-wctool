@@ -2,5 +2,5 @@
 
 internal interface ICommandFactory
 {
-    ICommand CreateCommand(CommandArgument request);
+    ICommand CreateCommand(CommandRequest request);
 }

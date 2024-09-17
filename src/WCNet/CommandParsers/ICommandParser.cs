@@ -2,5 +2,5 @@
 
 internal interface ICommandParser
 {
-	Result<CommandArgument> Parse(String[] args);
+	Result<CommandRequest> Parse(String[] args);
 }

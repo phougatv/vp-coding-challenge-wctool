@@ -6,8 +6,8 @@ public class NotEquals
     public void ReturnsFalse_WhenInstancesAreEqual()
     {
         //Arrange
-        var left = new CommandKey("-c");
-        var right = new CommandKey("-c");
+        var left = new Command("-c");
+        var right = new Command("-c");
 
         //Act
         var actual = left != right;
@@ -20,8 +20,8 @@ public class NotEquals
     public void ReturnsTrue_WhenInstancesAreNotEqual()
     {
         //Arrange
-        var left = new CommandKey("-c");
-        var right = new CommandKey("-w");
+        var left = new Command("-c");
+        var right = new Command("-w");
 
         //Act
         var actual = left != right;

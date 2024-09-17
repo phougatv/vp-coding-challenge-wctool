@@ -3,10 +3,10 @@
 [CommandKey("w")]
 internal class WordCountCommand : ICommand
 {
-    private readonly String _filepath;
+    private readonly Filepath _filepath;
     private readonly IOutput _output;
 
-    public WordCountCommand(String filepath, IOutput output)
+    public WordCountCommand(Filepath filepath, IOutput output)
     {
         _filepath = filepath;
         _output = output;

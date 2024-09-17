@@ -9,7 +9,7 @@ internal class DefaultCommandResolver : ICommandResolver
 		_factory = factory;
 	}
 
-    public ICommand ResolveCommand(CommandArgument request)
+    public ICommand ResolveCommand(CommandRequest request)
     {
         return _factory.CreateCommand(request);
     }

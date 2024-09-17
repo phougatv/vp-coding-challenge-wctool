@@ -2,12 +2,12 @@
 
 public abstract class CommandHandlerBase
 {
-    protected abstract Result<Message> Handle(CommandArgument commandArgument);
+    protected abstract Result<Message> Handle(CommandRequest commandArgument);
     protected abstract Result PostHandle(Message message);
 
-    public void Main(CommandArgument commandArgument)
+    public void Main(CommandRequest commandArgument)
     {
-        CommandKey[] keys = [];
+        Command[] keys = [];
 
         try
         {

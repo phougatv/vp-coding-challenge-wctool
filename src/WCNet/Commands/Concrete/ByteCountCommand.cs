@@ -3,10 +3,10 @@
 [CommandKey("c")]
 internal class ByteCountCommand : ICommand
 {
-    private readonly String _filepath;
+    private readonly Filepath _filepath;
     private readonly IOutput _output;
 
-    public ByteCountCommand(String filepath, IOutput output)
+    public ByteCountCommand(Filepath filepath, IOutput output)
     {
         _filepath = filepath;
         _output = output;

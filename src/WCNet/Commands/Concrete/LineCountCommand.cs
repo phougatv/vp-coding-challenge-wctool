@@ -3,10 +3,10 @@
 [CommandKey("l")]
 internal class LineCountCommand : ICommand
 {
-    private readonly String _filepath;
+    private readonly Filepath _filepath;
     private readonly IOutput _output;
 
-    public LineCountCommand(String filepath, IOutput output)
+    public LineCountCommand(Filepath filepath, IOutput output)
     {
         _filepath = filepath;
         _output = output;

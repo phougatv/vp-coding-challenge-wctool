@@ -2,18 +2,18 @@
 
 internal class CountCommandFactory : ICommandFactory
 {
-    private readonly IDictionary<CommandKey, Type> _commandTypeMap;
+    private readonly IDictionary<Command, Type> _commandTypeMap;
     private readonly IOutput _output;
 
     public CountCommandFactory(
-        IDictionary<CommandKey, Type> commandTypeMap,
+        IDictionary<Command, Type> commandTypeMap,
         IOutput output)
     {
         _commandTypeMap = commandTypeMap;
         _output = output;
     }
 
-    public ICommand CreateCommand(CommandArgument request)
+    public ICommand CreateCommand(CommandRequest request)
     {
         if (_commandTypeMap.TryGetValue(request.CommandKey, out var commandType))
         {

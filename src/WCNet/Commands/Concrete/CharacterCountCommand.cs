@@ -3,10 +3,10 @@
 [CommandKey("m")]
 internal class CharacterCountCommand : ICommand
 {
-    private readonly String _filepath;
+    private readonly Filepath _filepath;
     private readonly IOutput _output;
 
-    public CharacterCountCommand(String filepath, IOutput output)
+    public CharacterCountCommand(Filepath filepath, IOutput output)
     {
         _filepath = filepath;
         _output = output;

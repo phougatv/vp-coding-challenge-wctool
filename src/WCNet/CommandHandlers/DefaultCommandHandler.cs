@@ -11,9 +11,9 @@ internal class DefaultCommandHandler : CommandHandlerBase
         _invoker = invoker;
 	}
 
-    protected override Result<Message> Handle(CommandRequest commandArgument)
+    protected override Result<Message> Handle(CommandRequest request)
 	{
-        var command = _commandResolver.ResolveCommand(commandArgument);
+        var command = _commandResolver.ResolveCommand(request);
         _invoker.SetCommand(command);
         _invoker.InvokeCommand();
 

@@ -15,7 +15,7 @@ public class Program
             var commandRequestResult = DefaultCommandParser.Parse(args, options);
             if (commandRequestResult.IsFailed)
             {
-                throw new Exception("Failed to load ParserOptions.");
+                throw new ParserOptionsLoadFailedException();
             }
 
             //Build WcNet service provider

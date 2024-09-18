@@ -8,7 +8,7 @@ internal class DefaultCommandInvoker : ICommandInvoker
     {
         if (_command == null)
         {
-            throw new InvalidOperationException("Failed to invoke command as it is not set.");
+            throw new CommandNotSetException();
         }
 
         _command.Execute();

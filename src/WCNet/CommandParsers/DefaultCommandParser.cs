@@ -1,86 +1,100 @@
 ﻿namespace VP.CodingChallenge.WCNet.CommandParsers;
-using System.Diagnostics.CodeAnalysis;
 
 internal class DefaultCommandParser
 {
+    private const String Dash = "-";
+    private const String EmptyString = "";
+
     public static Result<CommandRequest> Parse(String[] args, ParserOptions? options)
     {
-        if (HasUnexpectedNumberOfItems(args))
+        if (IsIncorrectFormat(args))
         {
             return Result<CommandRequest>.Fail(CommandFormatError.Create());
         }
 
         if (IsConfigurationMissing(options))
         {
-            //TODO: add custom error along with the message
-            return Result<CommandRequest>.Fail("Missing configuration");
+            return Result<CommandRequest>.Fail(ParserOptionsMissingError.Create());
         }
 
-        //if (HasSingleItem(args))
-        //{
-        //    return ParseToDefaultCommands(args, options);
-        //}
+        var filename = args[^1];
+        if (IsDefault(args))
+        {
+            return ParseToDefaultCommands(options.DefaultCommands, options.Directory, filename, options.AllowedFileExtension);
+        }
 
-        return ParseToSpecifiedCommands(args, options);
+        var command = args[0];
+        return ParseToCommand(command, options.AllowedCommandPattern, options.Directory, filename, options.AllowedFileExtension);
     }
 
     #region Private Methods
     private static Boolean IsConfigurationMissing([NotNullWhen(false)] ParserOptions? options)
         => options is null ||
         options.DefaultCommands.Length == 0 ||
-        String.IsNullOrEmpty(options.CommandExpression) ||
+        String.IsNullOrEmpty(options.AllowedCommandPattern) ||
         String.IsNullOrEmpty(options.AllowedFileExtension);
-    //private static Result<CommandArgument> ParseToDefaultCommands(String[] args, ParserOptions options)
-    //{
-    //    var filename = args[^1];
-    //    var fileExtension = Path.GetExtension(filename);
-    //    var filepath = Path.Combine(options.Directory, filename);
-    //    if (!IsFileExtensionAllowed(fileExtension, options.AllowedFileExtension))
-    //    {
-    //        return Result<CommandArgument>.Fail(FileExtensionNotAllowedError.Create(Path.GetExtension(filename)));
-    //    }
+    private static Boolean IsDefault(String[] args) => args.Length == 1;
+    private static Boolean IsExtensionNotAllowed(String current, String allowed)
+        => !String.Equals(current, allowed, StringComparison.OrdinalIgnoreCase);
+    private static Boolean IsIncorrectFormat([NotNullWhen(false)]String[] args)
+        => args is null ||
+        args.Length < 1 ||
+        args.Length > 2;
+    private static String RemoveDash(String commandValue) => commandValue.Replace(Dash, EmptyString);
 
-    //    if (FileDoesNotExists(filepath))
-    //    {
-    //        return Result<CommandArgument>.Fail(FileNotFoundError.Create(filename));
-    //    }
-
-    //    return Result<CommandArgument>.Ok(CommandArgument.Create(options.DefaultCommands, filepath));
-    //}
-
-    private static Result<CommandRequest> ParseToSpecifiedCommands(String[] args, ParserOptions options)
+    private static Result<CommandRequest> ParseToDefaultCommands(
+        Command[] defaultCommands,
+        String directory,
+        String filename,
+        String allowedExtension)
     {
-        var commandRegex = new Regex(options.CommandExpression);
-        var commandValue = args[0];
-        if (!commandRegex.IsMatch(commandValue))
+        var filepathResult = ValidateFilepath(directory, filename, allowedExtension);
+        if (filepathResult.IsFailed)
         {
-            return Result<CommandRequest>.Fail(CommandNotFoundError.Create(commandValue));
+            return Result<CommandRequest>.Fail(filepathResult.Error);
         }
 
-        var filename = args[^1];
-        var fileExtension = Path.GetExtension(filename);
-        if (!IsFileExtensionAllowed(fileExtension, options.AllowedFileExtension))
-        {
-            return Result<CommandRequest>.Fail(FileExtensionNotAllowedError.Create(Path.GetExtension(filename)));
-        }
-
-        var filepath = Path.Combine(options.Directory, filename);
-        if (FileDoesNotExists(filepath))
-        {
-            return Result<CommandRequest>.Fail(FileNotFoundError.Create(filename));
-        }
-
-        var keys = new Command(commandValue.Replace("-", ""));
-        return Result<CommandRequest>.Ok(CommandRequest.Create(keys, filepath));
+        return Result<CommandRequest>.Ok(CommandRequest.CreateDefault(defaultCommands, filepathResult.Value));
     }
 
-    private static Boolean HasUnexpectedNumberOfItems(String[] args)
-        => args.Length < 1 || args.Length > 2;
-    private static Boolean HasSingleItem(String[] args)
-        => args.Length == 1;
-    private static Boolean FileDoesNotExists(String filepath)
-        => !File.Exists(filepath);
-    private static Boolean IsFileExtensionAllowed(String fileExtension, String allowedExtension)
-        => String.Equals(fileExtension, allowedExtension, StringComparison.OrdinalIgnoreCase);
+    private static Result<CommandRequest> ParseToCommand(
+        String commandValue,
+        String allowedCommandPattern,
+        String directory,
+        String filename,
+        String allowedExtension)
+    {
+        var commandRegex = new Regex(allowedCommandPattern);
+        if (!commandRegex.IsMatch(commandValue))
+        {
+            return Result<CommandRequest>.Fail(CommandNotFoundError.Create());
+        }
+
+        var filepathResult = ValidateFilepath(directory, filename, allowedExtension);
+        if (filepathResult.IsFailed)
+        {
+            return Result<CommandRequest>.Fail(filepathResult.Error);
+        }
+
+        var command = RemoveDash(commandValue);
+        return Result<CommandRequest>.Ok(CommandRequest.Create(command, filepathResult.Value));
+    }
+
+    private static Result<Filepath> ValidateFilepath(String directory, String filename, String allowedExtension)
+    {
+        var extension = Path.GetExtension(filename);
+        if (IsExtensionNotAllowed(extension, allowedExtension))
+        {
+            return Result<Filepath>.Fail(FileExtensionNotAllowedError.Create(extension));
+        }
+
+        var filepath = Path.Combine(directory, filename);
+        if (!File.Exists(filepath))
+        {
+            return Result<Filepath>.Fail(FileNotFoundError.Create(filename));
+        }
+
+        return Result<Filepath>.Ok(filepath);
+    }
     #endregion Private Methods
 }

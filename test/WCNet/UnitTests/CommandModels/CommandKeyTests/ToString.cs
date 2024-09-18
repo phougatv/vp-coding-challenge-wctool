@@ -6,7 +6,11 @@ public class ToString
     public void ReturnsStringContainingCommandKeyAndFilepath()
     {
         //Arrange
+<<<<<<< HEAD
         var commandKey = new Command("-c");
+=======
+        var commandKey = new CommandKey("-c");
+>>>>>>> master
         var expected = "-c";
 
         //Act

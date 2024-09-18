@@ -2,7 +2,11 @@
   "profiles": {
     "VP.CodingChallenge.WCNet": {
       "commandName": "Project",
+<<<<<<< HEAD
       "commandLineArgs": "-c test.txt"
+=======
+      "commandLineArgs": "test.txt"
+>>>>>>> master
     }
   }
 }

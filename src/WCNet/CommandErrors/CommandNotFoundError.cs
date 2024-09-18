@@ -13,7 +13,11 @@ internal class CommandNotFoundError : Error
     internal static CommandNotFoundError Create()
         => new CommandNotFoundError($"Command not found.");
 
+<<<<<<< HEAD
 	internal static CommandNotFoundError Create(Command command)
+=======
+	internal static CommandNotFoundError Create(CommandKey command)
+>>>>>>> master
 		=> new CommandNotFoundError($"Command: \"{command}\" not found.");
 
     public override String ToString() => _message;

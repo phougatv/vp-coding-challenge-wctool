@@ -2,6 +2,8 @@
 
 public readonly struct Command : IEquatable<Command>
 {
+    public static readonly Command None = "none";
+
 	public String Key { get; }
 
     /// <summary>
@@ -67,6 +69,7 @@ public readonly struct Command : IEquatable<Command>
     /// <returns>True if the two specified <see cref="Command"/> instances are not equal; otherwise, false.</returns>
     public static Boolean operator !=(Command left, Command right) => !left.Equals(right);
 
+    public Boolean IsNone() => IsOrdinalIgnoreCaseComparisonEqual(None);
     public Boolean IsByteCountKey() => IsOrdinalIgnoreCaseComparisonEqual("c");
     public Boolean IsCharacterCountKey() => IsOrdinalIgnoreCaseComparisonEqual("m");
     public Boolean IsLineCountKey() => IsOrdinalIgnoreCaseComparisonEqual("l");

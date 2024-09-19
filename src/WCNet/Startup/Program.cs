@@ -7,6 +7,7 @@ public class Program
 
     static void Main(String[] args)
     {
+        CommandHandlerBase? handler = null;
         try
         {
             //Build WcNet configuration
@@ -22,12 +23,13 @@ public class Program
             var serviceProvider = ServiceCollection.BuildWCNetServiceProvider();
 
             //Execute CommandHandlerBase.Main
-            var commandHandler = serviceProvider.GetRequiredService<CommandHandlerBase>();
-            commandHandler.Main(commandRequestResult.Value);
+            handler = serviceProvider.GetRequiredService<CommandHandlerBase>();
+            handler.Main(commandRequestResult.Value);
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Application terminated. Error: {ex.Message}");
+            handler?.Usage();
         }
     }
 }

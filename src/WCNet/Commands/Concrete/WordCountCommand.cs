@@ -3,7 +3,6 @@
 [CommandKey("w")]
 internal class WordCountCommand : ICommand
 {
-<<<<<<< HEAD
     private readonly Filepath _filepath;
     private readonly IOutput _output;
 
@@ -19,14 +18,5 @@ internal class WordCountCommand : ICommand
         var pattern = @"\b\w+\b";
         var matchCollection = Regex.Matches(content, pattern);
         _output.Sink(matchCollection.Count, Path.GetFileName(_filepath));
-=======
-    public Result<UInt64> Execute(String filepath)
-    {
-        var content = File.ReadAllText(filepath);
-        var pattern = @"\b\w+\b";
-        var matchCollection = Regex.Matches(content, pattern);
-
-        return Result<UInt64>.Ok((UInt64)matchCollection.Count);
->>>>>>> master
     }
 }

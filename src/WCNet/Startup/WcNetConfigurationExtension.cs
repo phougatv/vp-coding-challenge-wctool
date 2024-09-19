@@ -7,7 +7,6 @@ internal static class WCNetConfigurationExtension
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
             .Build();
-<<<<<<< HEAD
     internal static ParserOptions? GetParserOptions(this IConfiguration configuration)
     {
         var options = configuration.GetSection(nameof(ParserOptions)).Get<ParserOptions>();
@@ -18,6 +17,4 @@ internal static class WCNetConfigurationExtension
 
         return options;
     }
-=======
->>>>>>> master
 }

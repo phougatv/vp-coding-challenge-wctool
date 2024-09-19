@@ -2,7 +2,6 @@
 
 public class Program
 {
-<<<<<<< HEAD
     private static readonly IServiceCollection ServiceCollection = new ServiceCollection();
     private static readonly IConfigurationBuilder ConfigurationBuilder = new ConfigurationBuilder();
 
@@ -31,21 +30,4 @@ public class Program
             Console.WriteLine($"Application terminated. Error: {ex.Message}");
         }
     }
-=======
-	private static readonly IServiceCollection ServiceCollection = new ServiceCollection();
-    private static readonly IConfigurationBuilder ConfigurationBuilder = new ConfigurationBuilder();
-
-	static void Main(String[] args)
-	{
-		//Build WcNet configuration
-		var configuration = ConfigurationBuilder.BuildWCNetConfiguration();
-
-		//Build WcNet service provider
-		var serviceProvider = ServiceCollection.BuildWCNetServiceProvider(configuration);
-
-		//Execute CommandHandlerBase.Main
-		var commandHandler = serviceProvider.GetRequiredService<CommandHandlerBase>();
-		commandHandler.Main(args);
-	}
->>>>>>> master
 }

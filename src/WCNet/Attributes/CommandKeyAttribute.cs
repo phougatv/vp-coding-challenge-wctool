@@ -2,7 +2,6 @@
 
 internal sealed class CommandKeyAttribute : Attribute
 {
-<<<<<<< HEAD
 	public Command Key { get; }
 
     public CommandKeyAttribute(String key)
@@ -11,16 +10,6 @@ internal sealed class CommandKeyAttribute : Attribute
     }
 
 	public CommandKeyAttribute(Command key)
-=======
-	public CommandKey Key { get; }
-
-    public CommandKeyAttribute(String key)
-        : this((CommandKey)key)
-    {
-    }
-
-	public CommandKeyAttribute(CommandKey key)
->>>>>>> master
 	{
 		Key = key;
 	}

@@ -20,7 +20,13 @@ internal static class WCNetServiceExtension
             var commandTypes = Assembly
             .GetExecutingAssembly()
             .GetTypes()
-            .Where(type => typeof(ICommand).IsAssignableFrom(type) && !type.IsAbstract && type.IsClass)
+            .Where(type =>
+                //type.GetInterfaces().Any(i =>
+                //    i.IsGenericType &&
+                //    i.GetGenericTypeDefinition() == typeof(ICommand<>)) &&
+                //!type.IsAbstract &&
+                //type.IsClass)
+                typeof(ICommand).IsAssignableFrom(type) && !type.IsAbstract && type.IsClass)
             .ToList();
             var commandTypeMap = new Dictionary<Command, Type>(commandTypes.Count);
             foreach (var type in commandTypes)
@@ -30,8 +36,8 @@ internal static class WCNetServiceExtension
                 commandTypeMap.Add(commandKeyAttribute.Key, type);
             }
 
-            var output = provider.GetRequiredService<IOutput>();
-            return new CountCommandFactory(commandTypeMap, output);
+            //var output = provider.GetRequiredService<IOutput>();
+            return new CountCommandFactory(commandTypeMap);
         });
 
         return services;
@@ -46,6 +52,10 @@ internal static class WCNetServiceExtension
     private static IServiceCollection AddWCNetCommandInvoker(this IServiceCollection services)
         => services.AddSingleton<ICommandInvoker, DefaultCommandInvoker>();
 
+    //private static IServiceCollection AddWCNetCommandHandler(this IServiceCollection services)
+    //    => services.AddSingleton<CommandHandlerBase, DefaultCommandHandler>();
     private static IServiceCollection AddWCNetCommandHandler(this IServiceCollection services)
-        => services.AddSingleton<CommandHandlerBase, DefaultCommandHandler>();
+        => services.AddSingleton<DefaultCommandHandler>();
+
+    //private static IServiceCollection Add
 }

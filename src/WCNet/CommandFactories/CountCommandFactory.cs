@@ -3,23 +3,20 @@
 internal class CountCommandFactory : ICommandFactory
 {
     private readonly IDictionary<Command, Type> _commandTypeMap;
-    private readonly IOutput _output;
 
-    public CountCommandFactory(
-        IDictionary<Command, Type> commandTypeMap,
-        IOutput output)
+    public CountCommandFactory(IDictionary<Command, Type> commandTypeMap)
     {
         _commandTypeMap = commandTypeMap;
-        _output = output;
     }
 
     public ICommand CreateCommand(CommandRequest request)
     {
         if (_commandTypeMap.TryGetValue(request.CommandKey, out var commandType))
         {
-            return (ICommand?)Activator.CreateInstance(commandType, request.Filepath, _output) ?? new CommandNotFound(_output);
+            var command = (ICommand?)Activator.CreateInstance(commandType, request.Filepath) ?? new CommandNotFound();
+            return command;
         }
 
-        return new CommandNotFound(_output);
+        return new CommandNotFound();
     }
 }

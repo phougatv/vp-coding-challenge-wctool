@@ -18,7 +18,7 @@ public abstract class CommandHandlerBase
         PostHandle(messageResult.Value);
     }
 
-    internal void Usage()
+    internal static void Usage()
     {
         Console.WriteLine("Usage: wc.NET [OPTIONS] [FILE]");
         Console.WriteLine("Counts lines, characters, words, and bytes in the specified FILE.");

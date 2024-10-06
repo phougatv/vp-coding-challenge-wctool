@@ -4,14 +4,14 @@ internal class DefaultCommandInvoker : ICommandInvoker
 {
     private ICommand? _command = null;
 
-    public void InvokeCommand()
+    public Result<Count> InvokeCommand()
     {
         if (_command == null)
         {
-            throw new CommandNotSetException();
+            Result<Count>.Fail(CommandNotSetError.Create());
         }
 
-        _command.Execute();
+        return _command.Execute();
     }
     public void SetCommand(ICommand command) => _command = command;
 }

@@ -7,7 +7,7 @@ internal class DefaultCommandParser
 
     public static Result<CommandRequest> Parse(String[] args, ParserOptions? options)
     {
-        if (IsIncorrectFormat(args))
+        if (IsIncorrectCommandFormat(args))
         {
             return Result<CommandRequest>.Fail(CommandFormatError.Create());
         }
@@ -18,7 +18,7 @@ internal class DefaultCommandParser
         }
 
         var filename = args[^1];
-        if (IsDefault(args))
+        if (IsDefaultCommand(args))
         {
             return ParseToDefaultCommands(options.DefaultCommands, options.Directory, filename, options.AllowedFileExtension);
         }
@@ -33,10 +33,10 @@ internal class DefaultCommandParser
         options.DefaultCommands.Length == 0 ||
         String.IsNullOrEmpty(options.AllowedCommandPattern) ||
         String.IsNullOrEmpty(options.AllowedFileExtension);
-    private static Boolean IsDefault(String[] args) => args.Length == 1;
-    private static Boolean IsExtensionNotAllowed(String current, String allowed)
+    private static Boolean IsDefaultCommand(String[] args) => args.Length == 1;
+    private static Boolean IsFileExtensionNotAllowed(String current, String allowed)
         => !String.Equals(current, allowed, StringComparison.OrdinalIgnoreCase);
-    private static Boolean IsIncorrectFormat([NotNullWhen(false)]String[] args)
+    private static Boolean IsIncorrectCommandFormat([NotNullWhen(false)]String[] args)
         => args is null ||
         args.Length < 1 ||
         args.Length > 2;
@@ -83,7 +83,7 @@ internal class DefaultCommandParser
     private static Result<Filepath> ValidateFilepath(String directory, String filename, String allowedExtension)
     {
         var extension = Path.GetExtension(filename);
-        if (IsExtensionNotAllowed(extension, allowedExtension))
+        if (IsFileExtensionNotAllowed(extension, allowedExtension))
         {
             return Result<Filepath>.Fail(FileExtensionNotAllowedError.Create(extension));
         }

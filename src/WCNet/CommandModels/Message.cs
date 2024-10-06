@@ -14,6 +14,7 @@ public readonly struct Message : IEquatable<Message>
     public override Int32 GetHashCode() => Text.GetHashCode();
     public override String ToString() => Text;
     public static implicit operator Message(String text) => new Message(text);
+    public static implicit operator Message(StringBuilder builder) => new Message(builder.ToString());
     public static implicit operator String(Message message) => message.Text;
     public static Boolean operator ==(Message left, Message right) => left.Equals(right);
     public static Boolean operator !=(Message left, Message right) => !left.Equals(right);

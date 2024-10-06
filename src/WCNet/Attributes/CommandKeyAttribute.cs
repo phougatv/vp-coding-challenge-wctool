@@ -1,16 +1,12 @@
 ﻿namespace VP.CodingChallenge.WCNet.Attributes;
 
-internal sealed class CommandKeyAttribute : Attribute
+[AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
+internal sealed class CommandKeyAttribute(Command key) : Attribute
 {
-	public Command Key { get; }
+    public Command Key { get; } = key;
 
     public CommandKeyAttribute(String key)
         : this((Command)key)
     {
     }
-
-	public CommandKeyAttribute(Command key)
-	{
-		Key = key;
-	}
 }

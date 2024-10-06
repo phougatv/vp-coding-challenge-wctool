@@ -1,23 +1,17 @@
 ﻿namespace VP.CodingChallenge.WCNet.CommandFactories;
 
-internal class CountCommandFactory : ICommandFactory
+internal class CountCommandFactory(IServiceProvider serviceProvider) : ICommandFactory
 {
-    private readonly IDictionary<Command, Type> _commandTypeMap;
-
-    public CountCommandFactory(IDictionary<Command, Type> commandTypeMap)
-    {
-        _commandTypeMap = commandTypeMap;
-    }
-
     public ICommand CreateCommand(CommandRequest request)
     {
-        if (_commandTypeMap.TryGetValue(request.CommandKey, out var commandType))
+        var commandKey = request.CommandKey;
+        var command = serviceProvider.GetRequiredKeyedService<ICommand>(commandKey);
+        if (command is null)
         {
-            var command = (ICommand?)Activator.CreateInstance(commandType, request.Filepath) ?? new CommandNotFound();
-            return command;
+            return new CommandNotFound();
         }
 
-        return new CommandNotFound();
+        return command;
     }
 
     public ICollection<ICommand> CreateCommands(CommandRequest request)
@@ -26,11 +20,10 @@ internal class CountCommandFactory : ICommandFactory
         ICollection<ICommand> defaultCommands = defaultCommandKeys.Count < 1 ? Array.Empty<ICommand>() : new List<ICommand>(defaultCommandKeys.Count);
         foreach (var command in defaultCommandKeys)
         {
-            if (_commandTypeMap.TryGetValue(command, out var commandType))
-            {
-                var defaultCommand = (ICommand?)Activator.CreateInstance(commandType, request.Filepath) ?? new CommandNotFound();
-                defaultCommands.Add(defaultCommand);
-            }
+            var defaultCommand = serviceProvider.GetRequiredKeyedService<ICommand>(command);
+            if (defaultCommand is null) continue;
+
+            defaultCommands.Add(defaultCommand);
         }
 
         return defaultCommands;

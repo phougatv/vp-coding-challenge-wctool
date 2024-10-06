@@ -15,6 +15,8 @@ global using VP.CodingChallenge.WCNet.CommandHandlers;
 global using VP.CodingChallenge.WCNet.CommandInvokers;
 global using VP.CodingChallenge.WCNet.CommandModels;
 global using VP.CodingChallenge.WCNet.CommandParsers;
+global using VP.CodingChallenge.WCNet.CommandReceivers.FileHandlers;
+global using VP.CodingChallenge.WCNet.CommandReceivers.FileHandlers.Contracts;
 global using VP.CodingChallenge.WCNet.Commands;
 global using VP.CodingChallenge.WCNet.Commands.Concrete;
 global using VP.CodingChallenge.WCNet.Configurations;

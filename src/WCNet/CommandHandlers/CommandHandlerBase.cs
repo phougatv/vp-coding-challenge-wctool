@@ -3,7 +3,7 @@
 public abstract class CommandHandlerBase
 {
     protected abstract Result<Message> Handle(CommandRequest commandRequest);
-    protected abstract Result PostHandle(Message message);
+    protected abstract void PostHandle(Message message);
 
     public void Main(CommandRequest commandRequest)
     {

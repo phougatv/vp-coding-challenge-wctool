@@ -7,33 +7,31 @@ public class Program
 
     static void Main(String[] args)
     {
-        //CommandHandlerBase? handler = null;
         try
         {
             //Build WcNet configuration
             var configuration = ConfigurationBuilder.BuildWCNetConfiguration();
             var options = configuration.GetParserOptions();
-            var commandRequestResult = DefaultCommandParser.Parse(args, options);
+            var commandRequestResult = CommandParser.Parse(args, options);
             if (commandRequestResult.IsFailed)
             {
                 throw new ParserOptionsLoadFailedException();
             }
 
-            //Get object of TextFileAnalyzer
-
-            //Register the object of TextFileAnalyzer as implementation for all of its interfaces
-
             //Build WcNet service provider
             var serviceProvider = ServiceCollection.BuildWCNetServiceProvider();
 
             //Execute CommandHandlerBase.Main
-            var handler = serviceProvider.GetRequiredService<DefaultCommandHandler>();
+            CommandHandlerBase? handler = commandRequestResult.Value.IsDefault
+                ? serviceProvider.GetRequiredService<DefaultCommandHandler>()
+                : serviceProvider.GetRequiredService<UserCommandHandler>();
+
             handler.Main(commandRequestResult.Value);
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Application terminated. Error: {ex.Message}");
-            //handler?.Usage();
+            CommandHandlerBase.Usage();
         }
     }
 }

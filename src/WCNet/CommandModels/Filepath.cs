@@ -4,12 +4,13 @@ public readonly struct Filepath : IEquatable<Filepath>
     public static readonly Filepath Empty = String.Empty;
 
     public String Value { get; }
-    public String Filename => Path.GetFileName(Value);
 
     public Filepath(String value)
     {
         Value = value;
     }
+
+    public String GetFilename() => Path.GetFileName(Value);
 
     public Boolean Equals(Filepath other) => String.Equals(Value, other.Value);
     public override Boolean Equals(Object? obj) => obj is not null && obj is Filepath other && Equals(other);

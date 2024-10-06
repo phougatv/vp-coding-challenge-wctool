@@ -19,4 +19,20 @@ internal class CountCommandFactory : ICommandFactory
 
         return new CommandNotFound();
     }
+
+    public ICollection<ICommand> CreateCommands(CommandRequest request)
+    {
+        var defaultCommandKeys = request.DefaultCommandKeys;
+        ICollection<ICommand> defaultCommands = defaultCommandKeys.Count < 1 ? Array.Empty<ICommand>() : new List<ICommand>(defaultCommandKeys.Count);
+        foreach (var command in defaultCommandKeys)
+        {
+            if (_commandTypeMap.TryGetValue(command, out var commandType))
+            {
+                var defaultCommand = (ICommand?)Activator.CreateInstance(commandType, request.Filepath) ?? new CommandNotFound();
+                defaultCommands.Add(defaultCommand);
+            }
+        }
+
+        return defaultCommands;
+    }
 }

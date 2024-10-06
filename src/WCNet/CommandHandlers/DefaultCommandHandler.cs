@@ -1,81 +1,46 @@
 ﻿namespace VP.CodingChallenge.WCNet.CommandHandlers;
 
-internal class DefaultCommandHandler
+internal class DefaultCommandHandler : CommandHandlerBase
 {
-    private readonly ICommandResolver _commandResolver;
+    private readonly ICommandFactory _countCommandFactory;
     private readonly ICommandInvoker _invoker;
+    private readonly IOutput _output;
 
-    public DefaultCommandHandler(ICommandResolver commandResolver, ICommandInvoker invoker)
+    public DefaultCommandHandler(ICommandFactory countCommandFactory, ICommandInvoker invoker, IOutput output)
 	{
-		_commandResolver = commandResolver;
+		_countCommandFactory = countCommandFactory;
         _invoker = invoker;
+        _output = output;
 	}
 
-    internal void Main(CommandRequest request)
-    {
-        var messageResult = Handle(request);
-        if (messageResult.IsFailed)
-        {
-            Console.WriteLine(messageResult.Error);
-            Usage();
-            return;
-        }
-
-        PostHandle(messageResult.Value);
-    }
-
-    private Result<Message> Handle(CommandRequest request)
+    protected override Result<Message> Handle(CommandRequest request)
 	{
-        var command = _commandResolver.ResolveCommand(request);
-        _invoker.SetCommand(command);
+        var commands = _countCommandFactory.CreateCommands(request);
+        _invoker.SetCommands(commands);
         
-        var countResult = _invoker.InvokeCommand();
-        var messageResult = GetMessage(countResult, request.Filepath.Filename);
+        var countsResult = _invoker.InvokeCommands();
+        var messageResult = GetMessage(countsResult, request.Filepath.GetFilename());
 
         return messageResult;
 	}
 
-    private static Result<Message> GetMessage(Result<Count> countResult, String filename)
+    protected override void PostHandle(Message message) => _output.Sink(message);
+
+    private static Result<Message> GetMessage(Result<ICollection<Count>> countsResult, String filename)
     {
-        if (countResult.IsFailed)
+        if (countsResult.IsFailed)
         {
-            return Result<Message>.Fail(countResult.Error);
+            return Result<Message>.Fail(countsResult.Error);
         }
 
-        //var builder = new StringBuilder(countResult.Value.Count);
-        //foreach (var count in countResult.Value)
-        //{
-        //    builder.Append(count);
-        //    builder.Append(' ');
-        //}
+        var builder = new StringBuilder(countsResult.Value.Count);
+        foreach (var count in countsResult.Value)
+        {
+            builder.Append(count);
+            builder.Append(' ');
+        }
 
-        //builder.Append(filename);
-        //return Result<Message>.Ok(builder);
-
-        var textToDisplay = $"{countResult.Value} {filename}";
-        return Result<Message>.Ok(textToDisplay);
-    }
-
-    private static Result PostHandle(Message message)
-    {
-        Console.WriteLine(message);
-        return Result.Ok();
-    }
-
-    private static void Usage()
-    {
-        Console.WriteLine("Usage: wc.NET [OPTIONS] [FILE]");
-        Console.WriteLine("Counts lines, characters, words, and bytes in the specified FILE.");
-        Console.WriteLine();
-        Console.WriteLine("Options:");
-        Console.WriteLine("  -c,         Print the byte counts.");
-        Console.WriteLine("  -m,         Print the character counts.");
-        Console.WriteLine("  -l,         Print the line counts.");
-        Console.WriteLine("  -w,         Print the word counts.");
-        Console.WriteLine("              Display this help and exit.");
-        Console.WriteLine();
-        Console.WriteLine("Example:");
-        Console.WriteLine("  wc.NET -lwm filename.txt");
-        Console.WriteLine("  wc.NET --lines --words --chars filename.txt");
+        builder.Append(filename);
+        return Result<Message>.Ok(builder);
     }
 }

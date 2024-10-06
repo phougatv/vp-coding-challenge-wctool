@@ -3,18 +3,18 @@
 public class CommandRequest : IEquatable<CommandRequest>
 {
     public Command CommandKey { get; }
-    public IReadOnlyList<Command> DefaultCommands { get; }
+    public IReadOnlyList<Command> DefaultCommandKeys { get; }
     public Boolean IsDefault { get; }
 	public Filepath Filepath { get; }
 
     private CommandRequest(
         Command commandKey,
-        IReadOnlyList<Command> defaultCommands,
+        IReadOnlyList<Command> defaultCommandKeys,
         String filepath,
         Boolean isDefault)
     {
         CommandKey = commandKey;
-        DefaultCommands = defaultCommands;
+        DefaultCommandKeys = defaultCommandKeys;
         Filepath = filepath;
         IsDefault = isDefault;
     }

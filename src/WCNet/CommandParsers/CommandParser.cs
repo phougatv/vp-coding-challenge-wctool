@@ -24,7 +24,7 @@ internal class CommandParser
         }
 
         var command = args[0];
-        return ParseToCommand(command, options.AllowedCommandPattern, options.Directory, filename, options.AllowedFileExtension);
+        return ParseToUserCommand(command, options.AllowedCommandPattern, options.Directory, filename, options.AllowedFileExtension);
     }
 
     #region Private Methods
@@ -57,7 +57,7 @@ internal class CommandParser
         return Result<CommandRequest>.Ok(CommandRequest.CreateDefault(defaultCommands, filepathResult.Value));
     }
 
-    private static Result<CommandRequest> ParseToCommand(
+    private static Result<CommandRequest> ParseToUserCommand(
         String commandValue,
         String allowedCommandPattern,
         String directory,

@@ -2,15 +2,12 @@
 
 public class Program
 {
-    private static readonly IServiceCollection ServiceCollection = new ServiceCollection();
-    private static readonly IConfigurationBuilder ConfigurationBuilder = new ConfigurationBuilder();
-
     static void Main(String[] args)
     {
         try
         {
             //Build WcNet configuration
-            var configuration = ConfigurationBuilder.BuildWCNetConfiguration();
+            var configuration = new ConfigurationBuilder().BuildWCNetConfiguration();
             var options = configuration.GetParserOptions();
             var commandRequestResult = CommandParser.Parse(args, options);
             if (commandRequestResult.IsFailed)
@@ -19,7 +16,7 @@ public class Program
             }
 
             //Build WcNet service provider
-            var serviceProvider = ServiceCollection.BuildWCNetServiceProvider();
+            var serviceProvider = new ServiceCollection().BuildWCNetServiceProvider(commandRequestResult.Value.Filepath);
 
             //Execute CommandHandlerBase.Main
             CommandHandlerBase? handler = commandRequestResult.Value.IsDefault

@@ -9,9 +9,8 @@ internal static class WCNetServiceExtension
         => services
             .AddWCNetOutput()
             .AddWCNetCommandFactories()
-            .AddWCNetCommandResolver()
-            .AddWCNetCommandInvoker()
-            .AddWCNetCommandHandler();
+            .AddWCNetCommandInvokers()
+            .AddWCNetCommandHandlers();
 
     private static IServiceCollection AddWCNetCommandFactories(this IServiceCollection services)
     {
@@ -46,16 +45,11 @@ internal static class WCNetServiceExtension
     private static IServiceCollection AddWCNetOutput(this IServiceCollection services)
         => services.AddSingleton<IOutput, ConsoleOutput>();
 
-    private static IServiceCollection AddWCNetCommandResolver(this IServiceCollection services)
-        => services.AddSingleton<ICommandResolver, DefaultCommandResolver>();
+    private static IServiceCollection AddWCNetCommandInvokers(this IServiceCollection services)
+        => services.AddSingleton<ICommandInvoker, CommandInvoker>();
 
-    private static IServiceCollection AddWCNetCommandInvoker(this IServiceCollection services)
-        => services.AddSingleton<ICommandInvoker, DefaultCommandInvoker>();
-
-    //private static IServiceCollection AddWCNetCommandHandler(this IServiceCollection services)
-    //    => services.AddSingleton<CommandHandlerBase, DefaultCommandHandler>();
-    private static IServiceCollection AddWCNetCommandHandler(this IServiceCollection services)
-        => services.AddSingleton<DefaultCommandHandler>();
-
-    //private static IServiceCollection Add
+    private static IServiceCollection AddWCNetCommandHandlers(this IServiceCollection services)
+        => services
+            .AddSingleton<DefaultCommandHandler>()
+            .AddSingleton<UserCommandHandler>();
 }

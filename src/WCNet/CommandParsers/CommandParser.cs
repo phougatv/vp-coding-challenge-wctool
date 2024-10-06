@@ -1,6 +1,6 @@
 ﻿namespace VP.CodingChallenge.WCNet.CommandParsers;
 
-internal class DefaultCommandParser
+internal class CommandParser
 {
     private const String Dash = "-";
     private const String EmptyString = "";

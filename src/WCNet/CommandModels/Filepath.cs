@@ -4,6 +4,7 @@ public readonly struct Filepath : IEquatable<Filepath>
     public static readonly Filepath Empty = String.Empty;
 
     public String Value { get; }
+    public String Filename => Path.GetFileName(Value);
 
     public Filepath(String value)
     {

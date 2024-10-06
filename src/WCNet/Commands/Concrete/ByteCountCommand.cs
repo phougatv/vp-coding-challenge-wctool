@@ -4,17 +4,16 @@
 internal class ByteCountCommand : ICommand
 {
     private readonly Filepath _filepath;
-    private readonly IOutput _output;
 
-    public ByteCountCommand(Filepath filepath, IOutput output)
+    public ByteCountCommand(Filepath filepath)
     {
         _filepath = filepath;
-        _output = output;
     }
 
-    public void Execute()
+    public Result<Count> Execute()
     {
         var fileInfo = new FileInfo(_filepath);
-        _output.Sink(fileInfo.Length, fileInfo.Name);
+
+        return Result<Count>.Ok(fileInfo.Length);
     }
 }

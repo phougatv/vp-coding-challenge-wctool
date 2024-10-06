@@ -7,7 +7,7 @@ public class Program
 
     static void Main(String[] args)
     {
-        CommandHandlerBase? handler = null;
+        //CommandHandlerBase? handler = null;
         try
         {
             //Build WcNet configuration
@@ -19,17 +19,21 @@ public class Program
                 throw new ParserOptionsLoadFailedException();
             }
 
+            //Get object of TextFileAnalyzer
+
+            //Register the object of TextFileAnalyzer as implementation for all of its interfaces
+
             //Build WcNet service provider
             var serviceProvider = ServiceCollection.BuildWCNetServiceProvider();
 
             //Execute CommandHandlerBase.Main
-            handler = serviceProvider.GetRequiredService<CommandHandlerBase>();
+            var handler = serviceProvider.GetRequiredService<DefaultCommandHandler>();
             handler.Main(commandRequestResult.Value);
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Application terminated. Error: {ex.Message}");
-            handler?.Usage();
+            //handler?.Usage();
         }
     }
 }

@@ -6,7 +6,7 @@ public class ToString
     public void ReturnsStringContainingCommandKeyAndFilepath()
     {
         //Arrange
-        var commandKey = new Command("-c");
+        var commandKey = new CommandKey("-c");
         var expected = "-c";
 
         //Act

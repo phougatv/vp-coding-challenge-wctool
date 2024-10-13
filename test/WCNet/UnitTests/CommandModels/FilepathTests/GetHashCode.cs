@@ -1,4 +1,4 @@
-﻿namespace VP.CodingChallenge.WCNet.Test.UnitTests.CommandModels.CommandKeyTests;
+﻿namespace VP.CodingChallenge.WCNet.Test.UnitTests.CommandModels.FilepathTests;
 
 public class GetHashCode
 {
@@ -6,9 +6,9 @@ public class GetHashCode
     public void ReturnsSameValue_WhenSameInstanceIsCalledMultipleTimes()
     {
         //Arrange
-        var key = new CommandKey("-c");
-        var hash_1 = key.GetHashCode();
-        var hash_2 = key.GetHashCode();
+        var filepath = new Filepath("C:\\test.txt");
+        var hash_1 = filepath.GetHashCode();
+        var hash_2 = filepath.GetHashCode();
 
         //Act
         var actual = hash_1.Equals(hash_2);
@@ -21,12 +21,12 @@ public class GetHashCode
     public void ReturnsSameValue_ForDifferentInstancesWhenTheyAreEqual()
     {
         //Arrange
-        var key_1 = new CommandKey("-c");
-        var key_2 = new CommandKey("-c");
+        var filepath_1 = new Filepath("C:\\test.txt");
+        var filepath_2 = new Filepath("C:\\test.txt");
 
         //Act
-        var hash_1 = key_1.GetHashCode();
-        var hash_2 = key_2.GetHashCode();
+        var hash_1 = filepath_1.GetHashCode();
+        var hash_2 = filepath_2.GetHashCode();
 
         //Assert
         hash_1.Should().Be(hash_2);
@@ -36,12 +36,12 @@ public class GetHashCode
     public void ReturnsDifferentValue_ForDifferentInstancesWhenTheyAreNotEqual()
     {
         //Arrange
-        var key_1 = new CommandKey("-c");
-        var key_2 = new CommandKey("-w");
+        var filepath_1 = new Filepath("C:\\test.txt");
+        var filepath_2 = new Filepath("C:\\test2.txt");
 
         //Act
-        var hash_1 = key_1.GetHashCode();
-        var hash_2 = key_2.GetHashCode();
+        var hash_1 = filepath_1.GetHashCode();
+        var hash_2 = filepath_2.GetHashCode();
 
         //Assert
         hash_1.Should().NotBe(hash_2);

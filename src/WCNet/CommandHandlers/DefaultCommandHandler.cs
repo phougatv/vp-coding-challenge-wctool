@@ -38,6 +38,6 @@ internal class DefaultCommandHandler : CommandHandlerBase
         }
 
         builder.Append(filename);
-        return Result<Message>.Ok(builder);
+        return Result<Message>.Ok(builder.ToString());
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace VP.CodingChallenge.WCNet.Startup;
 
+[ExcludeFromCodeCoverage]
 internal static class WCNetConfigurationExtension
 {
     internal static IConfiguration BuildWCNetConfiguration(this IConfigurationBuilder builder)

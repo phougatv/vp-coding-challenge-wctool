@@ -1,16 +1,16 @@
-﻿namespace VP.CodingChallenge.WCNet.Test.UnitTests.CommandModels.CommandKeyTests;
+﻿namespace VP.CodingChallenge.WCNet.Test.UnitTests.CommandModels.CountTests;
 
 public class Equals
 {
-    #region IEquatable<CommandKey>.Equals
+    #region IEquatable<Count>.Equals
     [Fact]
-    public void ReturnsFalse_WhenInstancesAreNotEqual()
+    public void ReturnsFalse_WhenInstanceAreNotEqual()
     {
         //Arrange
-        var other = new CommandKey("c");
-        var current = new CommandKey("w");
+        var other = new Count(5);
+        var current = new Count(6);
 
-        //Assert
+        //Act
         var actual = current.Equals(other);
 
         //Assert
@@ -21,24 +21,24 @@ public class Equals
     public void ReturnsTrue_WhenInstancesAreEqual()
     {
         //Arrange
-        var other = new CommandKey("c");
-        var current = new CommandKey("c");
+        var other = new Count(5);
+        var current = new Count(5);
 
-        //Assert
+        //Act
         var actual = current.Equals(other);
 
         //Assert
         actual.Should().BeTrue();
     }
-    #endregion IEquatable<CommandKey>.Equals
+    #endregion IEquatable<Count>.Equals
 
-    #region IEquatable<CommandKey>.Equals(Object? obj)
+    #region Equals(Objects? obj)
     [Fact]
     public void ReturnsFalse_WhenObjectIsNull()
     {
         //Arrange
         var obj = (Object?)null;
-        var current = new CommandKey("c");
+        var current = new Count(5);
 
         //Act
         var actual = current.Equals(obj);
@@ -48,13 +48,12 @@ public class Equals
     }
 
     [Fact]
-    public void ReturnsFalse_WhenObjectIsNotNullButIsNotOfTypeCommandKey()
+    public void ReturnsFalse_WhenObjectIsNotNullButIsNotOfTypeCount()
     {
         //Arrange
         var commandKey = new CommandKey("x");
-        var filepath = new Filepath("fake-filepath");
-        var obj = (Object?)CommandRequest.Create(commandKey, filepath);
-        var current = new CommandKey("c");
+        var obj = (Object?)commandKey;
+        var current = new Count(5);
 
         //Act
         var actual = current.Equals(obj);
@@ -64,11 +63,12 @@ public class Equals
     }
 
     [Fact]
-    public void ReturnsFalse_WhenObjectIsNotNullAndIsOfTypeCommandKeyButInstancesAreNotEqual()
+    public void ReturnsFalse_WhenObjectIsNotNullAndIsOfTypeCountButInstancesAreNotEqual()
     {
         //Arrange
-        var obj = (Object?)new CommandKey("w");
-        var current = new CommandKey("c");
+        var other = new Count(6);
+        var obj = (Object?)other;
+        var current = new Count(5);
 
         //Act
         var actual = current.Equals(obj);
@@ -78,11 +78,12 @@ public class Equals
     }
 
     [Fact]
-    public void ReturnsTrue_WhenObjectIsNotNullAndIsOfTypeCommandKeyAndInstancesAreEqual()
+    public void ReturnsTrue_WhenObjectIsNotNullAndIsOfTypeCountAndInstancesAreEqual()
     {
         //Arrange
-        var obj = (Object?)new CommandKey("c");
-        var current = new CommandKey("c");
+        var other = new Count(5);
+        var obj = (Object?)other;
+        var current = new Count(5);
 
         //Act
         var actual = current.Equals(obj);
@@ -90,15 +91,15 @@ public class Equals
         //Assert
         actual.Should().BeTrue();
     }
-    #endregion IEquatable<CommandKey>.Equals(Object? obj)
+    #endregion Equals(Objects? obj)
 
     #region == Operator
     [Fact]
     public void ReturnsFalse_WhenOperandLeftIsNull()
     {
         //Arrange
-        var left = (CommandKey)null!;
-        var right = new CommandKey("c");
+        var left = (Count?)null;
+        var right = new Count(5);
 
         //Act
         var actual = left == right;
@@ -111,8 +112,8 @@ public class Equals
     public void ReturnsFalse_WhenOperandRightIsNull()
     {
         //Arrange
-        var left = new CommandKey("c");
-        var right = (CommandKey)null!;
+        var left = new Count(5);
+        var right = (Count?)null;
 
         //Act
         var actual = left == right;
@@ -125,8 +126,8 @@ public class Equals
     public void ReturnsFalse_WhenOperandsAreNotNullAndNotEqual()
     {
         //Arrange
-        var left = new CommandKey("c");
-        var right = new CommandKey("w");
+        var left = new Count(5);
+        var right = new Count(6);
 
         //Act
         var actual = left == right;
@@ -136,11 +137,11 @@ public class Equals
     }
 
     [Fact]
-    public void ReturnsTrue_WhenOperandsAreNull()
+    public void ReturnsTrue_WhenBothOperandsAreNull()
     {
         //Arrange
-        var left = (CommandKey)null!;
-        var right = (CommandKey)null!;
+        var left = (Count?)null;
+        var right = (Count?)null;
 
         //Act
         var actual = left == right;
@@ -150,11 +151,11 @@ public class Equals
     }
 
     [Fact]
-    public void ReturnsTrue_WhenOperandsAreNotNullAndEqual()
+    public void ReturnsTrue_WhenBothOperandsAreEqual()
     {
         //Arrange
-        var left = new CommandKey("c");
-        var right = new CommandKey("c");
+        var left = new Count(5);
+        var right = new Count(5);
 
         //Act
         var actual = left == right;

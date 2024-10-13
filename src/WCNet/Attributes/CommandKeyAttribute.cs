@@ -1,5 +1,6 @@
 ﻿namespace VP.CodingChallenge.WCNet.Attributes;
 
+[ExcludeFromCodeCoverage]
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
 internal sealed class CommandKeyAttribute(CommandKey key) : Attribute
 {

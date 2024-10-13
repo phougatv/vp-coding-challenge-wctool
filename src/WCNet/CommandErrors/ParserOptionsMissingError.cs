@@ -11,7 +11,7 @@ internal class ParserOptionsMissingError : Error
     }
 
     internal static ParserOptionsMissingError Create()
-        => new ParserOptionsMissingError($"Either ParserOptions object is null or one of its properties is null/empty.");
+        => new ParserOptionsMissingError("Either ParserOptions object is null or one of its properties is null/empty.");
 
     public override String ToString() => _message;
 }

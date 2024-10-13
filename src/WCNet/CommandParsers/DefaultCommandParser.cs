@@ -1,6 +1,6 @@
 ﻿namespace VP.CodingChallenge.WCNet.CommandParsers;
 
-internal class CommandParser
+internal class DefaultCommandParser
 {
     private const String Dash = "-";
     private const String EmptyString = "";
@@ -30,6 +30,7 @@ internal class CommandParser
     #region Private Methods
     private static Boolean IsConfigurationMissing([NotNullWhen(false)] ParserOptions? options)
         => options is null ||
+        options.DefaultCommands is null ||
         options.DefaultCommands.Length == 0 ||
         String.IsNullOrEmpty(options.AllowedCommandPattern) ||
         String.IsNullOrEmpty(options.AllowedFileExtension);

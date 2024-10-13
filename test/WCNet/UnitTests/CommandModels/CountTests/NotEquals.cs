@@ -1,4 +1,4 @@
-﻿namespace VP.CodingChallenge.WCNet.Test.UnitTests.CommandModels.CommandKeyTests;
+﻿namespace VP.CodingChallenge.WCNet.Test.UnitTests.CommandModels.CountTests;
 
 public class NotEquals
 {
@@ -6,8 +6,8 @@ public class NotEquals
     public void ReturnsFalse_WhenInstancesAreEqual()
     {
         //Arrange
-        var left = new CommandKey("-c");
-        var right = new CommandKey("-c");
+        var left = new Count(1);
+        var right = new Count(1);
 
         //Act
         var actual = left != right;
@@ -20,8 +20,8 @@ public class NotEquals
     public void ReturnsTrue_WhenInstancesAreNotEqual()
     {
         //Arrange
-        var left = new CommandKey("-c");
-        var right = new CommandKey("-w");
+        var left = new Count(1);
+        var right = new Count(2);
 
         //Act
         var actual = left != right;

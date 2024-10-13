@@ -1,4 +1,4 @@
-﻿namespace VP.CodingChallenge.WCNet.Test.UnitTests.CommandModels.CommandKeyTests;
+﻿namespace VP.CodingChallenge.WCNet.Test.UnitTests.CommandModels.CountTests;
 
 public class GetHashCode
 {
@@ -6,9 +6,9 @@ public class GetHashCode
     public void ReturnsSameValue_WhenSameInstanceIsCalledMultipleTimes()
     {
         //Arrange
-        var key = new CommandKey("-c");
-        var hash_1 = key.GetHashCode();
-        var hash_2 = key.GetHashCode();
+        var count = new Count(1);
+        var hash_1 = count.GetHashCode();
+        var hash_2 = count.GetHashCode();
 
         //Act
         var actual = hash_1.Equals(hash_2);
@@ -21,12 +21,12 @@ public class GetHashCode
     public void ReturnsSameValue_ForDifferentInstancesWhenTheyAreEqual()
     {
         //Arrange
-        var key_1 = new CommandKey("-c");
-        var key_2 = new CommandKey("-c");
+        var count_1 = new Count(1);
+        var count_2 = new Count(1);
 
         //Act
-        var hash_1 = key_1.GetHashCode();
-        var hash_2 = key_2.GetHashCode();
+        var hash_1 = count_1.GetHashCode();
+        var hash_2 = count_2.GetHashCode();
 
         //Assert
         hash_1.Should().Be(hash_2);
@@ -36,12 +36,12 @@ public class GetHashCode
     public void ReturnsDifferentValue_ForDifferentInstancesWhenTheyAreNotEqual()
     {
         //Arrange
-        var key_1 = new CommandKey("-c");
-        var key_2 = new CommandKey("-w");
+        var count_1 = new Count(1);
+        var count_2 = new Count(2);
 
         //Act
-        var hash_1 = key_1.GetHashCode();
-        var hash_2 = key_2.GetHashCode();
+        var hash_1 = count_1.GetHashCode();
+        var hash_2 = count_2.GetHashCode();
 
         //Assert
         hash_1.Should().NotBe(hash_2);

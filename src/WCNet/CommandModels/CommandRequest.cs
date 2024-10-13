@@ -3,13 +3,13 @@
 public class CommandRequest : IEquatable<CommandRequest>
 {
     public CommandKey CommandKey { get; }
-    public IReadOnlyList<CommandKey> DefaultCommandKeys { get; }
+    public IReadOnlyCollection<CommandKey> DefaultCommandKeys { get; }
     public Boolean IsDefault { get; }
 	public Filepath Filepath { get; }
 
     private CommandRequest(
         CommandKey commandKey,
-        IReadOnlyList<CommandKey> defaultCommandKeys,
+        IReadOnlyCollection<CommandKey> defaultCommandKeys,
         String filepath,
         Boolean isDefault)
     {
@@ -25,8 +25,22 @@ public class CommandRequest : IEquatable<CommandRequest>
         => new CommandRequest(CommandKey.None, defaultCommands, filepath, true);
 	public Boolean Equals(CommandRequest? other) => this == other;
 	public override Boolean Equals(Object? obj) => obj is not null && obj is CommandRequest other && Equals(other);
-	public override Int32 GetHashCode() => HashCode.Combine(CommandKey, Filepath);
-	public override String ToString() => $"Command: {CommandKey}, Filename: \"{Path.GetFileName(Filepath)}\"";
+    public override Int32 GetHashCode()
+    {
+        var defaultKeysHash = DefaultCommandKeys.Aggregate(0, (hash, key) => HashCode.Combine(hash, key));
+        return HashCode.Combine(CommandKey, Filepath, IsDefault, defaultKeysHash);
+    }
+	public override String ToString()
+    {
+        var filename = Path.GetFileName(Filepath);
+
+        if (IsDefault)
+        {
+            return $"Default command keys: {String.Join(", ", DefaultCommandKeys)}, Filename: \"{filename}\"";
+        }
+
+        return $"Command key: {CommandKey}, Filename: \"{filename}\"";
+    }
 	public static Boolean operator ==(CommandRequest? left, CommandRequest? right)
     {
         if (ReferenceEquals(left, right))
@@ -39,7 +53,11 @@ public class CommandRequest : IEquatable<CommandRequest>
             return false;
         }
 
-        return left.CommandKey == right.CommandKey && String.Equals(left.Filepath, right.Filepath, StringComparison.Ordinal);
+        return
+            left.CommandKey == right.CommandKey &&
+            String.Equals(left.Filepath, right.Filepath, StringComparison.Ordinal) &&
+            left.IsDefault == right.IsDefault &&
+            Enumerable.SequenceEqual(left.DefaultCommandKeys, right.DefaultCommandKeys);
     }
 	public static Boolean operator !=(CommandRequest? left, CommandRequest? right) => !(left == right);
 }

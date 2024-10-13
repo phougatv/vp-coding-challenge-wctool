@@ -1,4 +1,4 @@
-﻿namespace VP.CodingChallenge.WCNet.Test.UnitTests.CommandModels.CommandKeyTests;
+﻿namespace VP.CodingChallenge.WCNet.Test.UnitTests.CommandModels.CommandRequestTests;
 
 public class NotEquals
 {
@@ -6,8 +6,8 @@ public class NotEquals
     public void ReturnsFalse_WhenInstancesAreEqual()
     {
         //Arrange
-        var left = new CommandKey("-c");
-        var right = new CommandKey("-c");
+        var left = CommandRequest.Create(CommandKey.None, "filepath");
+        var right = CommandRequest.Create(CommandKey.None, "filepath");
 
         //Act
         var actual = left != right;
@@ -20,8 +20,8 @@ public class NotEquals
     public void ReturnsTrue_WhenInstancesAreNotEqual()
     {
         //Arrange
-        var left = new CommandKey("-c");
-        var right = new CommandKey("-w");
+        var left = CommandRequest.Create(CommandKey.None, "filepath");
+        var right = CommandRequest.Create(CommandKey.None, "different filepath");
 
         //Act
         var actual = left != right;

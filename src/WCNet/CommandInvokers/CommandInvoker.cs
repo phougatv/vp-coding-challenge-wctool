@@ -1,4 +1,5 @@
-﻿namespace VP.CodingChallenge.WCNet.CommandInvokers;
+﻿[assembly: InternalsVisibleTo("VP.CodingChallenge.WCNet.Tests")]
+namespace VP.CodingChallenge.WCNet.CommandInvokers;
 
 internal class CommandInvoker : ICommandInvoker
 {

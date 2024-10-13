@@ -1,5 +1,6 @@
 ﻿namespace VP.CodingChallenge.WCNet.Configurations;
 
+[ExcludeFromCodeCoverage]
 public class ParserOptions
 {
     public String AllowedFileExtension { get; set; } = String.Empty;

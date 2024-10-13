@@ -14,7 +14,7 @@ internal class CountCommandFactory(IServiceProvider serviceProvider) : ICommandF
         return command;
     }
 
-    public ICollection<ICommand> CreateCommands(IReadOnlyList<CommandKey> commandKeys)
+    public ICollection<ICommand> CreateCommands(IReadOnlyCollection<CommandKey> commandKeys)
     {
         ICollection<ICommand> commands = commandKeys.Count < 1 ? Array.Empty<ICommand>() : new List<ICommand>(commandKeys.Count);
         foreach (var commandKey in commandKeys)

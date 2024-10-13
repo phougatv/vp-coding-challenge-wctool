@@ -1,8 +1,8 @@
-﻿namespace VP.CodingChallenge.WCNet.Test.IntegrationTests;
+﻿namespace VP.CodingChallenge.WCNet.Test.FileOperations;
 
 public class FilesDirectoryFixture : IDisposable
 {
-    public String FilesDirectory { get; }
+    public string FilesDirectory { get; }
 
     public FilesDirectoryFixture()
     {

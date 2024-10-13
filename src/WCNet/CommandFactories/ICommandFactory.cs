@@ -3,5 +3,5 @@
 internal interface ICommandFactory
 {
     ICommand CreateCommand(CommandKey commandKey);
-    ICollection<ICommand> CreateCommands(IReadOnlyList<CommandKey> commandKeys);
+    ICollection<ICommand> CreateCommands(IReadOnlyCollection<CommandKey> commandKeys);
 }

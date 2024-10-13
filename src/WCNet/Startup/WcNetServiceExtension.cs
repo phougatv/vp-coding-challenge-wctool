@@ -1,5 +1,6 @@
 ﻿namespace VP.CodingChallenge.WCNet.Startup;
 
+[ExcludeFromCodeCoverage]
 internal static class WCNetServiceExtension
 {
     internal static IServiceProvider BuildWCNetServiceProvider(this IServiceCollection services, Filepath filepath)

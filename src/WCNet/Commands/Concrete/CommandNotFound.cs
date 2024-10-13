@@ -2,5 +2,12 @@
 
 internal class CommandNotFound : ICommand
 {
-	public Result<Count> Execute() => Result<Count>.Fail(CommandNotFoundError.Create());
+    private readonly CommandKey _key;
+
+    internal CommandNotFound(CommandKey key)
+    {
+        _key = key;
+    }
+
+	public Result<Count> Execute() => Result<Count>.Fail(CommandNotFoundError.Create(_key));
 }

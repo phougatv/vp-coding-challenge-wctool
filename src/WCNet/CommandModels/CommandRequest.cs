@@ -2,14 +2,14 @@
 
 public class CommandRequest : IEquatable<CommandRequest>
 {
-    public Command CommandKey { get; }
-    public IReadOnlyList<Command> DefaultCommandKeys { get; }
+    public CommandKey CommandKey { get; }
+    public IReadOnlyList<CommandKey> DefaultCommandKeys { get; }
     public Boolean IsDefault { get; }
 	public Filepath Filepath { get; }
 
     private CommandRequest(
-        Command commandKey,
-        IReadOnlyList<Command> defaultCommandKeys,
+        CommandKey commandKey,
+        IReadOnlyList<CommandKey> defaultCommandKeys,
         String filepath,
         Boolean isDefault)
     {
@@ -19,10 +19,10 @@ public class CommandRequest : IEquatable<CommandRequest>
         IsDefault = isDefault;
     }
 
-    public static CommandRequest Create(Command command, Filepath filepath)
-        => new CommandRequest(command, Array.Empty<Command>(), filepath, false);
-    public static CommandRequest CreateDefault(Command[] defaultCommands, Filepath filepath)
-        => new CommandRequest(Command.None, defaultCommands, filepath, true);
+    public static CommandRequest Create(CommandKey command, Filepath filepath)
+        => new CommandRequest(command, Array.Empty<CommandKey>(), filepath, false);
+    public static CommandRequest CreateDefault(CommandKey[] defaultCommands, Filepath filepath)
+        => new CommandRequest(CommandKey.None, defaultCommands, filepath, true);
 	public Boolean Equals(CommandRequest? other) => this == other;
 	public override Boolean Equals(Object? obj) => obj is not null && obj is CommandRequest other && Equals(other);
 	public override Int32 GetHashCode() => HashCode.Combine(CommandKey, Filepath);

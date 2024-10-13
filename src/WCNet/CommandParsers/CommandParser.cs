@@ -43,7 +43,7 @@ internal class CommandParser
     private static String RemoveDash(String commandValue) => commandValue.Replace(Dash, EmptyString);
 
     private static Result<CommandRequest> ParseToDefaultCommands(
-        Command[] defaultCommands,
+        CommandKey[] defaultCommands,
         String directory,
         String filename,
         String allowedExtension)
@@ -67,7 +67,7 @@ internal class CommandParser
         var commandRegex = new Regex(allowedCommandPattern);
         if (!commandRegex.IsMatch(commandValue))
         {
-            return Result<CommandRequest>.Fail(CommandNotFoundError.Create());
+            return Result<CommandRequest>.Fail(CommandNotFoundError.Create(commandValue));
         }
 
         var filepathResult = ValidateFilepath(directory, filename, allowedExtension);

@@ -22,8 +22,7 @@ internal static class WCNetServiceExtension
         var commandTypes = Assembly
             .GetExecutingAssembly()
             .GetTypes()
-            .Where(type =>
-                typeof(ICommand).IsAssignableFrom(type) && !type.IsAbstract && type.IsClass)
+            .Where(type => typeof(ICommand).IsAssignableFrom(type) && !type.IsAbstract && type.IsClass)
             .ToList();
 
         foreach (var type in commandTypes)

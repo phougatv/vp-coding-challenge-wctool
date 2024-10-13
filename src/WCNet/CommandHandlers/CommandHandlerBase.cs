@@ -2,8 +2,15 @@
 
 public abstract class CommandHandlerBase
 {
+    private readonly IOutput _output;
+
+    protected CommandHandlerBase(IOutput output)
+    {
+        _output = output;
+    }
+
     protected abstract Result<Message> Handle(CommandRequest commandRequest);
-    protected abstract void PostHandle(Message message);
+    protected void PostHandle(Message message) => _output.Sink(message);
 
     public void Main(CommandRequest commandRequest)
     {

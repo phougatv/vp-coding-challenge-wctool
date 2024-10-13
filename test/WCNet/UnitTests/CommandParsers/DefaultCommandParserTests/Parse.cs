@@ -1,221 +1,367 @@
-﻿//namespace VP.CodingChallenge.WCNet.Test.UnitTests.CommandParsers.DefaultCommandParserTests;
+﻿namespace VP.CodingChallenge.WCNet.Test.UnitTests.CommandParsers.DefaultCommandParserTests;
 
-//public class Parse
-//{
-//    #region Failure Cases
-//    [Fact]
-//    public void FailsWithCommandFormatError_WhenArgumentArrayIsEmpty()
-//    {
-//        //Arrange
-//        var args = Array.Empty<String>();
-//        var mockedOptions = Substitute.For<IOptions<ParserOptions>>();
-//        var parser = new DefaultCommandParser(mockedOptions);
+using VP.CodingChallenge.WCNet.Test.FileOperations;
 
-//        //Act
-//        var actualResult = parser.Parse(args);
+public class Parse(FilesDirectoryFixture fixture) : IClassFixture<FilesDirectoryFixture>
+{
+    private readonly FilesDirectoryFixture _fixture = fixture;
 
-//        //Assert
-//        actualResult.Should().NotBeNull().And.BeOfType<Result<CommandArgument>>();
-//        actualResult.IsFailed.Should().BeTrue();
-//        actualResult.Error.Should().NotBeNull().And.BeOfType<CommandFormatError>();
-//        actualResult.Error.Message.Should().NotBeNullOrEmpty().And.Be("Incorrect command format, try -<command> <filepath_along_with_filename.extension>.");
-//    }
+    [Fact]
+    public void ReturnsFailedResultOfCommandRequest_WhenArgsIsNull()
+    {
+        //Arrange
+        String[] args = null!;
+        var options = new ParserOptions();
 
-//    [Fact]
-//    public void FailsWithCommandFormatError_WhenArgumentArrayHasMoreThanTwoItems()
-//    {
-//        //Arrange
-//        var args = new String[] { "-c", "", "filename.txt" };
-//        var mockedOptions = Substitute.For<IOptions<ParserOptions>>();
-//        var parser = new DefaultCommandParser(mockedOptions);
+        //Act
+        var result = DefaultCommandParser.Parse(args, options);
 
-//        //Act
-//        var actualResult = parser.Parse(args);
+        //Assert
+        result.IsFailed.Should().BeTrue();
+        result.Error.Should().BeOfType<CommandFormatError>();
+    }
 
-//        //Assert
-//        actualResult.Should().NotBeNull().And.BeOfType<Result<CommandArgument>>();
-//        actualResult.IsFailed.Should().BeTrue();
-//        actualResult.Error.Should().NotBeNull().And.BeOfType<CommandFormatError>();
-//        actualResult.Error.Message.Should().NotBeNullOrEmpty().And.Be("Incorrect command format, try -<command> <filepath_along_with_filename.extension>.");
-//    }
+    [Fact]
+    public void ReturnsFailedResultOfCommandRequest_WhenArgsIsEmpty()
+    {
+        //Arrange
+        var args = Array.Empty<String>();
+        var options = new ParserOptions();
 
-//    [Fact]
-//    public void FailsWithFileExtensionNotAllowedError_WhenFilenameIsTheOnlyItemInTheArgumentArray_AndItsExtensionIsNotAllowed()
-//    {
-//        //Arrange
-//        var args = new String[] { "filename.exe" };
-//        var fileExtension = Path.GetExtension(args[^1]);
-//        var mockedOptions = Substitute.For<IOptions<ParserOptions>>();
-//        mockedOptions.Value.Returns(new ParserOptions
-//        {
-//            AllowedFileExtension = ".txt"
-//        });
+        //Act
+        var result = DefaultCommandParser.Parse(args, options);
 
-//        var parser = new DefaultCommandParser(mockedOptions);
+        //Assert
+        result.IsFailed.Should().BeTrue();
+        result.Error.Should().BeOfType<CommandFormatError>();
+    }
 
-//        //Act
-//        var actualResult = parser.Parse(args);
+    [Fact]
+    public void ReturnsFailedResultOfCommandRequest_WhenArgsLengthIsGreaterThanTwo()
+    {
+        //Arrange
+        var command = "-c";
+        var filepath = @"c:\fake\file\path\filename.txt";
+        var args = new[] { command, filepath, "extra" };
+        var options = new ParserOptions();
 
-//        //Assert
-//        actualResult.Should().NotBeNull().And.BeOfType<Result<CommandArgument>>();
-//        actualResult.IsFailed.Should().BeTrue();
-//        actualResult.Error.Should().NotBeNull().And.BeOfType<FileExtensionNotAllowedError>();
-//        actualResult.Error.Message.Should().NotBeNullOrEmpty().And.Be($"File extension: \".{fileExtension}\", is not allowed.");
-//    }
+        //Act
+        var result = DefaultCommandParser.Parse(args, options);
 
-//    [Fact]
-//    public void FailsWithFileNotFounError_WhenFilenameIsTheOnlyItemInTheArgumentArray_AndItDoesNotExists()
-//    {
-//        //Arrange
-//        var args = new String[] { "filename.txt" };
-//        var filename = args[^1];
-//        var mockedOptions = Substitute.For<IOptions<ParserOptions>>();
-//        mockedOptions.Value.Returns(new ParserOptions
-//        {
-//            AllowedFileExtension = ".txt"
-//        });
+        //Assert
+        result.IsFailed.Should().BeTrue();
+        result.Error.Should().BeOfType<CommandFormatError>();
+    }
 
-//        var parser = new DefaultCommandParser(mockedOptions);
+    [Fact]
+    public void ReturnsFailedResultOfCommandRequest_WhenParserOptionsIsNull()
+    {
+        //Arrange
+        var command = "-c";
+        var filepath = @"c:\fake\file\path\filename.txt";
+        var args = new[] { command, filepath };
+        ParserOptions? options = null;
 
-//        //Act
-//        var actualResult = parser.Parse(args);
+        //Act
+        var result = DefaultCommandParser.Parse(args, options);
 
-//        //Assert
-//        actualResult.Should().NotBeNull().And.BeOfType<Result<CommandArgument>>();
-//        actualResult.IsFailed.Should().BeTrue();
-//        actualResult.Error.Should().NotBeNull().And.BeOfType<FileNotFoundError>();
-//        actualResult.Error.Message.Should().NotBeNullOrEmpty().And.Be($"File: {filename}, not found.");
-//    }
+        //Assert
+        result.IsFailed.Should().BeTrue();
+        result.Error.Should().BeOfType<ParserOptionsMissingError>();
+    }
 
-//    [Fact]
-//    public void FailsWithCommandNotFoundError_WhenArgumentArrayHasCommandAndFilename_AndCommandDoesNotExists()
-//    {
-//        //Arrange
-//        var args = new String[] { "-w", "filename.txt" };
-//        var mockedOptions = Substitute.For<IOptions<ParserOptions>>();
-//        mockedOptions.Value.Returns(new ParserOptions { CommandExpression = "^(-[cl])" });
+    [Fact]
+    public void ReturnsFailedResultOfCommandRequest_WhenDefaultCommandsIsNull()
+    {
+        //Arrange
+        var command = "-c";
+        var filepath = @"c:\fake\file\path\filename.txt";
+        var args = new[] { command, filepath };
+        var options = new ParserOptions { DefaultCommands = null! };
 
-//        var parser = new DefaultCommandParser(mockedOptions);
+        //Act
+        var result = DefaultCommandParser.Parse(args, options);
 
-//        //Act
-//        var actualResult = parser.Parse(args);
+        //Assert
+        result.IsFailed.Should().BeTrue();
+        result.Error.Should().BeOfType<ParserOptionsMissingError>();
+    }
 
-//        //Assert
-//        actualResult.Should().NotBeNull().And.BeOfType<Result<CommandArgument>>();
-//        actualResult.IsFailed.Should().BeTrue();
-//        actualResult.Error.Should().NotBeNull().And.BeOfType<CommandNotFoundError>();
-//        actualResult.Error.Message.Should().NotBeNullOrEmpty().And.Be("Command: \"-w\" not found.");
-//    }
+    [Fact]
+    public void ReturnsFailedResultOfCommandRequest_WhenDefaultCommandsIsEmpty()
+    {
+        //Arrange
+        var command = "-c";
+        var filepath = @"c:\fake\file\path\filename.txt";
+        var args = new[] { command, filepath };
+        var options = new ParserOptions { DefaultCommands = Array.Empty<CommandKey>() };
 
-//    [Fact]
-//    public void FailsWithFileExtensionNotAllowedError_WhenArgumentArrayHasCommandAndFilename_AndFileExtensionIsNotAllowed()
-//    {
-//        //Arrange
-//        var args = new String[] { "-c", "filename.exe" };
-//        var fileExtension = Path.GetExtension(args[^1]);
-//        var mockedOptions = Substitute.For<IOptions<ParserOptions>>();
-//        mockedOptions.Value.Returns(new ParserOptions
-//        {
-//            CommandExpression = "^(-[cl])",
-//            AllowedFileExtension = ".txt"
-//        });
+        //Act
+        var result = DefaultCommandParser.Parse(args, options);
 
-//        var parser = new DefaultCommandParser(mockedOptions);
+        //Assert
+        result.IsFailed.Should().BeTrue();
+        result.Error.Should().BeOfType<ParserOptionsMissingError>();
+    }
 
-//        //Act
-//        var actualResult = parser.Parse(args);
+    [Fact]
+    public void ReturnsFailedResultOfCommandRequest_WhenAllowedCommandPatternIsNull()
+    {
+        //Arrange
+        var command = "-c";
+        var filepath = @"c:\fake\file\path\filename.txt";
+        var args = new[] { command, filepath };
+        var defaultCommands = new[] { new CommandKey("c"), new CommandKey("l"), new CommandKey("w") };
+        var options = new ParserOptions { DefaultCommands = defaultCommands, AllowedCommandPattern = null! };
 
-//        //Assert
-//        actualResult.Should().NotBeNull().And.BeOfType<Result<CommandArgument>>();
-//        actualResult.IsFailed.Should().BeTrue();
-//        actualResult.Error.Should().NotBeNull().And.BeOfType<FileExtensionNotAllowedError>();
-//        actualResult.Error.Message.Should().NotBeNullOrEmpty().And.Be($"File extension: \".{fileExtension}\", is not allowed.");
-//    }
+        //Act
+        var result = DefaultCommandParser.Parse(args, options);
 
-//    [Fact]
-//    public void FailsWithFileNotFoundError_WhenArgumentArrayHasCommandAndFilename_AndFileDoesNotExists()
-//    {
-//        //Arrange
-//        var args = new String[] { "-c", "filename.txt" };
-//        var filename = args[^1];
-//        var mockedOptions = Substitute.For<IOptions<ParserOptions>>();
-//        mockedOptions.Value.Returns(new ParserOptions
-//        {
-//            CommandExpression = "^(-[cl])",
-//            AllowedFileExtension = ".txt"
-//        });
+        //Assert
+        result.IsFailed.Should().BeTrue();
+        result.Error.Should().BeOfType<ParserOptionsMissingError>();
+    }
 
-//        var parser = new DefaultCommandParser(mockedOptions);
+    [Fact]
+    public void ReturnsFailedResultOfCommandRequest_WhenAllowedCommandPatternIsEmpty()
+    {
+        //Arrange
+        var command = "-c";
+        var filepath = @"c:\fake\file\path\filename.txt";
+        var args = new[] { command, filepath };
+        var defaultCommands = new[] { new CommandKey("c"), new CommandKey("l"), new CommandKey("w") };
+        var options = new ParserOptions { DefaultCommands = defaultCommands, AllowedCommandPattern = String.Empty };
 
-//        //Act
-//        var actualResult = parser.Parse(args);
+        //Act
+        var result = DefaultCommandParser.Parse(args, options);
 
-//        //Assert
-//        actualResult.Should().NotBeNull().And.BeOfType<Result<CommandArgument>>();
-//        actualResult.IsFailed.Should().BeTrue();
-//        actualResult.Error.Should().NotBeNull().And.BeOfType<FileNotFoundError>();
-//        actualResult.Error.Message.Should().NotBeNullOrEmpty().And.Be($"File: {filename}, not found.");
-//    }
-//    #endregion Failure Cases
+        //Assert
+        result.IsFailed.Should().BeTrue();
+        result.Error.Should().BeOfType<ParserOptionsMissingError>();
+    }
 
-//    #region Success Cases
-//    [Fact]
-//    public void SuccessfullyReturnsInstanceOfCommandArgumentWithDefaultCommands_WhenFilenameIsTheOnlyItemInTheArgumentArray()
-//    {
-//        //Arrange
-//        var tempPath = Path.GetTempPath();
-//        var filename = "testfile.txt";
-//        var args = new String[] { filename };
-//        var stubOptions = Substitute.For<IOptions<ParserOptions>>();
-//        var parserOptions = new ParserOptions
-//        {
-//            DefaultCommands = ["l", "w", "c"],
-//            CommandExpression = "^(-[cl])",
-//            AllowedFileExtension = ".txt",
-//            Directory = tempPath
-//        };
-//        stubOptions.Value.Returns(parserOptions);
+    [Fact]
+    public void ReturnsFailedResultOfCommandRequest_WhenAllowedFileExtensionIsNull()
+    {
+        //Arrange
+        var command = "-c";
+        var filepath = @"c:\fake\file\path\filename.txt";
+        var args = new[] { command, filepath };
+        var defaultCommands = new[] { new CommandKey("c"), new CommandKey("l"), new CommandKey("w") };
+        var options = new ParserOptions
+        {
+            DefaultCommands = defaultCommands,
+            AllowedCommandPattern = "^(-[clwm])",
+            AllowedFileExtension = null!
+        };
 
-//        var parser = new DefaultCommandParser(stubOptions);
-//        var expectedResult = CommandArgument.Create(parserOptions.DefaultCommands, Path.Combine(tempPath, filename));
+        //Act
+        var result = DefaultCommandParser.Parse(args, options);
 
-//        //Act
-//        var actualResult = parser.Parse(args);
+        //Assert
+        result.IsFailed.Should().BeTrue();
+        result.Error.Should().BeOfType<ParserOptionsMissingError>();
+    }
 
-//        //Assert
-//        actualResult.Should().NotBeNull().And.BeOfType<Result<CommandArgument>>();
-//        actualResult.Errors.Should().BeEmpty();
-//        actualResult.IsSuccess.Should().BeTrue();
-//        actualResult.Value.Should().Be(expectedResult);
-//    }
+    [Fact]
+    public void ReturnsFailedResultOfCommandRequest_WhenAllowedFileExtensionIsEmpty()
+    {
+        //Arrange
+        var command = "-c";
+        var filepath = @"c:\fake\file\path\filename.txt";
+        var args = new[] { command, filepath };
+        var defaultCommands = new[] { new CommandKey("c"), new CommandKey("l"), new CommandKey("w") };
+        var options = new ParserOptions
+        {
+            DefaultCommands = defaultCommands,
+            AllowedCommandPattern = "^(-[clwm])",
+            AllowedFileExtension = String.Empty
+        };
 
-//    [Fact]
-//    public void SuccessfullyReturnsInstanceOfCommandArgumentWithSpecifiedCommand_WhenArgumentArrayHasCorrectCommandAndFilename()
-//    {
-//        //Arrange
-//        var tempPath = Path.GetTempPath();
-//        var commandKey = "c";
-//        var filename = "testfile.txt";
-//        var args = new String[] { "-c", filename };
-//        var stubOptions = Substitute.For<IOptions<ParserOptions>>();
-//        stubOptions.Value.Returns(new ParserOptions
-//        {
-//            CommandExpression = "^(-[cl])",
-//            AllowedFileExtension = ".txt",
-//            Directory = tempPath
-//        });
+        //Act
+        var result = DefaultCommandParser.Parse(args, options);
 
-//        var parser = new DefaultCommandParser(stubOptions);
-//        var expectedResult = CommandArgument.Create([commandKey], Path.Combine(tempPath, filename));
+        //Assert
+        result.IsFailed.Should().BeTrue();
+        result.Error.Should().BeOfType<ParserOptionsMissingError>();
+    }
 
-//        //Act
-//        var actualResult = parser.Parse(args);
+    [Fact]
+    public void ReturnsFailedResultOfCommandRequest_ForDefaultCommandWhenFileExtensionIsNotAllowed()
+    {
+        //Arrange
+        var filepath = @"c:\fake\file\path\filename.docx";
+        var args = new[] { filepath };
+        var defaultCommands = new[] { new CommandKey("c"), new CommandKey("l"), new CommandKey("w") };
+        var options = new ParserOptions
+        {
+            DefaultCommands = defaultCommands,
+            AllowedCommandPattern = "^(-[clwm])",
+            AllowedFileExtension = ".txt"
+        };
 
-//        //Assert
-//        actualResult.Should().NotBeNull().And.BeOfType<Result<CommandArgument>>();
-//        actualResult.Errors.Should().BeEmpty();
-//        actualResult.IsSuccess.Should().BeTrue();
-//        actualResult.Value.Should().Be(expectedResult);
-//    }
-//    #endregion Success Cases
-//}
+        //Act
+        var result = DefaultCommandParser.Parse(args, options);
+
+        //Assert
+        result.IsFailed.Should().BeTrue();
+        result.Error.Should().BeOfType<FileExtensionNotAllowedError>();
+    }
+
+    [Fact]
+    public void ReturnsFailedResultOfCommandRequest_ForDefaultCommandWhenFileDoesNotExists()
+    {
+        //Arrange
+        var filepath = @"c:\fake\file\path\filename.txt";
+        var args = new[] { filepath };
+        var defaultCommands = new[] { new CommandKey("c"), new CommandKey("l"), new CommandKey("w") };
+        var options = new ParserOptions
+        {
+            DefaultCommands = defaultCommands,
+            AllowedCommandPattern = "^(-[clwm])",
+            AllowedFileExtension = ".txt"
+        };
+
+        //Act
+        var result = DefaultCommandParser.Parse(args, options);
+
+        //Assert
+        result.IsFailed.Should().BeTrue();
+        result.Error.Should().BeOfType<FileNotFoundError>();
+    }
+
+    [Fact]
+    public void ReturnsSuccessfulResultOfCommandRequest_ForDefaultCommandWhenFileExtensionIsAllowedAndFileExists()
+    {
+        //Arrange
+        var filename = "filename.txt";
+        var args = new[] { filename };
+        var filepath = Path.Combine(_fixture.FilesDirectory, filename);
+        var defaultCommands = new[] { new CommandKey("c"), new CommandKey("l"), new CommandKey("w") };
+        var options = new ParserOptions
+        {
+            DefaultCommands = defaultCommands,
+            AllowedCommandPattern = "^(-[clwm])",
+            AllowedFileExtension = ".txt",
+            Directory = _fixture.FilesDirectory
+        };
+        CreateTestFile(filename, "Hello World!");
+
+        //Act
+        var result = DefaultCommandParser.Parse(args, options);
+
+        //Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().BeOfType<CommandRequest>();
+        result.Value.IsDefault.Should().BeTrue();
+        result.Value.Filepath.Value.Should().Be(filepath);
+        result.Value.DefaultCommandKeys.Should().Equal(defaultCommands);
+    }
+
+    [Fact]
+    public void ReturnsFailedResultOfCommandRequest_ForUserCommandWhenCommandIsNotFound()
+    {
+       //Arrange
+        var command = "-x";
+        var filepath = @"c:\fake\file\path\filename.txt";
+        var args = new[] { command, filepath };
+        var defaultCommands = new[] { new CommandKey("c"), new CommandKey("l"), new CommandKey("w") };
+        var options = new ParserOptions
+        {
+            DefaultCommands = defaultCommands,
+            AllowedCommandPattern = "^(-[clwm])",
+            AllowedFileExtension = ".txt"
+        };
+
+        //Act
+        var result = DefaultCommandParser.Parse(args, options);
+
+        //Assert
+        result.IsFailed.Should().BeTrue();
+        result.Error.Should().BeOfType<CommandNotFoundError>();
+    }
+
+    [Fact]
+    public void ReturnsFailedResultOfCommandRequest_ForUserCommandWhenFileExtensionIsNotAllowed()
+    {
+        //Arrange
+        var command = "-c";
+        var filepath = @"c:\fake\file\path\filename.docx";
+        var args = new[] { command, filepath };
+        var defaultCommands = new[] { new CommandKey("c"), new CommandKey("l"), new CommandKey("w") };
+        var options = new ParserOptions
+        {
+            DefaultCommands = defaultCommands,
+            AllowedCommandPattern = "^(-[clwm])",
+            AllowedFileExtension = ".txt"
+        };
+
+        //Act
+        var result = DefaultCommandParser.Parse(args, options);
+
+        //Assert
+        result.IsFailed.Should().BeTrue();
+        result.Error.Should().BeOfType<FileExtensionNotAllowedError>();
+    }
+
+    [Fact]
+    public void ReturnsFailedResultOfCommandRequest_ForUserCommandWhenFileDoesNotExists()
+    {
+        //Arrange
+        var command = "-c";
+        var filename = "test-1.txt";
+        var args = new[] { command, filename };
+        var defaultCommands = new[] { new CommandKey("c"), new CommandKey("l"), new CommandKey("w") };
+        var options = new ParserOptions
+        {
+            DefaultCommands = defaultCommands,
+            AllowedCommandPattern = "^(-[clwm])",
+            AllowedFileExtension = ".txt",
+            Directory = _fixture.FilesDirectory
+        };
+
+        //Act
+        var result = DefaultCommandParser.Parse(args, options);
+
+        //Assert
+        result.IsFailed.Should().BeTrue();
+        result.Error.Should().BeOfType<FileNotFoundError>();
+    }
+
+    [Fact]
+    public void ReturnsSuccessfulResultOfCommandRequest_ForUserCommandWhenCommandIsFoundAndFileExtensionIsAllowedAndFileExists()
+    {
+        //Arrange
+        var command = "-c";
+        var filename = "test.txt";
+        var filepath = Path.Combine(_fixture.FilesDirectory, filename);
+        var args = new[] { command, filename };
+        var defaultCommands = new[] { new CommandKey("c"), new CommandKey("l"), new CommandKey("w") };
+        var options = new ParserOptions
+        {
+            DefaultCommands = defaultCommands,
+            AllowedCommandPattern = "^(-[clwm])",
+            AllowedFileExtension = ".txt",
+            Directory = _fixture.FilesDirectory
+        };
+
+        //Act
+        var result = DefaultCommandParser.Parse(args, options);
+
+        //Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().BeOfType<CommandRequest>();
+        result.Value.IsDefault.Should().BeFalse();
+        result.Value.Filepath.Value.Should().Be(filepath);
+        result.Value.CommandKey.Should().Be(new CommandKey("c"));
+    }
+
+    #region Private Methods
+    private String CreateTestFile(String filename, String content)
+    {
+        var filepath = Path.Combine(_fixture.FilesDirectory, filename);
+        File.WriteAllText(filepath, content);
+        return filepath;
+    }
+    #endregion Private Methods
+}

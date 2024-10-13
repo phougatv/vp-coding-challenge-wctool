@@ -1,6 +1,6 @@
 ﻿namespace VP.CodingChallenge.WCNet.CommandParsers;
 
-internal class CommandParser
+internal class DefaultCommandParser
 {
     private const String Dash = "-";
     private const String EmptyString = "";
@@ -30,6 +30,7 @@ internal class CommandParser
     #region Private Methods
     private static Boolean IsConfigurationMissing([NotNullWhen(false)] ParserOptions? options)
         => options is null ||
+        options.DefaultCommands is null ||
         options.DefaultCommands.Length == 0 ||
         String.IsNullOrEmpty(options.AllowedCommandPattern) ||
         String.IsNullOrEmpty(options.AllowedFileExtension);
@@ -43,7 +44,7 @@ internal class CommandParser
     private static String RemoveDash(String commandValue) => commandValue.Replace(Dash, EmptyString);
 
     private static Result<CommandRequest> ParseToDefaultCommands(
-        Command[] defaultCommands,
+        CommandKey[] defaultCommands,
         String directory,
         String filename,
         String allowedExtension)
@@ -67,7 +68,7 @@ internal class CommandParser
         var commandRegex = new Regex(allowedCommandPattern);
         if (!commandRegex.IsMatch(commandValue))
         {
-            return Result<CommandRequest>.Fail(CommandNotFoundError.Create());
+            return Result<CommandRequest>.Fail(CommandNotFoundError.Create(commandValue));
         }
 
         var filepathResult = ValidateFilepath(directory, filename, allowedExtension);

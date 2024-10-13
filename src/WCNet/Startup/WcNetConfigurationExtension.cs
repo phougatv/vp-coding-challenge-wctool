@@ -1,5 +1,6 @@
 ﻿namespace VP.CodingChallenge.WCNet.Startup;
 
+[ExcludeFromCodeCoverage]
 internal static class WCNetConfigurationExtension
 {
     internal static IConfiguration BuildWCNetConfiguration(this IConfigurationBuilder builder)
@@ -12,7 +13,7 @@ internal static class WCNetConfigurationExtension
         var options = configuration.GetSection(nameof(ParserOptions)).Get<ParserOptions>();
         if (options is not null && options.DefaultCommandsRaw.Length > 0)
         {
-            options.DefaultCommands = options.DefaultCommandsRaw.Select(dc => new Command(dc)).ToArray();
+            options.DefaultCommands = options.DefaultCommandsRaw.Select(dc => new CommandKey(dc)).ToArray();
         }
 
         return options;

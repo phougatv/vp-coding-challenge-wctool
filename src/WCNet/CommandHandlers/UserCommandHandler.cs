@@ -2,27 +2,24 @@
 
 internal class UserCommandHandler : CommandHandlerBase
 {
-    private readonly ICommandFactory _commandFactory;
-    private readonly ICommandInvoker _commandInvoker;
-    private readonly IOutput _output;
+    private readonly ICommandFactory _factory;
+    private readonly ICommandInvoker _invoker;
 
     public UserCommandHandler(ICommandFactory commandFactory, ICommandInvoker commandInvoker, IOutput output)
+        : base(output)
     {
-        _commandFactory = commandFactory;
-        _commandInvoker = commandInvoker;
-        _output = output;
+        _factory = commandFactory;
+        _invoker = commandInvoker;
     }
 
     protected override Result<Message> Handle(CommandRequest request)
     {
-        var command = _commandFactory.CreateCommand(request);
-        _commandInvoker.SetCommand(command);
+        var command = _factory.CreateCommand(request.CommandKey);
+        _invoker.SetCommand(command);
         
-        var countResult = _commandInvoker.InvokeCommand();
+        var countResult = _invoker.InvokeCommand();
         return GetMessage(countResult, request.Filepath.GetFilename());
     }
-
-    protected override void PostHandle(Message message) => _output.Sink(message);
 
     private static Result<Message> GetMessage(Result<Count> countResult, String filename)
     {

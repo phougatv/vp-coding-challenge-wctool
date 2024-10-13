@@ -1,5 +1,6 @@
-﻿namespace VP.CodingChallenge.WCNet.Chassis;
+﻿namespace VP.CodingChallenge.WCNet;
 
+[ExcludeFromCodeCoverage]
 public class Program
 {
     static void Main(String[] args)
@@ -9,7 +10,7 @@ public class Program
             //Build WcNet configuration
             var configuration = new ConfigurationBuilder().BuildWCNetConfiguration();
             var options = configuration.GetParserOptions();
-            var commandRequestResult = CommandParser.Parse(args, options);
+            var commandRequestResult = DefaultCommandParser.Parse(args, options);
             if (commandRequestResult.IsFailed)
             {
                 throw new ParserOptionsLoadFailedException();

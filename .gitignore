@@ -8,3 +8,5 @@
 /src/WCNet/obj
 /test/WCNet/bin
 /test/WCNet/obj
+/test/WCNet/coveragereport
+/test/WCNet/TestResults

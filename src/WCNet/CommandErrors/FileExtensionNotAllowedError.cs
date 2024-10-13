@@ -11,7 +11,7 @@ internal class FileExtensionNotAllowedError : Error
 	}
 
 	internal static FileExtensionNotAllowedError Create(String fileExtension)
-		=> new FileExtensionNotAllowedError($"File extension: \".{fileExtension}\", is not allowed.");
+		=> new FileExtensionNotAllowedError($"File extension: \".{fileExtension}\" not allowed.");
 
     public override String ToString() => _message;
 }

@@ -3,7 +3,7 @@
 public class CommandRequest : IEquatable<CommandRequest>
 {
     public CommandKey CommandKey { get; }
-    public IReadOnlyCollection<CommandKey> DefaultCommandKeys { get; }
+    public IReadOnlyCollection<CommandKey> CommandKeys { get; }
     public Boolean IsDefault { get; }
 	public Filepath Filepath { get; }
 
@@ -14,7 +14,7 @@ public class CommandRequest : IEquatable<CommandRequest>
         Boolean isDefault)
     {
         CommandKey = commandKey;
-        DefaultCommandKeys = defaultCommandKeys;
+        CommandKeys = defaultCommandKeys;
         Filepath = filepath;
         IsDefault = isDefault;
     }
@@ -27,7 +27,7 @@ public class CommandRequest : IEquatable<CommandRequest>
 	public override Boolean Equals(Object? obj) => obj is not null && obj is CommandRequest other && Equals(other);
     public override Int32 GetHashCode()
     {
-        var defaultKeysHash = DefaultCommandKeys.Aggregate(0, (hash, key) => HashCode.Combine(hash, key));
+        var defaultKeysHash = CommandKeys.Aggregate(0, (hash, key) => HashCode.Combine(hash, key));
         return HashCode.Combine(CommandKey, Filepath, IsDefault, defaultKeysHash);
     }
 	public override String ToString()
@@ -36,7 +36,7 @@ public class CommandRequest : IEquatable<CommandRequest>
 
         if (IsDefault)
         {
-            return $"Default command keys: {String.Join(", ", DefaultCommandKeys)}, Filename: \"{filename}\"";
+            return $"Default command keys: {String.Join(", ", CommandKeys)}, Filename: \"{filename}\"";
         }
 
         return $"Command key: {CommandKey}, Filename: \"{filename}\"";
@@ -57,7 +57,7 @@ public class CommandRequest : IEquatable<CommandRequest>
             left.CommandKey == right.CommandKey &&
             String.Equals(left.Filepath, right.Filepath, StringComparison.Ordinal) &&
             left.IsDefault == right.IsDefault &&
-            Enumerable.SequenceEqual(left.DefaultCommandKeys, right.DefaultCommandKeys);
+            Enumerable.SequenceEqual(left.CommandKeys, right.CommandKeys);
     }
 	public static Boolean operator !=(CommandRequest? left, CommandRequest? right) => !(left == right);
 }

@@ -1,7 +1,7 @@
 ﻿[assembly: InternalsVisibleTo("VP.CodingChallenge.WCNet.Test")]
 namespace VP.CodingChallenge.WCNet.Commands;
 
-internal interface ICommand
+internal interface IAsyncCommand
 {
-    Result<Count> Execute();
+    Task<Result<Count>> ExecuteAsync();
 }

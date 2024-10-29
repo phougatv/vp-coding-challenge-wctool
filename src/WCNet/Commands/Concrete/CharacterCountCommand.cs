@@ -1,11 +1,11 @@
 ﻿namespace VP.CodingChallenge.WCNet.Commands.Concrete;
 
 [CommandKey("m")]
-internal class CharacterCountCommand(ICharacterCountable characterCountable) : ICommand
+internal class CharacterCountCommand(IAsyncCharacterCountable characterCountable) : IAsyncCommand
 {
-    public Result<Count> Execute()
+    public async Task<Result<Count>> ExecuteAsync()
     {
-        var characterCount = characterCountable.GetCount();
+        var characterCount = await characterCountable.GetCountAsync();
 
         return Result<Count>.Ok(characterCount);
     }

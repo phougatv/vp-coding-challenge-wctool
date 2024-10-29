@@ -14,7 +14,7 @@ internal class DefaultCommandHandler : CommandHandlerBase
 
     protected override Result<Message> Handle(CommandRequest request)
 	{
-        var commands = _countCommandFactory.CreateCommands(request.DefaultCommandKeys);
+        var commands = _countCommandFactory.CreateCommands(request.CommandKeys);
         _invoker.SetCommands(commands);
         
         var countsResult = _invoker.InvokeCommands();

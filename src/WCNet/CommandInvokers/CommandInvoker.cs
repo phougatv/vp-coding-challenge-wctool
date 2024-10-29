@@ -1,39 +1,45 @@
 ﻿[assembly: InternalsVisibleTo("VP.CodingChallenge.WCNet.Tests")]
 namespace VP.CodingChallenge.WCNet.CommandInvokers;
 
-internal class CommandInvoker : ICommandInvoker
+internal class CommandInvoker /*: ICommandInvoker, ICommandsInvoker*/
 {
-    private ICommand? _command = null;
-    private ICollection<ICommand> _commands = Array.Empty<ICommand>();
+    private IAsyncCommand? _command;
+    private ICollection<IAsyncCommand> _commands;
 
-    public Result<Count> InvokeCommand()
+    public CommandInvoker()
     {
-        if (_command == null)
-        {
-            return Result<Count>.Fail(CommandNotSetError.Create());
-        }
-
-        return _command.Execute();
+        _command = null;
+        _commands = Array.Empty<IAsyncCommand>();
     }
 
-    public Result<ICollection<Count>> InvokeCommands()
-    {
-        if (_commands.Count == 0)
-        {
-            return Result<ICollection<Count>>.Fail(CommandNotSetError.Create());
-        }
+    //public Result<Count> InvokeCommand()
+    //{
+    //    if (_command == null)
+    //    {
+    //        return Result<Count>.Fail(CommandNotSetError.Create());
+    //    }
 
-        var counts = new List<Count>(_commands.Count);
-        foreach (var command in _commands)
-        {
-            var countResult = command.Execute();
-            counts.Add(countResult.Value);
-        }
+    //    return _command.ExecuteAsync();
+    //}
 
-        return Result<ICollection<Count>>.Ok(counts);
-    }
+    //public Result<ICollection<Count>> InvokeCommands()
+    //{
+    //    if (_commands.Count == 0)
+    //    {
+    //        return Result<ICollection<Count>>.Fail(CommandNotSetError.Create());
+    //    }
 
-    public void SetCommand(ICommand command) => _command = command;
+    //    var counts = new List<Count>(_commands.Count);
+    //    foreach (var command in _commands)
+    //    {
+    //        var countResult = command.ExecuteAsync();
+    //        counts.Add(countResult.Value);
+    //    }
 
-    public void SetCommands(ICollection<ICommand> commands) => _commands = commands;
+    //    return Result<ICollection<Count>>.Ok(counts);
+    //}
+
+    public void SetCommand(IAsyncCommand command) => _command = command;
+
+    public void SetCommands(ICollection<IAsyncCommand> commands) => _commands = commands;
 }

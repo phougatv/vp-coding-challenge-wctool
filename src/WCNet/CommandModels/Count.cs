@@ -1,4 +1,5 @@
-﻿namespace VP.CodingChallenge.WCNet.CommandModels;
+﻿[assembly: InternalsVisibleTo("VP.CodingChallenge.WCNet.UnitTests")]
+namespace VP.CodingChallenge.WCNet.CommandModels;
 
 internal readonly struct Count(Int64 value) : IEquatable<Count>
 {

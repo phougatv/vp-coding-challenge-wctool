@@ -1,6 +1,6 @@
 ﻿namespace VP.CodingChallenge.WCNet.CommandReceivers.FileHandlers.Contracts;
 
-internal interface ILineCountable
+internal interface IAsyncCharacterCountable
 {
-    Int64 GetCount();
+    Task<Int64> GetCountAsync();
 }

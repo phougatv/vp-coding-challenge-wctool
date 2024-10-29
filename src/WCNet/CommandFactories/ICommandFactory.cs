@@ -2,6 +2,6 @@
 
 internal interface ICommandFactory
 {
-    ICommand CreateCommand(CommandKey commandKey);
-    ICollection<ICommand> CreateCommands(IReadOnlyCollection<CommandKey> commandKeys);
+    IAsyncCommand CreateCommand(CommandKey commandKey);
+    ICollection<IAsyncCommand> CreateCommands(IReadOnlyCollection<CommandKey> commandKeys);
 }

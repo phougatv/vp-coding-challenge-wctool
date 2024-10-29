@@ -23,7 +23,7 @@ internal static class WCNetServiceExtension
         var commandTypes = Assembly
             .GetExecutingAssembly()
             .GetTypes()
-            .Where(type => typeof(ICommand).IsAssignableFrom(type) && !type.IsAbstract && type.IsClass)
+            .Where(type => typeof(IAsyncCommand).IsAssignableFrom(type) && !type.IsAbstract && type.IsClass)
             .ToList();
 
         foreach (var type in commandTypes)
@@ -31,7 +31,7 @@ internal static class WCNetServiceExtension
             var commandKeyAttribute = type.GetCustomAttribute<CommandKeyAttribute>();
             if (commandKeyAttribute is null) continue;
 
-            services.AddKeyedSingleton(typeof(ICommand), commandKeyAttribute.Key, type);
+            services.AddKeyedSingleton(typeof(IAsyncCommand), commandKeyAttribute.Key, type);
         }
 
         return services;
@@ -41,21 +41,24 @@ internal static class WCNetServiceExtension
         => services.AddSingleton<IOutput, ConsoleOutput>();
 
     private static IServiceCollection AddWCNetCommandInvokers(this IServiceCollection services)
-        => services.AddSingleton<ICommandInvoker, CommandInvoker>();
+        //=> services.AddSingleton<ICommandInvoker, CommandInvoker>();
+        => services.AddSingleton<IAsyncCommandInvoker, AsyncCommandInvoker>();
 
     private static IServiceCollection AddWCNetCommandHandlers(this IServiceCollection services)
         => services
             .AddSingleton<DefaultCommandHandler>()
-            .AddSingleton<UserCommandHandler>();
+            .AddSingleton<UserCommandHandler>()
+            .AddSingleton<AsyncDefaultCommandHandler>()
+            .AddSingleton<AsyncUserCommandHandler>();
 
     private static IServiceCollection AddWCNetFileHandlers(this IServiceCollection services, Filepath filepath)
     {
         var document = new Document(filepath);
         services
             .AddSingleton<IByteCountable>(document)
-            .AddSingleton<ICharacterCountable>(document)
-            .AddSingleton<ILineCountable>(document)
-            .AddSingleton<IWordCountable>(document);
+            .AddSingleton<IAsyncCharacterCountable>(document)
+            .AddSingleton<IAsyncLineCountable>(document)
+            .AddSingleton<IAsyncWordCountable>(document);
 
         return services;
     }

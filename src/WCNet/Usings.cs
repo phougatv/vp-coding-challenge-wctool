@@ -1,7 +1,9 @@
 ﻿global using LightResults;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
+global using System.Buffers;
 global using System.Diagnostics.CodeAnalysis;
+global using System.IO.Pipelines;
 global using System.Reflection;
 global using System.Runtime.CompilerServices;
 global using System.Text;

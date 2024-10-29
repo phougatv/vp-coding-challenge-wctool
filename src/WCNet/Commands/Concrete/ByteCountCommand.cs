@@ -1,11 +1,11 @@
 ﻿namespace VP.CodingChallenge.WCNet.Commands.Concrete;
 
 [CommandKey("c")]
-internal class ByteCountCommand(IByteCountable byteCountable) : ICommand
+internal class ByteCountCommand(IByteCountable byteCountable) : IAsyncCommand
 {
-    public Result<Count> Execute()
+    public async Task<Result<Count>> ExecuteAsync()
     {
-        var count = byteCountable.GetCount();
+        var count = await Task.Run(byteCountable.GetCount);
 
         return Result<Count>.Ok(count);
     }

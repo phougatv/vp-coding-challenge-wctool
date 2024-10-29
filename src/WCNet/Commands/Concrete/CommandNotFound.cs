@@ -1,6 +1,6 @@
 ﻿namespace VP.CodingChallenge.WCNet.Commands.Concrete;
 
-internal class CommandNotFound : ICommand
+internal class CommandNotFound : IAsyncCommand
 {
     private readonly CommandKey _key;
 
@@ -9,5 +9,5 @@ internal class CommandNotFound : ICommand
         _key = key;
     }
 
-	public Result<Count> Execute() => Result<Count>.Fail(CommandNotFoundError.Create(_key));
+	public async Task<Result<Count>> ExecuteAsync() => await Task.Run(() => Result<Count>.Fail(CommandNotFoundError.Create(_key)));
 }

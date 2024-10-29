@@ -3,9 +3,9 @@ namespace VP.CodingChallenge.WCNet.CommandFactories;
 
 internal class CountCommandFactory(IServiceProvider serviceProvider) : ICommandFactory
 {
-    public ICommand CreateCommand(CommandKey commandKey)
+    public IAsyncCommand CreateCommand(CommandKey commandKey)
     {
-        var command = serviceProvider.GetKeyedService<ICommand>(commandKey);
+        var command = serviceProvider.GetKeyedService<IAsyncCommand>(commandKey);
         if (command is null)
         {
             return new CommandNotFound(commandKey);
@@ -14,12 +14,12 @@ internal class CountCommandFactory(IServiceProvider serviceProvider) : ICommandF
         return command;
     }
 
-    public ICollection<ICommand> CreateCommands(IReadOnlyCollection<CommandKey> commandKeys)
+    public ICollection<IAsyncCommand> CreateCommands(IReadOnlyCollection<CommandKey> commandKeys)
     {
-        ICollection<ICommand> commands = commandKeys.Count < 1 ? Array.Empty<ICommand>() : new List<ICommand>(commandKeys.Count);
+        ICollection<IAsyncCommand> commands = commandKeys.Count < 1 ? Array.Empty<IAsyncCommand>() : new List<IAsyncCommand>(commandKeys.Count);
         foreach (var commandKey in commandKeys)
         {
-            var command = serviceProvider.GetKeyedService<ICommand>(commandKey);
+            var command = serviceProvider.GetKeyedService<IAsyncCommand>(commandKey);
             if (command is null)
             {
                 commands.Add(new CommandNotFound(commandKey));

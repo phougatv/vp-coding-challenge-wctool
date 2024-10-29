@@ -1,11 +1,11 @@
 ﻿namespace VP.CodingChallenge.WCNet.Commands.Concrete;
 
 [CommandKey("w")]
-internal class WordCountCommand(IWordCountable wordCountable) : ICommand
+internal class WordCountCommand(IAsyncWordCountable wordCountable) : IAsyncCommand
 {
-    public Result<Count> Execute()
+    public async Task<Result<Count>> ExecuteAsync()
     {
-        var wordCount = wordCountable.GetCount();
+        var wordCount = await wordCountable.GetCountAsync();
 
         return Result<Count>.Ok(wordCount);
     }

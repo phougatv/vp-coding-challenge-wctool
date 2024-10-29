@@ -1,9 +1,9 @@
 ﻿namespace VP.CodingChallenge.WCNet.CommandInvokers;
 
-internal interface ICommandInvoker
+internal interface IAsyncCommandInvoker
 {
     void SetCommand(IAsyncCommand command);
     void SetCommands(ICollection<IAsyncCommand> commands);
-    Result<Count> InvokeCommand();
-    Result<ICollection<Count>> InvokeCommands();
+    Task<Result<Count>> InvokeCommandAsync();
+    Task<Result<ICollection<Count>>> InvokeCommandsAsync();
 }

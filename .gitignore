@@ -10,3 +10,5 @@
 /test/WCNet/obj
 /test/WCNet/coveragereport
 /test/WCNet/TestResults
+/test/VP.CodingChallenge.WCNet.Benchmark/bin
+/test/VP.CodingChallenge.WCNet.Benchmark/obj

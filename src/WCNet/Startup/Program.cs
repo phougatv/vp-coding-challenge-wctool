@@ -3,7 +3,7 @@
 [ExcludeFromCodeCoverage]
 public class Program
 {
-    static void Main(String[] args)
+    static async Task Main(String[] args)
     {
         try
         {
@@ -20,11 +20,14 @@ public class Program
             var serviceProvider = new ServiceCollection().BuildWCNetServiceProvider(commandRequestResult.Value.Filepath);
 
             //Execute CommandHandlerBase.Main
-            CommandHandlerBase? handler = commandRequestResult.Value.IsDefault
-                ? serviceProvider.GetRequiredService<DefaultCommandHandler>()
-                : serviceProvider.GetRequiredService<UserCommandHandler>();
+            //CommandHandlerBase? handler = commandRequestResult.Value.IsDefault
+            //    ? serviceProvider.GetRequiredService<DefaultCommandHandler>()
+            //    : serviceProvider.GetRequiredService<UserCommandHandler>();
+            AsyncCommandHandlerBase? handler = commandRequestResult.Value.IsDefault
+                ? serviceProvider.GetRequiredService<AsyncDefaultCommandHandler>()
+                : serviceProvider.GetRequiredService<AsyncUserCommandHandler>();
 
-            handler.Main(commandRequestResult.Value);
+            await handler.Main(commandRequestResult.Value);
         }
         catch (Exception ex)
         {

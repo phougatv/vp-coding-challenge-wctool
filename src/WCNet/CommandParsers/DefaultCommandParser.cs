@@ -5,29 +5,7 @@ internal class DefaultCommandParser
     private const String Dash = "-";
     private const String EmptyString = "";
 
-    public static Result<CommandRequest> Parse(String[] args, ParseOptions? options)
-    {
-        //if (IsIncorrectCommandFormat(args))
-        //{
-        //    return Result<CommandRequest>.Fail(CommandFormatError.Create());
-        //}
-
-        //if (IsConfigurationMissing(options))
-        //{
-        //    return Result<CommandRequest>.Fail(ParserOptionsMissingError.Create());
-        //}
-
-        //var filename = args[^1];
-        //if (IsDefaultCommand(args))
-        //{
-        //    return ParseToDefaultCommands(options.DefaultCommands, options.Directory, filename, options.AllowedFileExtension);
-        //}
-
-        //var command = args[0];
-        //return ParseToUserCommand(command, options.AllowedCommandPattern, options.Directory, filename, options.AllowedFileExtension);
-
-        return InternalTestParse(args, options);
-    }
+    public static Result<CommandRequest> Parse(String[] args, ParseOptions? options) => InternalTestParse(args, options);
 
     #region Test
     private static Result<CommandRequest> InternalTestParse(String[] args, ParseOptions? options)
@@ -51,7 +29,7 @@ internal class DefaultCommandParser
 
         if (IsDefaultCommand(args))
         {
-            return Result<CommandRequest>.Ok(CommandRequest.CreateTest(options.DefaultCommands, filepathResult.Value));
+            return Result<CommandRequest>.Ok(CommandRequest.Create(options.DefaultCommands, filepathResult.Value));
         }
 
         var commandKey = args[0];
@@ -62,7 +40,7 @@ internal class DefaultCommandParser
         }
 
         commandKey = RemoveDash(commandKey);
-        return Result<CommandRequest>.Ok(CommandRequest.CreateTest(commandKey, filepathResult.Value));
+        return Result<CommandRequest>.Ok(CommandRequest.Create(commandKey, filepathResult.Value));
     }
     #endregion Test
 
@@ -81,44 +59,6 @@ internal class DefaultCommandParser
         args.Length < 1 ||
         args.Length > 2;
     private static String RemoveDash(String commandValue) => commandValue.Replace(Dash, EmptyString);
-
-    private static Result<CommandRequest> ParseToDefaultCommands(
-        CommandKey[] defaultCommands,
-        String directory,
-        String filename,
-        String allowedExtension)
-    {
-        var filepathResult = ValidateFilepath(directory, filename, allowedExtension);
-        if (filepathResult.IsFailed)
-        {
-            return Result<CommandRequest>.Fail(filepathResult.Error);
-        }
-
-        return Result<CommandRequest>.Ok(CommandRequest.CreateDefault(defaultCommands, filepathResult.Value));
-    }
-
-    private static Result<CommandRequest> ParseToUserCommand(
-        String commandValue,
-        String allowedCommandPattern,
-        String directory,
-        String filename,
-        String allowedExtension)
-    {
-        var commandRegex = new Regex(allowedCommandPattern);
-        if (!commandRegex.IsMatch(commandValue))
-        {
-            return Result<CommandRequest>.Fail(CommandNotFoundError.Create(commandValue));
-        }
-
-        var filepathResult = ValidateFilepath(directory, filename, allowedExtension);
-        if (filepathResult.IsFailed)
-        {
-            return Result<CommandRequest>.Fail(filepathResult.Error);
-        }
-
-        var command = RemoveDash(commandValue);
-        return Result<CommandRequest>.Ok(CommandRequest.Create(command, filepathResult.Value));
-    }
 
     private static Result<Filepath> ValidateFilepath(String directory, String filename, String allowedExtension)
     {

@@ -12,3 +12,5 @@
 /test/WCNet/TestResults
 /test/VP.CodingChallenge.WCNet.Benchmark/bin
 /test/VP.CodingChallenge.WCNet.Benchmark/obj
+/test/WCNet/VP.CodingChallenge.WCNet.UnitTests/bin/Debug/net8.0
+/test/WCNet/VP.CodingChallenge.WCNet.UnitTests/obj

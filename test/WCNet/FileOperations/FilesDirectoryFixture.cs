@@ -2,7 +2,7 @@
 
 public class FilesDirectoryFixture : IDisposable
 {
-    public string FilesDirectory { get; }
+    public String FilesDirectory { get; }
 
     public FilesDirectoryFixture()
     {

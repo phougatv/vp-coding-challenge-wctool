@@ -23,9 +23,12 @@ public class Program
             //CommandHandlerBase? handler = commandRequestResult.Value.IsDefault
             //    ? serviceProvider.GetRequiredService<DefaultCommandHandler>()
             //    : serviceProvider.GetRequiredService<UserCommandHandler>();
-            AsyncCommandHandlerBase? handler = commandRequestResult.Value.IsDefault
-                ? serviceProvider.GetRequiredService<AsyncDefaultCommandHandler>()
-                : serviceProvider.GetRequiredService<AsyncUserCommandHandler>();
+
+            AsyncCommandHandlerBase? handler = serviceProvider.GetRequiredService<AsyncCommandsHandler>();
+
+            //AsyncCommandHandlerBase? handler = commandRequestResult.Value.IsDefault
+            //    ? serviceProvider.GetRequiredService<AsyncDefaultCommandHandler>()
+            //    : serviceProvider.GetRequiredService<AsyncUserCommandHandler>();
 
             await handler.Main(commandRequestResult.Value);
         }

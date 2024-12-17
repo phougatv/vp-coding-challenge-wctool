@@ -19,6 +19,13 @@ public class CommandRequest : IEquatable<CommandRequest>
         IsDefault = isDefault;
     }
 
+    #region Test
+    public static CommandRequest CreateTest(CommandKey commandKey, Filepath filepath)
+        => new CommandRequest(CommandKey.None, [commandKey], filepath, false);
+    public static CommandRequest CreateTest(CommandKey[] defaultCommandKeys, Filepath filepath)
+        => new CommandRequest(CommandKey.None, defaultCommandKeys, filepath, true);
+    #endregion Test
+
     public static CommandRequest Create(CommandKey command, Filepath filepath)
         => new CommandRequest(command, Array.Empty<CommandKey>(), filepath, false);
     public static CommandRequest CreateDefault(CommandKey[] defaultCommands, Filepath filepath)

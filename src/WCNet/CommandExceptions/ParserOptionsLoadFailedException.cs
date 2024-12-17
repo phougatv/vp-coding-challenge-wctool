@@ -3,7 +3,7 @@
 public class ParserOptionsLoadFailedException : Exception
 {
     public ParserOptionsLoadFailedException()
-        : base($"Failed to parse the {nameof(ParserOptions)}") { }
+        : base($"Failed to parse the {nameof(ParseOptions)}") { }
 
     public ParserOptionsLoadFailedException(String message)
         : base(message) { }

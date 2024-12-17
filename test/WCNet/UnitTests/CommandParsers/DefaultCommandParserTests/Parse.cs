@@ -11,7 +11,7 @@ public class Parse(FilesDirectoryFixture fixture) : IClassFixture<FilesDirectory
     {
         //Arrange
         String[] args = null!;
-        var options = new ParserOptions();
+        var options = new ParseOptions();
 
         //Act
         var result = DefaultCommandParser.Parse(args, options);
@@ -26,7 +26,7 @@ public class Parse(FilesDirectoryFixture fixture) : IClassFixture<FilesDirectory
     {
         //Arrange
         var args = Array.Empty<String>();
-        var options = new ParserOptions();
+        var options = new ParseOptions();
 
         //Act
         var result = DefaultCommandParser.Parse(args, options);
@@ -43,7 +43,7 @@ public class Parse(FilesDirectoryFixture fixture) : IClassFixture<FilesDirectory
         var command = "-c";
         var filepath = @"c:\fake\file\path\filename.txt";
         var args = new[] { command, filepath, "extra" };
-        var options = new ParserOptions();
+        var options = new ParseOptions();
 
         //Act
         var result = DefaultCommandParser.Parse(args, options);
@@ -60,7 +60,7 @@ public class Parse(FilesDirectoryFixture fixture) : IClassFixture<FilesDirectory
         var command = "-c";
         var filepath = @"c:\fake\file\path\filename.txt";
         var args = new[] { command, filepath };
-        ParserOptions? options = null;
+        ParseOptions? options = null;
 
         //Act
         var result = DefaultCommandParser.Parse(args, options);
@@ -77,7 +77,7 @@ public class Parse(FilesDirectoryFixture fixture) : IClassFixture<FilesDirectory
         var command = "-c";
         var filepath = @"c:\fake\file\path\filename.txt";
         var args = new[] { command, filepath };
-        var options = new ParserOptions { DefaultCommands = null! };
+        var options = new ParseOptions { DefaultCommands = null! };
 
         //Act
         var result = DefaultCommandParser.Parse(args, options);
@@ -94,7 +94,7 @@ public class Parse(FilesDirectoryFixture fixture) : IClassFixture<FilesDirectory
         var command = "-c";
         var filepath = @"c:\fake\file\path\filename.txt";
         var args = new[] { command, filepath };
-        var options = new ParserOptions { DefaultCommands = Array.Empty<CommandKey>() };
+        var options = new ParseOptions { DefaultCommands = Array.Empty<CommandKey>() };
 
         //Act
         var result = DefaultCommandParser.Parse(args, options);
@@ -112,7 +112,7 @@ public class Parse(FilesDirectoryFixture fixture) : IClassFixture<FilesDirectory
         var filepath = @"c:\fake\file\path\filename.txt";
         var args = new[] { command, filepath };
         var defaultCommands = new[] { new CommandKey("c"), new CommandKey("l"), new CommandKey("w") };
-        var options = new ParserOptions { DefaultCommands = defaultCommands, AllowedCommandPattern = null! };
+        var options = new ParseOptions { DefaultCommands = defaultCommands, AllowedCommandPattern = null! };
 
         //Act
         var result = DefaultCommandParser.Parse(args, options);
@@ -130,7 +130,7 @@ public class Parse(FilesDirectoryFixture fixture) : IClassFixture<FilesDirectory
         var filepath = @"c:\fake\file\path\filename.txt";
         var args = new[] { command, filepath };
         var defaultCommands = new[] { new CommandKey("c"), new CommandKey("l"), new CommandKey("w") };
-        var options = new ParserOptions { DefaultCommands = defaultCommands, AllowedCommandPattern = String.Empty };
+        var options = new ParseOptions { DefaultCommands = defaultCommands, AllowedCommandPattern = String.Empty };
 
         //Act
         var result = DefaultCommandParser.Parse(args, options);
@@ -148,7 +148,7 @@ public class Parse(FilesDirectoryFixture fixture) : IClassFixture<FilesDirectory
         var filepath = @"c:\fake\file\path\filename.txt";
         var args = new[] { command, filepath };
         var defaultCommands = new[] { new CommandKey("c"), new CommandKey("l"), new CommandKey("w") };
-        var options = new ParserOptions
+        var options = new ParseOptions
         {
             DefaultCommands = defaultCommands,
             AllowedCommandPattern = "^(-[clwm])",
@@ -171,7 +171,7 @@ public class Parse(FilesDirectoryFixture fixture) : IClassFixture<FilesDirectory
         var filepath = @"c:\fake\file\path\filename.txt";
         var args = new[] { command, filepath };
         var defaultCommands = new[] { new CommandKey("c"), new CommandKey("l"), new CommandKey("w") };
-        var options = new ParserOptions
+        var options = new ParseOptions
         {
             DefaultCommands = defaultCommands,
             AllowedCommandPattern = "^(-[clwm])",
@@ -193,7 +193,7 @@ public class Parse(FilesDirectoryFixture fixture) : IClassFixture<FilesDirectory
         var filepath = @"c:\fake\file\path\filename.docx";
         var args = new[] { filepath };
         var defaultCommands = new[] { new CommandKey("c"), new CommandKey("l"), new CommandKey("w") };
-        var options = new ParserOptions
+        var options = new ParseOptions
         {
             DefaultCommands = defaultCommands,
             AllowedCommandPattern = "^(-[clwm])",
@@ -215,7 +215,7 @@ public class Parse(FilesDirectoryFixture fixture) : IClassFixture<FilesDirectory
         var filepath = @"c:\fake\file\path\filename.txt";
         var args = new[] { filepath };
         var defaultCommands = new[] { new CommandKey("c"), new CommandKey("l"), new CommandKey("w") };
-        var options = new ParserOptions
+        var options = new ParseOptions
         {
             DefaultCommands = defaultCommands,
             AllowedCommandPattern = "^(-[clwm])",
@@ -238,7 +238,7 @@ public class Parse(FilesDirectoryFixture fixture) : IClassFixture<FilesDirectory
         var args = new[] { filename };
         var filepath = Path.Combine(_fixture.FilesDirectory, filename);
         var defaultCommands = new[] { new CommandKey("c"), new CommandKey("l"), new CommandKey("w") };
-        var options = new ParserOptions
+        var options = new ParseOptions
         {
             DefaultCommands = defaultCommands,
             AllowedCommandPattern = "^(-[clwm])",
@@ -255,7 +255,7 @@ public class Parse(FilesDirectoryFixture fixture) : IClassFixture<FilesDirectory
         result.Value.Should().BeOfType<CommandRequest>();
         result.Value.IsDefault.Should().BeTrue();
         result.Value.Filepath.Value.Should().Be(filepath);
-        result.Value.DefaultCommandKeys.Should().Equal(defaultCommands);
+        result.Value.CommandKeys.Should().Equal(defaultCommands);
     }
 
     [Fact]
@@ -266,7 +266,7 @@ public class Parse(FilesDirectoryFixture fixture) : IClassFixture<FilesDirectory
         var filepath = @"c:\fake\file\path\filename.txt";
         var args = new[] { command, filepath };
         var defaultCommands = new[] { new CommandKey("c"), new CommandKey("l"), new CommandKey("w") };
-        var options = new ParserOptions
+        var options = new ParseOptions
         {
             DefaultCommands = defaultCommands,
             AllowedCommandPattern = "^(-[clwm])",
@@ -289,7 +289,7 @@ public class Parse(FilesDirectoryFixture fixture) : IClassFixture<FilesDirectory
         var filepath = @"c:\fake\file\path\filename.docx";
         var args = new[] { command, filepath };
         var defaultCommands = new[] { new CommandKey("c"), new CommandKey("l"), new CommandKey("w") };
-        var options = new ParserOptions
+        var options = new ParseOptions
         {
             DefaultCommands = defaultCommands,
             AllowedCommandPattern = "^(-[clwm])",
@@ -312,7 +312,7 @@ public class Parse(FilesDirectoryFixture fixture) : IClassFixture<FilesDirectory
         var filename = "test-1.txt";
         var args = new[] { command, filename };
         var defaultCommands = new[] { new CommandKey("c"), new CommandKey("l"), new CommandKey("w") };
-        var options = new ParserOptions
+        var options = new ParseOptions
         {
             DefaultCommands = defaultCommands,
             AllowedCommandPattern = "^(-[clwm])",
@@ -337,7 +337,7 @@ public class Parse(FilesDirectoryFixture fixture) : IClassFixture<FilesDirectory
         var filepath = Path.Combine(_fixture.FilesDirectory, filename);
         var args = new[] { command, filename };
         var defaultCommands = new[] { new CommandKey("c"), new CommandKey("l"), new CommandKey("w") };
-        var options = new ParserOptions
+        var options = new ParseOptions
         {
             DefaultCommands = defaultCommands,
             AllowedCommandPattern = "^(-[clwm])",

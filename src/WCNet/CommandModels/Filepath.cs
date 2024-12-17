@@ -7,6 +7,9 @@ public readonly struct Filepath : IEquatable<Filepath>
 
     public Filepath(String value)
     {
+        if (String.IsNullOrWhiteSpace(value))
+            throw new ArgumentException("Filepath cannot be null or empty", nameof(value));
+
         Value = value;
     }
 

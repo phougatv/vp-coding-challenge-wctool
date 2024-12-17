@@ -22,13 +22,7 @@ internal class WcNetStartup
 
         //Build WcNet service provider
         var serviceProvider = new ServiceCollection().BuildWCNetServiceProvider(commandRequestResult.Value.Filepath);
-
-        //Execute CommandHandlerBase.Main
-        //AsyncCommandHandlerBase? handler = commandRequestResult.Value.IsDefault
-        //    ? serviceProvider.GetRequiredService<AsyncDefaultCommandHandler>()
-        //    : serviceProvider.GetRequiredService<AsyncUserCommandHandler>();
-        AsyncCommandHandlerBase? handler = serviceProvider.GetRequiredService<AsyncCommandsHandler>();
-
+        var handler = serviceProvider.GetRequiredService<AsyncCommandsHandler>();
         await handler.Main(commandRequestResult.Value);
     }
 

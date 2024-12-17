@@ -41,16 +41,10 @@ internal static class WCNetServiceExtension
         => services.AddSingleton<IOutput, ConsoleOutput>();
 
     private static IServiceCollection AddWCNetCommandInvokers(this IServiceCollection services)
-        //=> services.AddSingleton<ICommandInvoker, CommandInvoker>();
         => services.AddSingleton<IAsyncCommandInvoker, AsyncCommandInvoker>();
 
     private static IServiceCollection AddWCNetCommandHandlers(this IServiceCollection services)
-        => services
-            .AddSingleton<DefaultCommandHandler>()
-            .AddSingleton<UserCommandHandler>()
-            //.AddSingleton<AsyncDefaultCommandHandler>()
-            //.AddSingleton<AsyncUserCommandHandler>()
-            .AddSingleton<AsyncCommandsHandler>();
+        => services.AddSingleton<AsyncCommandsHandler>();
 
     private static IServiceCollection AddWCNetFileHandlers(this IServiceCollection services, Filepath filepath)
     {

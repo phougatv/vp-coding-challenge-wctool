@@ -13,11 +13,11 @@ public abstract class AsyncCommandHandlerBase(IOutput output)
         foreach (var message in messageResult)
         {
             if (message.IsFailed)
-        {
+            {
                 Console.WriteLine(message.Error);
-            Usage();
-            return;
-        }
+                Usage();
+                return;
+            }
 
             PostHandle(message.Value);
         }

@@ -8,7 +8,9 @@ public readonly struct CommandKey : IEquatable<CommandKey>
 
 	public CommandKey(String key)
 	{
-		Key = key;
+        ArgumentNullException.ThrowIfNull(key);
+
+        Key = key;
 	}
 
 	public Boolean Equals(CommandKey other) => String.Equals(Key, other.Key);

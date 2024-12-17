@@ -8,9 +8,9 @@ internal static class WCNetConfigurationExtension
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
             .Build();
-    internal static ParserOptions? GetParserOptions(this IConfiguration configuration)
+    internal static ParseOptions? GetParserOptions(this IConfiguration configuration)
     {
-        var options = configuration.GetSection(nameof(ParserOptions)).Get<ParserOptions>();
+        var options = configuration.GetSection(nameof(ParseOptions)).Get<ParseOptions>();
         if (options is not null && options.DefaultCommandsRaw.Length > 0)
         {
             options.DefaultCommands = options.DefaultCommandsRaw.Select(dc => new CommandKey(dc)).ToArray();

@@ -5,7 +5,32 @@ internal class DefaultCommandParser
     private const String Dash = "-";
     private const String EmptyString = "";
 
-    public static Result<CommandRequest> Parse(String[] args, ParserOptions? options)
+    public static Result<CommandRequest> Parse(String[] args, ParseOptions? options)
+    {
+        //if (IsIncorrectCommandFormat(args))
+        //{
+        //    return Result<CommandRequest>.Fail(CommandFormatError.Create());
+        //}
+
+        //if (IsConfigurationMissing(options))
+        //{
+        //    return Result<CommandRequest>.Fail(ParserOptionsMissingError.Create());
+        //}
+
+        //var filename = args[^1];
+        //if (IsDefaultCommand(args))
+        //{
+        //    return ParseToDefaultCommands(options.DefaultCommands, options.Directory, filename, options.AllowedFileExtension);
+        //}
+
+        //var command = args[0];
+        //return ParseToUserCommand(command, options.AllowedCommandPattern, options.Directory, filename, options.AllowedFileExtension);
+
+        return InternalTestParse(args, options);
+    }
+
+    #region Test
+    private static Result<CommandRequest> InternalTestParse(String[] args, ParseOptions? options)
     {
         if (IsIncorrectCommandFormat(args))
         {
@@ -18,17 +43,31 @@ internal class DefaultCommandParser
         }
 
         var filename = args[^1];
-        if (IsDefaultCommand(args))
+        var filepathResult = ValidateFilepath(options.Directory, filename, options.AllowedFileExtension);
+        if (filepathResult.IsFailed)
         {
-            return ParseToDefaultCommands(options.DefaultCommands, options.Directory, filename, options.AllowedFileExtension);
+            return Result<CommandRequest>.Fail(filepathResult.Error);
         }
 
-        var command = args[0];
-        return ParseToUserCommand(command, options.AllowedCommandPattern, options.Directory, filename, options.AllowedFileExtension);
+        if (IsDefaultCommand(args))
+        {
+            return Result<CommandRequest>.Ok(CommandRequest.CreateTest(options.DefaultCommands, filepathResult.Value));
+        }
+
+        var commandKey = args[0];
+        var commandRegex = new Regex(options.AllowedCommandPattern);
+        if (!commandRegex.IsMatch(commandKey))
+        {
+            return Result<CommandRequest>.Fail(CommandNotFoundError.Create(commandKey));
+        }
+
+        commandKey = RemoveDash(commandKey);
+        return Result<CommandRequest>.Ok(CommandRequest.CreateTest(commandKey, filepathResult.Value));
     }
+    #endregion Test
 
     #region Private Methods
-    private static Boolean IsConfigurationMissing([NotNullWhen(false)] ParserOptions? options)
+    private static Boolean IsConfigurationMissing([NotNullWhen(false)] ParseOptions? options)
         => options is null ||
         options.DefaultCommands is null ||
         options.DefaultCommands.Length == 0 ||

@@ -28,9 +28,9 @@ public class InvokeCommand
         //Arrange
         var count = new Count(1);
         var resultCount = Result<Count>.Ok(count);
-        var commandStub = Substitute.For<ICommand>();
+        var commandStub = Substitute.For<IAsyncCommand>();
         commandStub
-            .Execute()
+            .ExecuteAsync()
             .Returns(resultCount);
 
         var invoker = new CommandInvoker();

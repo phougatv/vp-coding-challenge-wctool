@@ -48,8 +48,9 @@ internal static class WCNetServiceExtension
         => services
             .AddSingleton<DefaultCommandHandler>()
             .AddSingleton<UserCommandHandler>()
-            .AddSingleton<AsyncDefaultCommandHandler>()
-            .AddSingleton<AsyncUserCommandHandler>();
+            //.AddSingleton<AsyncDefaultCommandHandler>()
+            //.AddSingleton<AsyncUserCommandHandler>()
+            .AddSingleton<AsyncCommandsHandler>();
 
     private static IServiceCollection AddWCNetFileHandlers(this IServiceCollection services, Filepath filepath)
     {

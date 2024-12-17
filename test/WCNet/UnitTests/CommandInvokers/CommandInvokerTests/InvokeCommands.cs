@@ -28,13 +28,13 @@ public class InvokeCommands
         //Arrange
         var count = new Count(1);
         var resultCount = Result<Count>.Ok(count);
-        var commandStub = Substitute.For<ICommand>();
+        var commandStub = Substitute.For<IAsyncCommand>();
         commandStub
-            .Execute()
+            .ExecuteAsync()
             .Returns(resultCount);
 
         var invoker = new CommandInvoker();
-        var commands = new List<ICommand> { commandStub };
+        var commands = new List<IAsyncCommand> { commandStub };
         invoker.SetCommands(commands);
 
         //Act
@@ -57,20 +57,20 @@ public class InvokeCommands
         //Arrange
         var count1 = new Count(1);
         var resultCount1 = Result<Count>.Ok(count1);
-        var commandStub1 = Substitute.For<ICommand>();
+        var commandStub1 = Substitute.For<IAsyncCommand>();
         commandStub1
-            .Execute()
+            .ExecuteAsync()
             .Returns(resultCount1);
 
         var count2 = new Count(2);
         var resultCount2 = Result<Count>.Ok(count2);
-        var commandStub2 = Substitute.For<ICommand>();
+        var commandStub2 = Substitute.For<IAsyncCommand>();
         commandStub2
-            .Execute()
+            .ExecuteAsync()
             .Returns(resultCount2);
 
         var invoker = new CommandInvoker();
-        var commands = new List<ICommand> { commandStub1, commandStub2 };
+        var commands = new List<IAsyncCommand> { commandStub1, commandStub2 };
         invoker.SetCommands(commands);
 
         //Act

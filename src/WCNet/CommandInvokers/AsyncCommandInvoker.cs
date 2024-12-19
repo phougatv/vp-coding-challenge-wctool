@@ -2,36 +2,26 @@
 
 internal class AsyncCommandInvoker : IAsyncCommandInvoker
 {
-    private IAsyncCommand? _command = null;
     private ICollection<IAsyncCommand> _commands = Array.Empty<IAsyncCommand>();
 
-    public async Task<Result<Count>> InvokeCommandAsync()
+    public async Task<Result<ICollection<Result<Count>>>> InvokeCommandsAsync()
     {
-        if (_command is null)
+        if (IsCommandsInvalid())
         {
-            return Result<Count>.Fail(CommandNotSetError.Create());
+            return Result<ICollection<Result<Count>>>.Fail("No command found. Use 'SetCommands' method.");
         }
 
-        return await _command.ExecuteAsync();
-    }
-    public async Task<Result<ICollection<Count>>> InvokeCommandsAsync()
-    {
-        if (_commands.Count == 0)
-        {
-            return Result<ICollection<Count>>.Fail(CommandNotSetError.Create());
-        }
-
-        var commandCounts = new List<Count>(_commands.Count);
+        var commandCounts = new List<Result<Count>>(_commands.Count);
         foreach (var command in _commands)
         {
             var countResult = await command.ExecuteAsync();
-            commandCounts.Add(countResult.Value);
+            commandCounts.Add(countResult);
         }
 
-        return Result<ICollection<Count>>.Ok(commandCounts);
+        return Result<ICollection<Result<Count>>>.Ok(commandCounts);
     }
 
-    public void SetCommand(IAsyncCommand command) => _command = command;
-
     public void SetCommands(ICollection<IAsyncCommand> commands) => _commands = commands;
+
+    private Boolean IsCommandsInvalid() => _commands is null || _commands.Count == 0;
 }

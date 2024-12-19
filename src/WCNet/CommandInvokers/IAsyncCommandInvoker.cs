@@ -2,8 +2,6 @@
 
 internal interface IAsyncCommandInvoker
 {
-    void SetCommand(IAsyncCommand command);
     void SetCommands(ICollection<IAsyncCommand> commands);
-    Task<Result<Count>> InvokeCommandAsync();
-    Task<Result<ICollection<Count>>> InvokeCommandsAsync();
+    Task<Result<ICollection<Result<Count>>>> InvokeCommandsAsync();
 }

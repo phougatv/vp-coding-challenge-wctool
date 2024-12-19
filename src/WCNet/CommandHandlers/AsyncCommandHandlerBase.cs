@@ -4,23 +4,27 @@ public abstract class AsyncCommandHandlerBase(IOutput output)
 {
     private readonly IOutput _output = output;
 
-    protected abstract Task<ICollection<Result<Message>>> Handle(CommandRequest commandRequest);
-    protected void PostHandle(Message message) => _output.Sink(message);
+    protected abstract Task<Result<ICollection<Message>>> Handle(CommandRequest commandRequest);
+
+    protected void PostHandle(ICollection<Message> messages)
+    {
+        foreach (var message in messages)
+        {
+            _output.Sink(message);
+        }
+    }
 
     public async Task Main(CommandRequest commandRequest)
     {
-        var messageResult = await Handle(commandRequest);
-        foreach (var message in messageResult)
+        var results = await Handle(commandRequest);
+        if (results.IsFailed)
         {
-            if (message.IsFailed)
-            {
-                Console.WriteLine(message.Error);
-                Usage();
-                return;
-            }
-
-            PostHandle(message.Value);
+            Console.WriteLine(results.Error);
+            Usage();
+            return;
         }
+
+        PostHandle(results.Value);
     }
 
     internal static void Usage()

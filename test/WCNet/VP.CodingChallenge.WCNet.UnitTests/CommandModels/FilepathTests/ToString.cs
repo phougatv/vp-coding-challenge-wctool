@@ -6,7 +6,7 @@ public class ToString
     public void ReturnsValueOfFilepathAsString()
     {
         //Arrange
-        var filepath = new Filepath("C:\\temp\\file.txt");
+        var filepath = new FilePath("C:\\temp\\file.txt");
         var expected = "C:\\temp\\file.txt";
 
         //Act

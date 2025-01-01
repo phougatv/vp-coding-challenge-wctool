@@ -60,21 +60,21 @@ internal class DefaultCommandParser
         args.Length > 2;
     private static String RemoveDash(String commandValue) => commandValue.Replace(Dash, EmptyString);
 
-    private static Result<Filepath> ValidateFilepath(String directory, String filename, String allowedExtension)
+    private static Result<FilePath> ValidateFilepath(String directory, String filename, String allowedExtension)
     {
         var extension = Path.GetExtension(filename);
         if (IsFileExtensionNotAllowed(extension, allowedExtension))
         {
-            return Result<Filepath>.Fail(FileExtensionNotAllowedError.Create(extension));
+            return Result<FilePath>.Fail(FileExtensionNotAllowedError.Create(extension));
         }
 
         var filepath = Path.Combine(directory, filename);
         if (!File.Exists(filepath))
         {
-            return Result<Filepath>.Fail(FileNotFoundError.Create(filename));
+            return Result<FilePath>.Fail(FileNotFoundError.Create(filename));
         }
 
-        return Result<Filepath>.Ok(filepath);
+        return Result<FilePath>.Ok(filepath);
     }
     #endregion Private Methods
 }

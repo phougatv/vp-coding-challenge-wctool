@@ -6,7 +6,7 @@ public class GetHashCode
     public void ReturnsSameValue_WhenSameInstanceIsCalledMultipleTimes()
     {
         //Arrange
-        var filepath = new Filepath("C:\\test.txt");
+        var filepath = new FilePath("C:\\test.txt");
         var hash_1 = filepath.GetHashCode();
         var hash_2 = filepath.GetHashCode();
 
@@ -21,8 +21,8 @@ public class GetHashCode
     public void ReturnsSameValue_ForDifferentInstancesWhenTheyAreEqual()
     {
         //Arrange
-        var filepath_1 = new Filepath("C:\\test.txt");
-        var filepath_2 = new Filepath("C:\\test.txt");
+        var filepath_1 = new FilePath("C:\\test.txt");
+        var filepath_2 = new FilePath("C:\\test.txt");
 
         //Act
         var hash_1 = filepath_1.GetHashCode();
@@ -36,8 +36,8 @@ public class GetHashCode
     public void ReturnsDifferentValue_ForDifferentInstancesWhenTheyAreNotEqual()
     {
         //Arrange
-        var filepath_1 = new Filepath("C:\\test.txt");
-        var filepath_2 = new Filepath("C:\\test2.txt");
+        var filepath_1 = new FilePath("C:\\test.txt");
+        var filepath_2 = new FilePath("C:\\test2.txt");
 
         //Act
         var hash_1 = filepath_1.GetHashCode();

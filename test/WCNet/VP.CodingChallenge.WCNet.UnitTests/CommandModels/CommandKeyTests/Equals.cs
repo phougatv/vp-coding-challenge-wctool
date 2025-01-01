@@ -52,7 +52,7 @@ public class Equals
     {
         //Arrange
         var commandKey = new CommandKey("x");
-        var filepath = new Filepath("fake-filepath");
+        var filepath = new FilePath("fake-filepath");
         var obj = (Object?)CommandRequest.Create(commandKey, filepath);
         var current = new CommandKey("c");
 

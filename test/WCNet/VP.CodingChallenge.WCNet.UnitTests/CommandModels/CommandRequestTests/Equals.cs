@@ -8,7 +8,7 @@ public class Equals
     {
         //Arrange
         var other = (CommandRequest?)null;
-        var current = CommandRequest.Create(CommandKey.None, new Filepath("fake/file/path"));
+        var current = CommandRequest.Create(CommandKey.None, new FilePath("fake/file/path"));
 
         //Act
         var actual = current.Equals(other);
@@ -21,8 +21,8 @@ public class Equals
     public void ReturnsFalse_WhenOtherIsNotNullButNotEqual()
     {
         //Arrange
-        var left = CommandRequest.Create(CommandKey.None, new Filepath("fake/file/path"));
-        var right = CommandRequest.Create(CommandKey.None, new Filepath("actual/file/path"));
+        var left = CommandRequest.Create(CommandKey.None, new FilePath("fake/file/path"));
+        var right = CommandRequest.Create(CommandKey.None, new FilePath("actual/file/path"));
 
         //Act
         var actual = left.Equals(right);
@@ -35,8 +35,8 @@ public class Equals
     public void ReturnsTrue_WhenOtherIsNotNullAndEqual()
     {
         //Arrange
-        var left = CommandRequest.Create(CommandKey.None, new Filepath("fake/file/path"));
-        var right = CommandRequest.Create(CommandKey.None, new Filepath("fake/file/path"));
+        var left = CommandRequest.Create(CommandKey.None, new FilePath("fake/file/path"));
+        var right = CommandRequest.Create(CommandKey.None, new FilePath("fake/file/path"));
 
         //Act
         var actual = left.Equals(right);
@@ -52,7 +52,7 @@ public class Equals
     {
         //Arrange
         var obj = (Object?)null;
-        var current = CommandRequest.Create(CommandKey.None, new Filepath("fake/file/path"));
+        var current = CommandRequest.Create(CommandKey.None, new FilePath("fake/file/path"));
 
         //Act
         var actual = current.Equals(obj);
@@ -67,7 +67,7 @@ public class Equals
         //Arrange
         var commandKey = new CommandKey("x");
         var obj = (Object?)commandKey;
-        var current = CommandRequest.Create(CommandKey.None, new Filepath("fake/file/path"));
+        var current = CommandRequest.Create(CommandKey.None, new FilePath("fake/file/path"));
 
         //Act
         var actual = current.Equals(obj);
@@ -80,8 +80,8 @@ public class Equals
     public void ReturnsFalse_WhenObjectIsNotNullAndIsOfTypeCommandRequestButNotEqual()
     {
         //Arrange
-        var left = CommandRequest.Create(CommandKey.None, new Filepath("fake/file/path"));
-        var right = CommandRequest.Create(CommandKey.None, new Filepath("actual/file/path"));
+        var left = CommandRequest.Create(CommandKey.None, new FilePath("fake/file/path"));
+        var right = CommandRequest.Create(CommandKey.None, new FilePath("actual/file/path"));
         var obj = (Object?)right;
 
         //Act
@@ -95,8 +95,8 @@ public class Equals
     public void ReturnsTrue_WhenObjectIsNotNullAndIsOfTypeCommandRequestAndEqual()
     {
         //Arrange
-        var left = CommandRequest.Create(CommandKey.None, new Filepath("fake/file/path"));
-        var right = CommandRequest.Create(CommandKey.None, new Filepath("fake/file/path"));
+        var left = CommandRequest.Create(CommandKey.None, new FilePath("fake/file/path"));
+        var right = CommandRequest.Create(CommandKey.None, new FilePath("fake/file/path"));
         var obj = (Object?)right;
 
         //Act
@@ -126,7 +126,7 @@ public class Equals
     public void ReturnsTrue_WhenReferencesOfBothInstancesAreEqual()
     {
         //Arrange
-        var left = CommandRequest.Create(CommandKey.None, new Filepath("fake/file/path"));
+        var left = CommandRequest.Create(CommandKey.None, new FilePath("fake/file/path"));
         var right = left;
 
         //Act
@@ -141,7 +141,7 @@ public class Equals
     {
         //Arrange
         CommandRequest? left = null;
-        var right = CommandRequest.Create(CommandKey.None, new Filepath("fake/file/path"));
+        var right = CommandRequest.Create(CommandKey.None, new FilePath("fake/file/path"));
 
         //Act
         var actual = left == right;
@@ -154,7 +154,7 @@ public class Equals
     public void ReturnsFalse_WhenOperandRightIsNull()
     {
         //Arrange
-        var left = CommandRequest.Create(CommandKey.None, new Filepath("fake/file/path"));
+        var left = CommandRequest.Create(CommandKey.None, new FilePath("fake/file/path"));
         CommandRequest? right = null;
 
         //Act
@@ -168,8 +168,8 @@ public class Equals
     public void ReturnsFalse_WhenOperandsAreNotNullAndNotEqual()
     {
         //Arrange
-        var left = CommandRequest.Create(CommandKey.None, new Filepath("fake/file/path"));
-        var right = CommandRequest.CreateDefault([new CommandKey("c")], new Filepath("actual/file/path"));
+        var left = CommandRequest.Create(CommandKey.None, new FilePath("fake/file/path"));
+        var right = CommandRequest.CreateDefault([new CommandKey("c")], new FilePath("actual/file/path"));
 
         //Act
         var actual = left == right;
@@ -182,8 +182,8 @@ public class Equals
     public void ReturnsFalse_WhenOnlyFilepathIsNotEqual()
     {
         //Arrange
-        var left = CommandRequest.Create(CommandKey.None, new Filepath("fake/file/path"));
-        var right = CommandRequest.Create(CommandKey.None, new Filepath("actual/file/path"));
+        var left = CommandRequest.Create(CommandKey.None, new FilePath("fake/file/path"));
+        var right = CommandRequest.Create(CommandKey.None, new FilePath("actual/file/path"));
 
         //Act
         var actual = left == right;
@@ -196,8 +196,8 @@ public class Equals
     public void ReturnsFalse_WhenOnlyCommandKeyIsNotEqual()
     {
         //Arrange
-        var left = CommandRequest.Create(CommandKey.None, new Filepath("fake/file/path"));
-        var right = CommandRequest.Create(new CommandKey("c"), new Filepath("fake/file/path"));
+        var left = CommandRequest.Create(CommandKey.None, new FilePath("fake/file/path"));
+        var right = CommandRequest.Create(new CommandKey("c"), new FilePath("fake/file/path"));
 
         //Act
         var actual = left == right;
@@ -210,8 +210,8 @@ public class Equals
     public void ReturnsFalse_WhenOnlyIsDefaultIsNotEqual()
     {
         //Arrange
-        var left = CommandRequest.Create(CommandKey.None, new Filepath("fake/file/path"));
-        var right = CommandRequest.CreateDefault([new CommandKey("c")], new Filepath("fake/file/path"));
+        var left = CommandRequest.Create(CommandKey.None, new FilePath("fake/file/path"));
+        var right = CommandRequest.CreateDefault([new CommandKey("c")], new FilePath("fake/file/path"));
 
         //Act
         var actual = left == right;
@@ -224,8 +224,8 @@ public class Equals
     public void ReturnsFalse_WhenOnlyDefaultCommandKeysAreNotEqual()
     {
         //Arrange
-        var left = CommandRequest.CreateDefault([CommandKey.None], new Filepath("fake/file/path"));
-        var right = CommandRequest.CreateDefault([new CommandKey("c")], new Filepath("fake/file/path"));
+        var left = CommandRequest.CreateDefault([CommandKey.None], new FilePath("fake/file/path"));
+        var right = CommandRequest.CreateDefault([new CommandKey("c")], new FilePath("fake/file/path"));
 
         //Act
         var actual = left == right;
@@ -238,10 +238,10 @@ public class Equals
     public void ReturnsTrue_WhenOperandsAreNotNullAndEqual()
     {
         //Arrange
-        var left1 = CommandRequest.Create(CommandKey.None, new Filepath("fake/file/path"));
-        var right1 = CommandRequest.Create(CommandKey.None, new Filepath("fake/file/path"));
-        var left2 = CommandRequest.CreateDefault([CommandKey.None], new Filepath("fake/file/path"));
-        var right2 = CommandRequest.CreateDefault([CommandKey.None], new Filepath("fake/file/path"));
+        var left1 = CommandRequest.Create(CommandKey.None, new FilePath("fake/file/path"));
+        var right1 = CommandRequest.Create(CommandKey.None, new FilePath("fake/file/path"));
+        var left2 = CommandRequest.CreateDefault([CommandKey.None], new FilePath("fake/file/path"));
+        var right2 = CommandRequest.CreateDefault([CommandKey.None], new FilePath("fake/file/path"));
 
         //Act
         var actual1 = left1 == right1;

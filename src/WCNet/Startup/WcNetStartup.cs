@@ -21,7 +21,7 @@ internal class WcNetStartup
         }
 
         //Build WcNet service provider
-        var serviceProvider = new ServiceCollection().BuildWCNetServiceProvider(commandRequestResult.Value.Filepath);
+        var serviceProvider = new ServiceCollection().BuildWCNetServiceProvider(commandRequestResult.Value.FilePath);
         var handler = serviceProvider.GetRequiredService<AsyncCommandsHandler>();
         await handler.Main(commandRequestResult.Value);
     }

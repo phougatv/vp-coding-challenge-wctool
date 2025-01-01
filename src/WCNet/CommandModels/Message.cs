@@ -6,8 +6,19 @@ public readonly struct Message(String text) : IEquatable<Message>
 
     public Boolean Equals(Message other) => String.Equals(Text, other.Text);
     public override Boolean Equals(Object? obj) => obj is not null && obj is Message other && Equals(other);
-    public override Int32 GetHashCode() => Text.GetHashCode();
-    public override String ToString() => Text;
+    public override Int32 GetHashCode() => Text is null ? 0 : Text.GetHashCode();
+    public override String ToString()
+    {
+        var nameof_Message = nameof(Message);
+        var text = Text switch
+        {
+            null => "null",
+            "" => "empty",
+            _ => Text
+        };
+
+        return $"{nameof_Message}=[Text: \"{text}\"]";
+    }
     public static implicit operator Message(String text) => new Message(text);
     public static implicit operator String(Message message) => message.Text;
     public static Boolean operator ==(Message left, Message right) => left.Equals(right);

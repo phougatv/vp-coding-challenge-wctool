@@ -254,7 +254,7 @@ public class Parse(FilesDirectoryFixture fixture) : IClassFixture<FilesDirectory
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().BeOfType<CommandRequest>();
         result.Value.IsDefault.Should().BeTrue();
-        result.Value.Filepath.Value.Should().Be(filepath);
+        result.Value.FilePath.Value.Should().Be(filepath);
         result.Value.CommandKeys.Should().Equal(defaultCommands);
     }
 
@@ -352,7 +352,7 @@ public class Parse(FilesDirectoryFixture fixture) : IClassFixture<FilesDirectory
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().BeOfType<CommandRequest>();
         result.Value.IsDefault.Should().BeFalse();
-        result.Value.Filepath.Value.Should().Be(filepath);
+        result.Value.FilePath.Value.Should().Be(filepath);
         result.Value.CommandKey.Should().Be(new CommandKey("c"));
     }
 

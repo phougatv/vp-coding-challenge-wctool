@@ -14,9 +14,15 @@ public readonly struct CommandKey : IEquatable<CommandKey>
 	}
 
 	public Boolean Equals(CommandKey other) => String.Equals(Key, other.Key);
-	public override Boolean Equals(Object? obj) => obj is not null && obj is CommandKey other && Equals(other);
-	public override Int32 GetHashCode() => Key.GetHashCode();
-    public override String ToString() => Key;
+	public override Boolean Equals(Object? obj) => obj is CommandKey other && Equals(other);
+	public override Int32 GetHashCode() => Key is null ? 0 : Key.GetHashCode();
+    public override String ToString()
+    {
+        var commandKeyName = nameof(CommandKey);
+        var keyName = nameof(Key);
+
+        return $"{commandKeyName}=[{keyName}: \"{Key}\"]";
+    }
     public static implicit operator CommandKey(String key) => new CommandKey(key);
     public static implicit operator String(CommandKey commandKey) => commandKey.Key;
     public static Boolean operator ==(CommandKey left, CommandKey right) => left.Equals(right);

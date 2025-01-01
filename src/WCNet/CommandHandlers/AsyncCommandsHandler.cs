@@ -21,7 +21,7 @@ internal class AsyncCommandsHandler(ICommandFactory factory, IAsyncCommandInvoke
         }
 
         var messages = new List<Message>(countResults.Value.Count);
-        var filename = Path.GetFileName(request.Filepath);
+        var filename = Path.GetFileName(request.FilePath);
         foreach (var countResult in countResults.Value)
         {
             var message = CreateMessage(countResult, filename);

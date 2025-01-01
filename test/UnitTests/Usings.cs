@@ -1,0 +1,13 @@
+﻿global using FluentAssertions;
+global using LightResults;
+global using Microsoft.Extensions.DependencyInjection;
+global using NSubstitute;
+global using VP.CodingChallenge.WCNet.CommandErrors;
+global using VP.CodingChallenge.WCNet.CommandFactories;
+global using VP.CodingChallenge.WCNet.CommandHandlers;
+global using VP.CodingChallenge.WCNet.CommandModels;
+global using VP.CodingChallenge.WCNet.CommandReceivers.FileHandlers.Contracts;
+global using VP.CodingChallenge.WCNet.Commands;
+global using VP.CodingChallenge.WCNet.Commands.Concrete;
+global using VP.CodingChallenge.WCNet.CommandParsers;
+global using VP.CodingChallenge.WCNet.Configurations;

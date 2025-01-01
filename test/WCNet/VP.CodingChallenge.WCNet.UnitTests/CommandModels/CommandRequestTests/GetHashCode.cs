@@ -6,10 +6,10 @@ public class GetHashCode
     public void ReturnsSameHashCode_WhenObjectsAreEqual()
     {
         //Arrange
-        var left1 = CommandRequest.Create(CommandKey.None, new Filepath("fake/file/path"));
-        var right1 = CommandRequest.Create(CommandKey.None, new Filepath("fake/file/path"));
-        var left2 = CommandRequest.CreateDefault([new CommandKey("c")], new Filepath("fake/file/path"));
-        var right2 = CommandRequest.CreateDefault([new CommandKey("c")], new Filepath("fake/file/path"));
+        var left1 = CommandRequest.Create(CommandKey.None, new FilePath("fake/file/path"));
+        var right1 = CommandRequest.Create(CommandKey.None, new FilePath("fake/file/path"));
+        var left2 = CommandRequest.CreateDefault([new CommandKey("c")], new FilePath("fake/file/path"));
+        var right2 = CommandRequest.CreateDefault([new CommandKey("c")], new FilePath("fake/file/path"));
 
         //Act
         var leftHashCode1 = left1.GetHashCode();
@@ -26,10 +26,10 @@ public class GetHashCode
     public void ReturnsDifferentHashCode_WhenObjectsAreNotEqual()
     {
         //Arrange
-        var left1 = CommandRequest.Create(CommandKey.None, new Filepath("fake/file/path"));
-        var right1 = CommandRequest.Create(CommandKey.None, new Filepath("actual/file/path"));
-        var left2 = CommandRequest.CreateDefault([new CommandKey("c")], new Filepath("fake/file/path"));
-        var right2 = CommandRequest.Create(CommandKey.None, new Filepath("fake/file/path"));
+        var left1 = CommandRequest.Create(CommandKey.None, new FilePath("fake/file/path"));
+        var right1 = CommandRequest.Create(CommandKey.None, new FilePath("actual/file/path"));
+        var left2 = CommandRequest.CreateDefault([new CommandKey("c")], new FilePath("fake/file/path"));
+        var right2 = CommandRequest.Create(CommandKey.None, new FilePath("fake/file/path"));
 
         //Act
         var leftHashCode1 = left1.GetHashCode();

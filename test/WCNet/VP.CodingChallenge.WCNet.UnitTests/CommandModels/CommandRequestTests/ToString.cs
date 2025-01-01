@@ -7,7 +7,7 @@ public class ToString
     {
         // Arrange
         var commandKey = new CommandKey("c");
-        var filepath = new Filepath("C:/test.txt");
+        var filepath = new FilePath("C:/test.txt");
         var filename = Path.GetFileName(filepath);
         var commandRequest = CommandRequest.Create(commandKey, filepath);
 
@@ -23,7 +23,7 @@ public class ToString
     {
         // Arrange
         var defaultCommandKeys = new[] { new CommandKey("c1"), new CommandKey("c2") };
-        var filepath = new Filepath("C:/test.txt");
+        var filepath = new FilePath("C:/test.txt");
         var filename = Path.GetFileName(filepath);
         var commandRequest = CommandRequest.CreateDefault(defaultCommandKeys, filepath);
 

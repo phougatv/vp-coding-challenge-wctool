@@ -1,26 +1,36 @@
 ﻿namespace VP.CodingChallenge.WCNet.CommandModels;
-public readonly struct Filepath : IEquatable<Filepath>
+public readonly struct FilePath : IEquatable<FilePath>
 {
-    public static readonly Filepath Empty = String.Empty;
+    public static readonly FilePath Empty = String.Empty;
 
     public String Value { get; }
 
-    public Filepath(String value)
+    public FilePath(String path)
     {
-        if (String.IsNullOrWhiteSpace(value))
-            throw new ArgumentException("Filepath cannot be null or empty", nameof(value));
+        if (String.IsNullOrWhiteSpace(path))
+            throw new ArgumentException("Filepath cannot be null or empty or only whitespace.", nameof(path));
 
-        Value = value;
+        Value = path;
     }
 
-    public String GetFilename() => Path.GetFileName(Value);
+    public String GetFileName() => Path.GetFileName(Value);
 
-    public Boolean Equals(Filepath other) => String.Equals(Value, other.Value);
-    public override Boolean Equals(Object? obj) => obj is not null && obj is Filepath other && Equals(other);
-    public override Int32 GetHashCode() => Value.GetHashCode();
-    public override String ToString() => Value;
-    public static implicit operator Filepath(String value) => new Filepath(value);
-    public static implicit operator String(Filepath filepath) => filepath.Value;
-    public static Boolean operator ==(Filepath left, Filepath right) => left.Equals(right);
-    public static Boolean operator !=(Filepath left, Filepath right) => !left.Equals(right);
+    public Boolean Equals(FilePath other) => String.Equals(Value, other.Value);
+    public override Boolean Equals(Object? obj) => obj is not null && obj is FilePath other && Equals(other);
+    public override Int32 GetHashCode() => Value is null ? 0 : Value.GetHashCode();
+    public override String ToString()
+    {
+        var nameof_FilePath = nameof(FilePath);
+        var value = Value switch
+        {
+            null => "null",
+            _ => Value
+        };
+
+        return $"{nameof_FilePath}=[Path: \"{value}\"]";
+    }
+    public static implicit operator FilePath(String value) => new FilePath(value);
+    public static implicit operator String(FilePath filepath) => filepath.Value;
+    public static Boolean operator ==(FilePath left, FilePath right) => left.Equals(right);
+    public static Boolean operator !=(FilePath left, FilePath right) => !left.Equals(right);
 }

@@ -7,10 +7,10 @@ public class ImplicitOperations
     {
         // Arrange
         var str = "C:\\temp\\file.txt";
-        var expectedFilepath = new Filepath("C:\\temp\\file.txt");
+        var expectedFilepath = new FilePath("C:\\temp\\file.txt");
 
         // Act
-        Filepath actualFilepath = str;
+        FilePath actualFilepath = str;
 
         // Assert
         actualFilepath.Should().Be(expectedFilepath);
@@ -20,7 +20,7 @@ public class ImplicitOperations
     public void ReturnsString_WhenConvertingFilepathToString()
     {
         // Arrange
-        var filepath = new Filepath("C:\\temp\\file.txt");
+        var filepath = new FilePath("C:\\temp\\file.txt");
 
         // Act
         String actual = filepath;

@@ -6,11 +6,11 @@ public class GetFilename
     public void ReturnsFilename_WhenFilenameExistsInPath()
     {
         // Arrange
-        var filepath = new Filepath("C:/test.txt");
+        var filepath = new FilePath("C:/test.txt");
         var expected = "test.txt";
 
         // Act
-        var result = filepath.GetFilename();
+        var result = filepath.GetFileName();
 
         // Assert
         result.Should().Be(expected);
@@ -20,12 +20,12 @@ public class GetFilename
     public void ReturnsEmpty_WhenFilenameDoesNotExistInPath()
     {
         // Arrange
-        var filepath = new Filepath("C:/");
+        var filepath = new FilePath("C:/");
 
         // Act
-        var result = filepath.GetFilename();
+        var result = filepath.GetFileName();
 
         // Assert
-        result.Should().Be(Filepath.Empty);
+        result.Should().Be(FilePath.Empty);
     }
 }

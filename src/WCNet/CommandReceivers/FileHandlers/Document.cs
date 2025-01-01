@@ -1,8 +1,8 @@
 ﻿namespace VP.CodingChallenge.WCNet.CommandReceivers.FileHandlers;
 
-internal class Document(Filepath filepath) : IByteCountable, IAsyncCharacterCountable, IAsyncLineCountable, IAsyncWordCountable
+internal class Document(FilePath filepath) : IByteCountable, IAsyncCharacterCountable, IAsyncLineCountable, IAsyncWordCountable
 {
-    private readonly Filepath _filepath = Path.GetFullPath(filepath);
+    private readonly FilePath _filepath = Path.GetFullPath(filepath);
 
     Int64 IByteCountable.GetCount()
     {

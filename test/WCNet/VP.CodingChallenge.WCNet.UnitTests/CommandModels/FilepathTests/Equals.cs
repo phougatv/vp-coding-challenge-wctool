@@ -7,8 +7,8 @@ public class Equals
     public void ReturnsFalse_WhenInstanceAreNotEqual()
     {
         //Arrange
-        var other = new Filepath("x");
-        var current = new Filepath("y");
+        var other = new FilePath("x");
+        var current = new FilePath("y");
 
         //Act
         var actual = current.Equals(other);
@@ -21,8 +21,8 @@ public class Equals
     public void ReturnsTrue_WhenInstancesAreEqual()
     {
         //Arrange
-        var other = new Filepath("x");
-        var current = new Filepath("x");
+        var other = new FilePath("x");
+        var current = new FilePath("x");
 
         //Act
         var actual = current.Equals(other);
@@ -38,7 +38,7 @@ public class Equals
     {
         //Arrange
         var obj = (Object?)null;
-        var current = new Filepath("x");
+        var current = new FilePath("x");
 
         //Act
         var actual = current.Equals(obj);
@@ -53,7 +53,7 @@ public class Equals
         //Arrange
         var commandKey = new CommandKey("x");
         var obj = (Object?)commandKey;
-        var current = new Filepath("fake/file/path");
+        var current = new FilePath("fake/file/path");
 
         //Act
         var actual = current.Equals(obj);
@@ -66,9 +66,9 @@ public class Equals
     public void ReturnsFalse_WhenObjectIsNotNullAndIsOfTypeFilepathButValuesAreNotEqual()
     {
         //Arrange
-        var other = new Filepath("fake/file/path");
+        var other = new FilePath("fake/file/path");
         var obj = (Object?)other;
-        var current = new Filepath("actual/file/path");
+        var current = new FilePath("actual/file/path");
 
         //Act
         var actual = current.Equals(obj);
@@ -81,9 +81,9 @@ public class Equals
     public void ReturnsTrue_WhenObjectIsNotNullAndIsOfTypeFilepathAndValuesAreEqual()
     {
         //Arrange
-        var other = new Filepath("fake/file/path");
+        var other = new FilePath("fake/file/path");
         var obj = (Object?)other;
-        var current = new Filepath("fake/file/path");
+        var current = new FilePath("fake/file/path");
 
         //Act
         var actual = current.Equals(obj);
@@ -98,8 +98,8 @@ public class Equals
     public void ReturnsFalse_WhenOperandLeftIsNull()
     {
        //Arrange
-        var other = new Filepath("fake/file/path");
-        var current = (Filepath?)null;
+        var other = new FilePath("fake/file/path");
+        var current = (FilePath?)null;
 
         //Act
         var actual = current == other;
@@ -112,8 +112,8 @@ public class Equals
     public void ReturnsFalse_WhenOperandRightIsNull()
     {
         //Arrange
-        var other = (Filepath?)null;
-        var current = new Filepath("fake/file/path");
+        var other = (FilePath?)null;
+        var current = new FilePath("fake/file/path");
 
         //Act
         var actual = current == other;
@@ -126,8 +126,8 @@ public class Equals
     public void ReturnsFalse_WhenInstancesAreNotNullAndNotEqual()
     {
         //Arrange
-        var other = new Filepath("fake/file/path");
-        var current = new Filepath("actual/file/path");
+        var other = new FilePath("fake/file/path");
+        var current = new FilePath("actual/file/path");
 
         //Act
         var actual = current == other;
@@ -140,8 +140,8 @@ public class Equals
     public void ReturnsTrue_WhenBothOperandsAreNull()
     {
         //Arrange
-        var other = (Filepath?)null;
-        var current = (Filepath?)null;
+        var other = (FilePath?)null;
+        var current = (FilePath?)null;
 
         //Act
         var actual = current == other;
@@ -154,8 +154,8 @@ public class Equals
     public void ReturnsTrue_WhenBothOperandsAreEqual()
     {
         //Arrange
-        var other = new Filepath("fake/file/path");
-        var current = new Filepath("fake/file/path");
+        var other = new FilePath("fake/file/path");
+        var current = new FilePath("fake/file/path");
 
         //Act
         var actual = current == other;

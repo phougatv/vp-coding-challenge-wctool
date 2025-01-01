@@ -3,10 +3,10 @@
 [ExcludeFromCodeCoverage]
 internal static class WCNetServiceExtension
 {
-    internal static IServiceProvider BuildWCNetServiceProvider(this IServiceCollection services, Filepath filepath)
+    internal static IServiceProvider BuildWCNetServiceProvider(this IServiceCollection services, FilePath filepath)
         => services.AddWCNet(filepath).BuildServiceProvider();
 
-    private static IServiceCollection AddWCNet(this IServiceCollection services, Filepath filepath)
+    private static IServiceCollection AddWCNet(this IServiceCollection services, FilePath filepath)
         => services
             .AddWCNetFileHandlers(filepath)
             .AddWCNetCountCommands()
@@ -46,7 +46,7 @@ internal static class WCNetServiceExtension
     private static IServiceCollection AddWCNetCommandHandlers(this IServiceCollection services)
         => services.AddSingleton<AsyncCommandsHandler>();
 
-    private static IServiceCollection AddWCNetFileHandlers(this IServiceCollection services, Filepath filepath)
+    private static IServiceCollection AddWCNetFileHandlers(this IServiceCollection services, FilePath filepath)
     {
         var document = new Document(filepath);
         services

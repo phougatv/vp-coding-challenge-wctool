@@ -1,17 +1,17 @@
 ﻿[assembly: InternalsVisibleTo("VP.CodingChallenge.WCNet.UnitTests")]
 namespace VP.CodingChallenge.WCNet.CommandModels;
 
-internal readonly struct Count(Int64 value) : IEquatable<Count>
+public readonly struct Count(Int64 value) : IEquatable<Count>
 {
-    internal Int64 Value { get; } = value;
+    public Int64 Value { get; } = value;
 
     public Boolean Equals(Count other) => Value == other.Value;
 
     public override Boolean Equals(Object? obj) => obj is not null && obj is Count other && Equals(other);
 
-    public override Int32 GetHashCode() => Value.GetHashCode();
+    public override Int32 GetHashCode() => HashCode.Combine(Value);
 
-    public override String ToString() => Value.ToString();
+    public override String ToString() => $"Count=[Value: \"{Value}\"]";
 
     public static implicit operator Int64(Count count) => count.Value;
 
@@ -25,5 +25,5 @@ internal readonly struct Count(Int64 value) : IEquatable<Count>
 
     public static Boolean operator ==(Count left, Count right) => left.Equals(right);
 
-    public static Boolean operator !=(Count left, Count right) => !left.Equals(right);
+    public static Boolean operator !=(Count left, Count right) => !(left == right);
 }

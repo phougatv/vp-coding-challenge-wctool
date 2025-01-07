@@ -6,7 +6,7 @@ public class ToString
     public void ReturnsErrorMessage()
     {
         //Arrange
-        var error = ParserOptionsMissingError.Create();
+        var error = CommandParsingOptionsMissingError.Create();
 
         //Act
         var result = error.ToString();

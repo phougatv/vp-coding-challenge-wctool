@@ -1,24 +1,21 @@
 ﻿namespace VP.CodingChallenge.WCNet.Startup;
 
 [ExcludeFromCodeCoverage]
-internal static class WCNetServiceExtension
+internal static class WcNetServiceExtension
 {
-    internal static IServiceProvider BuildWCNetServiceProvider(this IServiceCollection services, FilePath filepath)
-        => services.AddWCNet(filepath).BuildServiceProvider();
-
-    private static IServiceCollection AddWCNet(this IServiceCollection services, FilePath filepath)
+    internal static IServiceCollection AddWcNet(this IServiceCollection services, FilePath filepath)
         => services
-            .AddWCNetFileHandlers(filepath)
-            .AddWCNetCountCommands()
-            .AddWCNetOutput()
-            .AddWCNetCommandFactories()
-            .AddWCNetCommandInvokers()
-            .AddWCNetCommandHandlers();
+            .AddWcNetFileHandlers(filepath)
+            .AddWcNetCountCommands()
+            .AddWcNetOutput()
+            .AddWcNetCommandFactories()
+            .AddWcNetCommandInvokers()
+            .AddWcNetCommandHandlers();
 
-    private static IServiceCollection AddWCNetCommandFactories(this IServiceCollection services)
+    private static IServiceCollection AddWcNetCommandFactories(this IServiceCollection services)
         => services.AddSingleton<ICommandFactory, CountCommandFactory>();
 
-    private static IServiceCollection AddWCNetCountCommands(this IServiceCollection services)
+    private static IServiceCollection AddWcNetCountCommands(this IServiceCollection services)
     {
         var commandTypes = Assembly
             .GetExecutingAssembly()
@@ -37,16 +34,16 @@ internal static class WCNetServiceExtension
         return services;
     }
 
-    private static IServiceCollection AddWCNetOutput(this IServiceCollection services)
+    private static IServiceCollection AddWcNetOutput(this IServiceCollection services)
         => services.AddSingleton<IOutput, ConsoleOutput>();
 
-    private static IServiceCollection AddWCNetCommandInvokers(this IServiceCollection services)
+    private static IServiceCollection AddWcNetCommandInvokers(this IServiceCollection services)
         => services.AddSingleton<IAsyncCommandInvoker, AsyncCommandInvoker>();
 
-    private static IServiceCollection AddWCNetCommandHandlers(this IServiceCollection services)
+    private static IServiceCollection AddWcNetCommandHandlers(this IServiceCollection services)
         => services.AddSingleton<AsyncCommandsHandler>();
 
-    private static IServiceCollection AddWCNetFileHandlers(this IServiceCollection services, FilePath filepath)
+    private static IServiceCollection AddWcNetFileHandlers(this IServiceCollection services, FilePath filepath)
     {
         var document = new Document(filepath);
         services

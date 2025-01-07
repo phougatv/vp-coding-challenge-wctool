@@ -1,7 +1,7 @@
 ﻿namespace VP.CodingChallenge.WCNet.Configurations;
 
 [ExcludeFromCodeCoverage]
-public class ParseOptions
+public class CommandParsingOptions
 {
     public String AllowedFileExtension { get; set; } = String.Empty;
     public String AllowedCommandPattern { get; set; } = String.Empty;

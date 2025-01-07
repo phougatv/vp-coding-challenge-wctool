@@ -11,3 +11,4 @@ global using VP.CodingChallenge.WCNet.Commands;
 global using VP.CodingChallenge.WCNet.Commands.Concrete;
 global using VP.CodingChallenge.WCNet.CommandParsers;
 global using VP.CodingChallenge.WCNet.Configurations;
+global using VP.CodingChallenge.WCNet.Infrastructure.FileManagement;

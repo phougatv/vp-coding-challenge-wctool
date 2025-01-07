@@ -11,7 +11,7 @@ internal class FileNotFoundError : Error
 	}
 
 	internal static FileNotFoundError Create(String filename)
-		=> new FileNotFoundError($"File: {filename}, not found.");
+		=> new FileNotFoundError($"File: \"{filename}\", not found.");
 
     public override String ToString() => _message;
 }

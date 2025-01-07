@@ -1,52 +1,62 @@
 ﻿namespace VP.CodingChallenge.WCNet.Startup;
 
-using VP.CodingChallenge.WCNet.Validators;
-
 internal class WcNetStartup
 {
-    internal async Task Main(String[] args)
+    private const String DefaultAppSettingsFileName = "appsettings.json";
+
+    internal static async Task MainAsync(String[] args)
     {
-        var wcNetConfigurationBuilder = GetWcNetConfigurationBuilder();
-        var wcNetConfiguration = GetWcNetConfiguration(wcNetConfigurationBuilder);
-        var options = GetWcParseOptions(wcNetConfiguration);
-        if (!WcOptionsValidator.Validate(options, out var validationResults))
+        try
         {
+            var options = GetParserOptions();
+            var parser = GetParser();
+            var commandRequestResult = parser.Parse(args, options);
+            if (commandRequestResult.IsFailed)
+            {
+                throw new ParserOptionsLoadFailedException();
+            }
 
+            var serviceProvider = BuildWcNetServiceProvider(commandRequestResult.Value.FilePath);
+            var handler = serviceProvider.GetRequiredService<AsyncCommandsHandler>();
+            await handler.Main(commandRequestResult.Value);
         }
-
-        var commandRequestResult = DefaultCommandParser.Parse(args, options);
-        if (commandRequestResult.IsFailed)
+        catch (Exception ex)
         {
-            throw new ParserOptionsLoadFailedException();
+            Console.WriteLine($"Application terminated. Error: {ex.Message}");
+            AsyncCommandHandlerBase.Usage();
         }
-
-        //Build WcNet service provider
-        var serviceProvider = new ServiceCollection().BuildWCNetServiceProvider(commandRequestResult.Value.FilePath);
-        var handler = serviceProvider.GetRequiredService<AsyncCommandsHandler>();
-        await handler.Main(commandRequestResult.Value);
     }
 
     #region Private Methods
-    private static IConfigurationBuilder GetWcNetConfigurationBuilder()
+    private static DefaultCommandParser GetParser()
     {
-        var builder = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-
-        return builder;
+        var fileOperation = new DefaultFile();
+        return new DefaultCommandParser(fileOperation);
     }
-    private static IConfiguration GetWcNetConfiguration(IConfigurationBuilder builder)
-        => builder.Build();
-
-    private static ParseOptions? GetWcParseOptions(IConfiguration configuration)
+    private static CommandParsingOptions? GetParserOptions()
     {
-        var options = configuration.GetSection(nameof(ParseOptions)).Get<ParseOptions>();
+        var builder = new ConfigurationBuilder();
+        var configuration = BuildWcNetConfiguration(builder);
+        var options = configuration.GetSection(nameof(CommandParsingOptions)).Get<CommandParsingOptions>();
         if (options is not null && options.DefaultCommandsRaw.Length > 0)
         {
             options.DefaultCommands = options.DefaultCommandsRaw.Select(dc => new CommandKey(dc)).ToArray();
         }
 
         return options;
+    }
+    private static IConfiguration BuildWcNetConfiguration(IConfigurationBuilder builder)
+        => builder
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile(path: DefaultAppSettingsFileName, optional: true, reloadOnChange: true)
+            .Build();
+    internal static IServiceProvider BuildWcNetServiceProvider(FilePath filepath)
+    {
+        var services = new ServiceCollection();
+
+        return services
+            .AddWcNet(filepath)
+            .BuildServiceProvider();
     }
     #endregion Private Methods
 }

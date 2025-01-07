@@ -24,5 +24,6 @@ global using VP.CodingChallenge.WCNet.CommandReceivers.FileHandlers.Contracts;
 global using VP.CodingChallenge.WCNet.Commands;
 global using VP.CodingChallenge.WCNet.Commands.Concrete;
 global using VP.CodingChallenge.WCNet.Configurations;
+global using VP.CodingChallenge.WCNet.Infrastructure.FileManagement;
 global using VP.CodingChallenge.WCNet.Sinks;
 global using VP.CodingChallenge.WCNet.Startup;

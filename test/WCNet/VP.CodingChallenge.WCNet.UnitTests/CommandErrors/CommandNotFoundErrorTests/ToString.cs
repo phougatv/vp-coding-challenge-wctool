@@ -7,7 +7,7 @@ public class ToString
     {
         //Arrange
         var commandKey = new CommandKey("c");
-        var error = CommandNotFoundError.Create(commandKey);
+        var error = CommandNotRegisteredError.Create(commandKey);
 
         //Act
         var result = error.ToString();

@@ -8,27 +8,32 @@ internal class CountCommandFactory(IServiceProvider serviceProvider) : ICommandF
         var command = serviceProvider.GetKeyedService<IAsyncCommand>(commandKey);
         if (command is null)
         {
-            return new CommandNotFound(commandKey);
+            return new CommandNotRegistered(commandKey);
         }
 
         return command;
     }
 
-    public ICollection<IAsyncCommand> CreateCommands(IReadOnlyCollection<CommandKey> commandKeys)
+    public Result<ICollection<IAsyncCommand>> CreateCommands(IReadOnlyCollection<CommandKey> commandKeys)
     {
-        ICollection<IAsyncCommand> commands = commandKeys.Count < 1 ? Array.Empty<IAsyncCommand>() : new List<IAsyncCommand>(commandKeys.Count);
+        if (commandKeys is null || commandKeys.Count < 1)
+        {
+            return Result<ICollection<IAsyncCommand>>.Fail(CommandKeysNullOrEmptyError.Create());
+        }
+
+        var commands = new List<IAsyncCommand>(commandKeys.Count);
         foreach (var commandKey in commandKeys)
         {
             var command = serviceProvider.GetKeyedService<IAsyncCommand>(commandKey);
             if (command is null)
             {
-                commands.Add(new CommandNotFound(commandKey));
+                commands.Add(new CommandNotRegistered(commandKey));
                 continue;
             }
 
             commands.Add(command);
         }
 
-        return commands;
+        return Result<ICollection<IAsyncCommand>>.Ok(commands);
     }
 }

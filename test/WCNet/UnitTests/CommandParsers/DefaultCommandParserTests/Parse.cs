@@ -278,7 +278,7 @@ public class Parse(FilesDirectoryFixture fixture) : IClassFixture<FilesDirectory
 
         //Assert
         result.IsFailed.Should().BeTrue();
-        result.Error.Should().BeOfType<CommandNotFoundError>();
+        result.Error.Should().BeOfType<CommandNotRegisteredError>();
     }
 
     [Fact]

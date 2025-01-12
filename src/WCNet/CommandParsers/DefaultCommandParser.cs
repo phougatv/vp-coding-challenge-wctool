@@ -45,7 +45,7 @@ internal class DefaultCommandParser
         if (!commandRegex.IsMatch(commandKey))
         {
             var key = RemoveDash(commandKey);
-            return Result<CommandRequest>.Fail(CommandNotFoundError.Create(key));
+            return Result<CommandRequest>.Fail(CommandNotRegisteredError.Create(key));
         }
 
         commandKey = RemoveDash(commandKey);

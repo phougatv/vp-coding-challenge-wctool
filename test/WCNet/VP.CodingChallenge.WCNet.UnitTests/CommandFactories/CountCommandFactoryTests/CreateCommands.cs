@@ -50,7 +50,7 @@ public class CreateCommands
         actualCommands.Should()
             .NotBeNullOrEmpty().And
             .HaveCount(3).And
-            .OnlyContain(c => c is CommandNotFound);
+            .OnlyContain(c => c is CommandNotRegistered);
     }
 
     [Fact]
@@ -86,8 +86,8 @@ public class CreateCommands
             .NotBeNullOrEmpty().And
             .HaveCount(3).And
             .SatisfyRespectively(
-                c => c.Should().BeOfType<CommandNotFound>(),
-                c => c.Should().BeOfType<CommandNotFound>(),
+                c => c.Should().BeOfType<CommandNotRegistered>(),
+                c => c.Should().BeOfType<CommandNotRegistered>(),
                 c => c.Should().BeOfType<ByteCountCommand>());
     }
 

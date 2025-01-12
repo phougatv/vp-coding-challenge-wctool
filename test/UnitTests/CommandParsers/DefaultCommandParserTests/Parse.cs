@@ -333,8 +333,8 @@ public class Parse
 		actual.Should().BeOfType<Result<CommandRequest>>();
 		actual.IsFailed.Should().BeTrue();
 		actual.Error.Should()
-			.BeOfType<CommandNotFoundError>().And
-			.Subject.As<CommandNotFoundError>().ToString().Should().Be($"Command '{expectedKey}' not found.");
+			.BeOfType<CommandNotRegisteredError>().And
+			.Subject.As<CommandNotRegisteredError>().ToString().Should().Be($"No corresponding command is registered for CommandKey: '{expectedKey.Key}'.");
 	}
 
 	[Fact]

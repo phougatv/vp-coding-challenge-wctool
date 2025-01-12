@@ -1,28 +1,52 @@
-﻿namespace VP.CodingChallenge.WCNet.CommandHandlers;
+﻿[assembly: InternalsVisibleTo("VP.CodingChallenge.WCNet.UnitTest")]
+namespace VP.CodingChallenge.WCNet.CommandHandlers;
 
 internal class AsyncCommandsHandler(ICommandFactory factory, IAsyncCommandInvoker invoker, IOutput output)
     : AsyncCommandHandlerBase(output)
 {
     protected override async Task<Result<ICollection<Message>>> Handle(CommandRequest commandRequest)
     {
-        var keyCount = commandRequest.CommandKeys.Count;
-        var commands = CreateCommands(commandRequest, keyCount);
-        var countResults = await InvokeCommandsAsync(commands);
-        var messageResults = CreateMessages(countResults, commandRequest);
+        if (commandRequest is null)
+        {
+            return Result<ICollection<Message>>.Fail(CommandRequestNullError.Create());
+        }
 
+        var commandResults = CreateCommands(commandRequest);
+        if (commandResults.IsFailed)
+        {
+            return Result<ICollection<Message>>.Fail(commandResults.Error);
+        }
+
+        var countResults = await InvokeCommandsAsync(commandResults.Value);
+        var messageResults = CreateMessages(commandRequest, countResults);
         return messageResults;
     }
 
-    private static Result<ICollection<Message>> CreateMessages(Result<ICollection<Result<Count>>> countResults, CommandRequest request)
+    private Result<ICollection<IAsyncCommand>> CreateCommands(CommandRequest request)
     {
-        if (countResults.IsFailed)
+        var commands = factory.CreateCommands(request.CommandKeys);
+        return commands;
+    }
+
+    private async Task<Result<ICollection<Result<Count>>>> InvokeCommandsAsync(ICollection<IAsyncCommand> commands)
+    {
+        invoker.SetCommands(commands);
+
+        var countResults = await invoker.InvokeCommandsAsync();
+        return countResults;
+    }
+
+    private static Result<ICollection<Message>> CreateMessages(CommandRequest request, Result<ICollection<Result<Count>>> countResultsResult)
+    {
+        if (countResultsResult.IsFailed)
         {
-            return Result<ICollection<Message>>.Fail(countResults.Error);
+            return Result<ICollection<Message>>.Fail(countResultsResult.Error);
         }
 
-        var messages = new List<Message>(countResults.Value.Count);
+        var countResults = countResultsResult.Value;
+        var messages = new List<Message>(countResults.Count);
         var filename = Path.GetFileName(request.FilePath);
-        foreach (var countResult in countResults.Value)
+        foreach (var countResult in countResults)
         {
             var message = CreateMessage(countResult, filename);
             messages.Add(message);
@@ -32,31 +56,5 @@ internal class AsyncCommandsHandler(ICommandFactory factory, IAsyncCommandInvoke
     }
 
     private static Message CreateMessage(Result<Count> countResult, String filename)
-    {
-        if (countResult.IsFailed)
-        {
-            return countResult.Error.Message;
-        }
-
-        return $"{countResult.Value} {filename}";
-    }
-
-    private async Task<Result<ICollection<Result<Count>>>> InvokeCommandsAsync(List<IAsyncCommand> commands)
-    {
-        invoker.SetCommands(commands);
-
-        var countResults = await invoker.InvokeCommandsAsync();
-        return countResults;
-    }
-
-    private List<IAsyncCommand> CreateCommands(CommandRequest request, Int32 commandKeyCount)
-    {
-        var commands = new List<IAsyncCommand>(commandKeyCount);
-        foreach (var commandKey in request.CommandKeys)
-        {
-            commands.Add(factory.CreateCommand(commandKey));
-        }
-
-        return commands;
-    }
+        => countResult.IsFailed ? new Message(countResult.Error.Message) : new Message($"{countResult.Value.Value} {filename}");
 }

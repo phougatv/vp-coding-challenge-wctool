@@ -23,7 +23,7 @@ public class CreateCommand
         // Assert
         actualCommand.Should()
             .NotBeNull().And
-            .BeOfType<CommandNotFound>();
+            .BeOfType<CommandNotRegistered>();
     }
 
     [Fact]
@@ -46,7 +46,7 @@ public class CreateCommand
         //Assert
         actualCommand.Should()
             .NotBeNull().And
-            .BeOfType<CommandNotFound>();
+            .BeOfType<CommandNotRegistered>();
     }
 
     [Fact]

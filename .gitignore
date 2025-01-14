@@ -18,3 +18,5 @@
 /test/VP.CodingChallenge.WCNet.UnitTest/bin
 /test/UnitTests/obj
 /test/UnitTests/bin
+/test/UnitTests/CodeCoverage
+/test/UnitTests/TestResults
